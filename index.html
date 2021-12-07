@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Final</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css"
+    />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <main
+      class="
+        flex flex-col
+        justify-top
+        w-screen
+        max-w-3xl
+        mx-auto
+        mt-16
+        space-y-6
+        h-screen
+      "
+    >
+      <h4 class="text-2xl font-black">三明治後測</h4>
+      <section
+        id="article"
+        class="bg-white text-black text-opacity-70 rounded-2xl shadow-xl p-8"
+      >
+        <h6 class="text-md font-black">題目一：</h6>
+        找到全台當下最低溫的點，並列出
+        <span class="bg-blue-900 text-white">縣市</span>
+        <span class="bg-blue-900 text-white">行政區</span>
+        <span class="bg-blue-900 text-white">測站名稱</span>
+        <span class="bg-blue-900 text-white">溫度</span>
+        <span class="bg-blue-900 text-white">座標</span>
+        <small class="block">(透過中央氣象局ＡＰＩ取得全台測站即時資料)</small>
+      </section>
+      <section
+        id="article"
+        class="bg-white text-black text-opacity-70 rounded-2xl shadow-xl p-8"
+      >
+        <h6 class="text-md font-black">Answer：</h6>
+        <textarea
+          class="w-full p-4 text-black text-opacity-70 text-sm"
+          id="answer_1"
+          rows="10"
+          disabled
+        /></textarea>
+      </section>
+
+      <div class="bg-white w-full rounded-2xl shadow-xl">
+        <!-- <h6 class="text-md font-black">Answer 1</h6> -->
+
+      </div>
+    </main>
+    <script src="./script.js"></script>
+  </body>
+</html>
