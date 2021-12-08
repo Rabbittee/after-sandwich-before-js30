@@ -21,3 +21,14 @@
 - [六角之前的免費 Git&GitHub 手冊](https://w3c.hexschool.com/git/cfdbd310)
 - [如何發 PR 教學](https://hsiangfeng.github.io/git/20190615/4143994266/)
 - [兔兔教 leetcode practice 上傳解法教學](https://hackmd.io/s3-6fhjWQPaBtvsBr1aTig?view)
+
+<details>
+  <summary style="font-size:1.2rem">hint</summary>
+  <ol>
+    <li>用promise 或 await 串接 fetch API</li>
+    <li>用closure概念包裝API taken</li>
+    <li>使用建構子函式（constructor function) 建立結果物件</li>
+    <li>利用object getter 與 setter讓結果console.log時候自帶單位</li>
+    <li>加 34 改用 class 改寫</li>
+  </ol>
+</details>
