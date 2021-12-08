@@ -10,7 +10,7 @@
 
 請自行新增自己名字的資料夾<br>
 內部使用框架不限 `原生` `react` `vue` `angular` `svelte` 等<br>
-使用前端三寶者，可參考 `template` 資料夾中的檔案<br>
+使用前端三寶者，可參考 [`template`](https://github.com/Rabbittee/after-sandwich-before-js30/tree/master/template) 資料夾中的檔案<br>
 把 `answers` 這個 array 物件中的 item 取代成該題的答案<br>
 
 > ps. 使用框架者請自行 build 出 index.html 之類的東西，供 github page 讀取
