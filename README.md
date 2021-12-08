@@ -17,15 +17,7 @@
 
 ### GIT 操作教學
 
-##### Git 基礎指令：
-
-https://hsiangfeng.github.io/git/20190615/1148594701/
-
-##### 六角之前的免費 Git&GitHub 手冊
-
-https://w3c.hexschool.com/git/cfdbd310
-
-##### 如何發 PR 教學
-
-https://hsiangfeng.github.io/git/20190615/4143994266/
-https://hackmd.io/s3-6fhjWQPaBtvsBr1aTig?view
+- [Git 基礎指令](https://hsiangfeng.github.io/git/20190615/1148594701/)
+- [六角之前的免費 Git&GitHub 手冊](https://w3c.hexschool.com/git/cfdbd310)
+- [如何發 PR 教學](https://hsiangfeng.github.io/git/20190615/4143994266/)
+- [兔兔教 leetcode practice 上傳解法教學](https://hackmd.io/s3-6fhjWQPaBtvsBr1aTig?view)
