@@ -9,6 +9,10 @@
 ### 上傳格式
 
 請自行新增自己名字的資料夾<br>
+merge 後 github page 應該會自動生成，路徑加上你的資料夾名稱可
+
+> [ex. https://rabbittee.github.io/after-sandwich-before-js30/template/](https://rabbittee.github.io/after-sandwich-before-js30/template/)
+
 內部使用框架不限 `原生` `react` `vue` `angular` `svelte` 等<br>
 使用前端三寶者，可參考 [`template`](https://github.com/Rabbittee/after-sandwich-before-js30/tree/master/template) 資料夾中的檔案<br>
 把 `answers` 這個 array 物件中的 item 取代成該題的答案<br>
