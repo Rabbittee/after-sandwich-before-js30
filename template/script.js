@@ -15,7 +15,7 @@ const getCurrentData = async () => {
 
 getCurrentData();
 
-const answers = new Array(2).fill({});
+const answers = new Array(4).fill({});
 answers[0] = {
   city: "STRING",
   town: "STRING",
@@ -29,5 +29,7 @@ answers[0] = {
 
 answers.forEach((answer, index) => {
   const answer_node = document.getElementById(`answer_${index + 1}`);
-  answer_node.value = JSON.stringify(answer, null, "    ");
+  const showText = JSON.stringify(answer, null, "    ");
+  answer_node.rows = showText.split('\n').length;
+  answer_node.value = showText;
 })
