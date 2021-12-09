@@ -2,7 +2,7 @@ const getCurrentData = async () => {
   const cwbHost = "https://opendata.cwb.gov.tw";
   const apiPath = "api/v1/rest/datastore/O-A0001-001";
   let paramsObj = {
-    Authorization: "<YOUR_API_TOKEN>",
+    Authorization: "CWB-34AC2BFB-2272-41E3-84FE-AAF40C0C42AA",
   };
   let searchParams = new URLSearchParams(paramsObj);
   const response = await fetch(
