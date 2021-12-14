@@ -1,0 +1,55 @@
+import { pipe } from './utils.js';
+
+const maxRow = 20;
+
+export const Section = (question, fn) => {
+  // 建立 card container
+  const createSection = (node) => {
+    node.classList.add('bg-white', 'text-black', 'text-opacity-70', 'rounded-xl', 'shadow-xl', 'p-8', 'space-y-2');
+    node.innerHTML = `<div>${question}</div>`;
+
+    return node;
+  };
+
+  // 建立解答按鈕
+  const createButton = (node) => {
+    const button = document.createElement('button');
+    button.classList.add('bg-blue-500', 'hover:bg-blue-700', 'text-white', 'font-bold', 'py-2', 'px-4', 'rounded');
+    button.innerText = '解答';
+
+    button.onclick = async () => {
+      if (!fn) return;
+      const text = await fn();
+      const prettified = JSON.stringify(text, undefined, 4);
+
+      const textarea = node.querySelector('textarea');
+      textarea.value = prettified;
+      textarea.rows = Math.min(prettified.split('\n').length, maxRow);
+    };
+
+    node.appendChild(button);
+    return node;
+  };
+
+  // 建立解答區 textarea
+  const createAnswer = (node) => {
+    node.insertAdjacentHTML(
+      'beforeend',
+      `
+  <div>
+    <div>Answer:</div>
+    <textarea class="w-full p-4 bg-slate-100 text-black text-opacity-70 text-sm resize-none" disabled></textarea>
+  </div>`,
+    );
+
+    return node;
+  };
+
+  const section = document.createElement('section');
+  const node = pipe(createSection, createButton, createAnswer)(section);
+
+  // 回傳 card
+  return function () {
+    return node;
+  };
+};
