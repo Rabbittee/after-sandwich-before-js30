@@ -11,7 +11,7 @@ function Question({title,task}){
         </section>
     )
 }
-function Anwser({title="Answer:",value}){
+function Anwser({title="Answer:",children}){
     return(
         <section
             id="article"
@@ -20,9 +20,8 @@ function Anwser({title="Answer:",value}){
             <h6 className="text-md font-black">{title}</h6>
             <div
                 className="w-full p-4 text-black bg-slate-100 rounded-md outline-none my-2 text-opacity-70 text-sm  h-fit"
-                value={value}
                 disabled
-            >{value}</div>
+            >{children}</div>
         </section>
     )
 }

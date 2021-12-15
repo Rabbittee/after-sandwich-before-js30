@@ -22,7 +22,7 @@
 
 
 const serialize = (props, format= () => {}) => {
-  return Object.keys(props).map((key) => format(key));
+  return Object.keys(props).map((key) => format(props,key));
 };
 
 function queryAPI(baseUrl, Authorization) {
@@ -30,25 +30,21 @@ function queryAPI(baseUrl, Authorization) {
      *  @param {string} apth
      *  @param {QueryWeatherConditions} queryStringProps
      */
+    
+    if(!Authorization){
+      throw Error("Please type token of CWB")
+    }
   return async function (
     path,
     queryStringProps
   ) {
-    const auth = Authorization ? `?Authorization=${Authorization}` : "";
-    const queryStrings = queryStringProps
-      ? serialize(
-          queryStringProps,
-          (key) =>
-            `&${key}=${
-              Array.isArray(queryStringProps[key])
-                ? queryStringProps[key].join(",")
-                : queryStringProps[key]
-            }`
-        )
-      : "";
-    return fetch(baseUrl + path + auth + queryStrings).then((response) =>
-      response.json()
-    );
+      const auth = new URLSearchParams({Authorization})
+      const queryStrings = queryStringProps
+        ? serialize( queryStringProps,(props,key) => `&${key}=${props[key].join(",")}`)
+        : "";
+      return fetch(baseUrl + path + `?${auth}` + queryStrings).then((response) =>
+        response.json()
+      );
   };
 }
 export const queryCwb = queryAPI(

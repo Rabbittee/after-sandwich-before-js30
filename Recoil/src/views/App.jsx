@@ -4,6 +4,21 @@ import clsx from "clsx"
 import {queryCwb} from "../api/api"
 
 
+class Station{
+  constructor({locationName,lat,lon,weatherElement,time,parameter}){
+    this.name = locationName;
+    this.geoLocation = {lat,lon};
+    this.distriction = parameter.reduce((acc,val)=>({...acc,[val.parameterName]:val.parameterValue}),{});
+    this.weather = weatherElement.reduce((acc,val)=>({...acc,[val.elementName]:val.elementValue}),{});
+    this.time = time;
+  }
+  get info(){
+    return {
+     ...this
+    }
+  }
+}
+
 function useWeatherAPI(path,body){
   const [series,setSeries] = useState(null);
   const api = useCallback(async()=>{
@@ -20,15 +35,16 @@ function useReduce(cb,series,init=null){
 function useSort(cond,series){
   return series.sort(cond)
 }
-
+const useCompose = (enhance,func) => enhance(func);
 
 function QuestionOne(){
-  const data = useWeatherAPI("O-A0001-001",{elementName:['TEMP']})
+  const data = useWeatherAPI("O-A0001-001",{elementName:['TEMP']});
+  if(!data) return (<div>loading</div>)
   const station = useReduce((acc,val)=>{
     if(acc !== null){
       const newTemp = val.weatherElement[0].elementValue;
       const preTemp = acc.weatherElement[0].elementValue;
-      if(Number(newTemp) === -99 ) return acc
+      if( Number(newTemp) === -99 ) return acc
       if( Number(newTemp) < Number(preTemp)) return val
       return acc
     }
@@ -49,18 +65,51 @@ function QuestionOne(){
             <small className="block">(API: v1/rest/datastore/O-A0001-001)</small>
           </>)}
         />
-        <Task.Anwser title="當下最低溫的點" value={JSON.stringify(station)}/>
+        <Task.Anwser title="當下最低溫的點">
+          {JSON.stringify(new Station(station))}
+        </Task.Anwser>
     </>
   )
 }
 
 
 
+const handleClassify = (acc,val)=>{
+  const elevation = Math.ceil(val.weatherElement[0].elementValue/500) * 500;
+  const range =  `${elevation-500}-${elevation}`;
+  if(!acc.hasOwnProperty(range)){
+    return {
+      ...acc,
+      [range]: [val]
+    }
+  }
+  return {
+    ...acc,
+    [range]: [ ...acc[range], val]
+  }
+}
 
-
+const filterStation = (data) =>{ 
+  const series = Object.entries(data);
+  return series.map(([key,list])=>{
+    const getLowest = (acc,val)=>{
+      return val.weatherElement[1].elementValue < acc.weatherElement[1].elementValue ? val : acc
+    }
+    return [key,useReduce(getLowest,list,list[0])]
+  })
+}
 function QuestionTwo(){
-  // const data = useWeatherAPI("O-A0001-001",{elementName:['ELEV','TEMP']});
-
+  const data = useWeatherAPI("O-A0001-001",{elementName:['ELEV','TEMP']});
+  if(!data) return (<div>loading</div>)
+  const filterError = (data) => data.filter(station=> Number(station.weatherElement[1].elementValue) !== -99)
+  const lowestStations = useCompose(
+    filterStation,
+    useReduce(
+      handleClassify,
+      filterError(data.location),
+      {})
+  );
+    // console.log(lowestStations)
   return (
     <>
       <Task.Question
@@ -70,7 +119,13 @@ function QuestionTwo(){
           一組，並回傳object<small className="block">(API: v1/rest/datastore/O-A0001-001)</small>
         </>)}
       />
-      <Task.Anwser></Task.Anwser>
+      {
+      lowestStations.map(([key,station])=>(
+        <Task.Anwser title={key}>
+          <span>{ JSON.stringify(new Station(station))}</span>
+        </Task.Anwser>
+      ))
+      }
     </>
   )
 }
@@ -81,7 +136,7 @@ function useTop(quantity,cb,series){
 }
  
 const ascendingOrder = (pre,val)=> Number(val.weatherElement[0].elementValue) - Number(pre.weatherElement[0].elementValue)
-const getDistribution = (acc,val)=>{
+const getDistriction = (acc,val)=>{
   const cityName = val.parameter[0].parameterValue
   if(!acc.hasOwnProperty(cityName)){
     return {
@@ -97,10 +152,11 @@ const getDistribution = (acc,val)=>{
 
 function QuestionThree(){
   const data = useWeatherAPI("O-A0002-001",{elementName:['HOUR_24']});
+  if(!data) return (<div>loading</div>)
   const top20 = useTop(20,ascendingOrder,data.location);
   const topList = top20.map(sensor=>(<div>{sensor.locationName}: {sensor.weatherElement[0].elementValue}</div>));
-  const distribution = useReduce(getDistribution,top20,{});
-  const count = Object.keys(distribution).map(key => (<div>{key}: {distribution[key].length}</div>));
+  const distriction = useReduce(getDistriction,top20,{});
+  const count = Object.keys(distriction).map(key => (<div>{key}: {distriction[key].length}</div>));
   return (
     <>
       <Task.Question
@@ -113,8 +169,12 @@ function QuestionThree(){
           <small className="block">(API: /v1/rest/datastore/O-A0002-001)</small>
         </>)}
       />
-      <Task.Anwser title="近24小時降雨量前20名:" value={topList}/>
-      <Task.Anwser title="前20名分佈於:" value={count}/>
+      <Task.Anwser title="近24小時降雨量前20名:">
+        {topList}
+      </Task.Anwser>
+      <Task.Anwser title="前20名分佈於:">
+        {count}
+      </Task.Anwser>
     </>
   )
 }
@@ -129,16 +189,16 @@ function getCountryInfo(data){
 
 function QuestionFour(){
   const data = useWeatherAPI("F-D0047-051",{elementName:['MaxT','MinT']});
-  const getDistribution = getCountryInfo(data.locations[0]);
-  const distribution = getDistribution("安樂區");
-  const minTempInWeek = distribution.weatherElement[0].time
-  const maxTempInWeek = distribution.weatherElement[1].time
+  if(!data) return (<div>loading</div>)
+  const getDistriction = getCountryInfo(data.locations[0]);
+  const distriction = getDistriction("安樂區");
+  const minTempInWeek = distriction.weatherElement[0].time
+  const maxTempInWeek = distriction.weatherElement[1].time
   const minTemp = Math.min(...minTempInWeek.map(point=>point.elementValue[0].value)) 
   const maxTemp = Math.max(...maxTempInWeek.map(point=>point.elementValue[0].value)) 
 
   const subTempByDay = maxTempInWeek.map((point,index)=>point.elementValue[0].value - minTempInWeek[index].elementValue[0].value);
   const maxSub = Math.max(...subTempByDay)
-  console.log(maxSub)
   return (
     <>
       <Task.Question
@@ -150,8 +210,12 @@ function QuestionFour(){
           <small className="block">(API: ​/v1​/rest​/datastore​/F-D0047-00XX系列)</small>
         </>)}
       />
-      <Task.Anwser title="未來一週的最低溫與最高溫:" value={`最低溫:${minTemp}°C\n最高溫:${maxTemp}°C`}/>
-      <Task.Anwser title="單日溫差最大為:" value={`${maxSub}°C`}/>
+      <Task.Anwser title="未來一週的最低溫與最高溫:">
+        {`最低溫:${minTemp}°C\n最高溫:${maxTemp}°C`}
+      </Task.Anwser>
+      <Task.Anwser title="單日溫差最大為:">
+      {`${maxSub}°C`}
+      </Task.Anwser>
     </>
   )
 }
