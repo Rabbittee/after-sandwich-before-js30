@@ -1,7 +1,9 @@
-import './index.css'
+import "./index.css";
+import { question as q1 } from "./questions/q1";
 
-document.querySelector('#app').innerHTML = `
-<h1 class="text-3xl font-bold underline">
-  Hello world!
-</h1>
-`
+const answers = [];
+answers.push(await q1("TEMP", "MIN"));
+
+for (let answer of answers) {
+  console.log(answer);
+}
