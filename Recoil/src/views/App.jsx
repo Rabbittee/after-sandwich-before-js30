@@ -4,7 +4,7 @@ import clsx from "clsx"
 import {queryCwb} from "../api/api"
 
 
-class Station{
+class StationInfo{
   constructor({locationName,lat,lon,weatherElement,time,parameter}){
     this.name = locationName;
     this.geoLocation = {lat,lon};
@@ -66,7 +66,7 @@ function QuestionOne(){
           </>)}
         />
         <Task.Anwser title="當下最低溫的點">
-          {JSON.stringify(new Station(station))}
+          {JSON.stringify(new StationInfo(station))}
         </Task.Anwser>
     </>
   )
@@ -109,7 +109,6 @@ function QuestionTwo(){
       filterError(data.location),
       {})
   );
-    // console.log(lowestStations)
   return (
     <>
       <Task.Question
@@ -122,7 +121,7 @@ function QuestionTwo(){
       {
       lowestStations.map(([key,station])=>(
         <Task.Anwser title={key}>
-          <span>{ JSON.stringify(new Station(station))}</span>
+          <span>{ JSON.stringify(new StationInfo(station))}</span>
         </Task.Anwser>
       ))
       }
@@ -192,13 +191,13 @@ function QuestionFour(){
   if(!data) return (<div>loading</div>)
   const getDistriction = getCountryInfo(data.locations[0]);
   const distriction = getDistriction("安樂區");
-  const minTempInWeek = distriction.weatherElement[0].time
-  const maxTempInWeek = distriction.weatherElement[1].time
-  const minTemp = Math.min(...minTempInWeek.map(point=>point.elementValue[0].value)) 
-  const maxTemp = Math.max(...maxTempInWeek.map(point=>point.elementValue[0].value)) 
+  const minTempSeries = distriction.weatherElement[0].time
+  const maxTempSeries = distriction.weatherElement[1].time
+  const minTemp = Math.min(...minTempSeries.map(point=>point.elementValue[0].value)) 
+  const maxTemp = Math.max(...maxTempSeries.map(point=>point.elementValue[0].value)) 
 
-  const subTempByDay = maxTempInWeek.map((point,index)=>point.elementValue[0].value - minTempInWeek[index].elementValue[0].value);
-  const maxSub = Math.max(...subTempByDay)
+  const tempDiffSeries = maxTempSeries.map((point,index)=>point.elementValue[0].value - minTempSeries[index].elementValue[0].value);
+  const maxTempDiff = Math.max(...tempDiffSeries)
   return (
     <>
       <Task.Question
@@ -214,7 +213,7 @@ function QuestionFour(){
         {`最低溫:${minTemp}°C\n最高溫:${maxTemp}°C`}
       </Task.Anwser>
       <Task.Anwser title="單日溫差最大為:">
-      {`${maxSub}°C`}
+      {`${maxTempDiff}°C`}
       </Task.Anwser>
     </>
   )
