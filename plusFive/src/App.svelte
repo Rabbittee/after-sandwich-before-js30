@@ -49,28 +49,45 @@
 	}
 </script>
 
-<main class="p-1 my-0 mx-auto text-center">
-	{#await promise}
-		waiting....
-	{:then currentTN}
-	<div class="currentTN">
+<main class="w-screen h-screen flex flex-col items-center bg-gray-200">
+	<h3 class="m-3">三明治讀書會期末考～</h3>
+	<section class="first w-1/5 bg-white m-3 p-5 rounded-lg shadow-md font-light">
+		<h6>第一題：</h6>
 		<div>
-			縣市：{currentTN.parameter[0].parameterValue}
+			{#await promise}
+				waiting....
+			{:then currentTN}
+			<div class="currentTN">
+				<div>
+					縣市：{currentTN.parameter[0].parameterValue}
+				</div>
+				<div>
+					行政區：{currentTN.parameter[2].parameterValue}
+				</div>
+				<div>
+					測站名稱：{currentTN.locationName}
+				</div>
+				<div>
+					溫度：{currentTN.weatherElement[3].elementValue}
+				</div>
+				<div>
+					座標：{currentTN.lat} <span class="mx-1"></span> {currentTN.lon}
+				</div>
+			</div>
+			{/await}
 		</div>
-		<div>
-			行政區：{currentTN.parameter[2].parameterValue}
-		</div>
-		<div>
-			測站名稱：{currentTN.locationName}
-		</div>
-		<div>
-			溫度：{currentTN.weatherElement[3].elementValue}
-		</div>
-		<div>
-			座標：{currentTN.lat} <span class="mx-1"></span> {currentTN.lon}
-		</div>
-	</div>
-	{/await}
+	</section>
+	<section class="second w-1/5 bg-white m-3 p-5 rounded-lg shadow-md font-light">
+
+	</section>
+
+	<section class="third w-1/5 bg-white m-3 p-5 rounded-lg shadow-md font-light">
+
+	</section>
+
+	<section class="forth w-1/5 bg-white m-3 p-5 rounded-lg shadow-md font-light">
+
+	</section>
 </main>
 
 <!-- <style>
