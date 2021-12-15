@@ -51,38 +51,3 @@ export const queryCwb = queryAPI(
   "https://opendata.cwb.gov.tw/api/v1/rest/datastore/",
   "CWB-E8AC8336-9346-4D8A-A2D4-EB1934B7C25D"
 );
-
-
-
-
-
-//automatic weather station
-//getAutomaticStationSeries({ elementName: ["TEMP", "ELEV", "WDIR"] });
-/**
- * @name getAutomaticStationSeries path - O-A0001-001
- * @param {QueryWeatherConditions} queryStrings 
- * @returns {Array}
- * 
- */
-
-export const getAutomaticStationSeries = (queryStrings) => queryCwb("O-A0001-001", queryStrings);
-
-//realtime weather station
-//realtimeWeatherStation({elementName: "ELEV,WDIR,WDSD"})
-/**
- * @name getRealtimeStationSeries path - O-A0002-001
- * @param {QueryWeatherConditions} queryStrings 
- * @returns {Array}
- * path - "O-A0002-001"
- */
-export const getRealtimeStationSeries = (queryStrings) => queryCwb("O-A0002-001", queryStrings);
-
-
-
-/**
- * @name getStationSeries path - F-D0047-001
- * @param {QueryWeatherConditions} queryStrings 
- * @returns {Array}
- * 
- */
-export const getStationSeries = (queryStrings) => queryCwb("F-D0047-001", queryStrings);
