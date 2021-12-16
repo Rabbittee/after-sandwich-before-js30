@@ -1,13 +1,13 @@
 <script>
-	import { onMount } from 'svelte'
+  import { onMount } from 'svelte'
 
   let data
-	let location
-	let currentTN
+  let location
+  let currentTN
 
-	onMount (async () => {
-		await getCurrentData()
-	})
+  onMount(async () => {
+    await getCurrentData()
+  })
 
   async function getCurrentData() {
     const cwbHost = 'https://opendata.cwb.gov.tw'
@@ -20,69 +20,70 @@
       `${cwbHost}/${apiPath}?${searchParams.toString()}`
     )
 
-		if (response.statusText === 'OK') {
-			data = await response.json()
-			location = await data.records.location
-			// console.log(location)
-			
-			getCurrentTN()
-		}
+    if (response.statusText === 'OK') {
+      data = await response.json()
+      location = await data.records.location
+      // console.log(location)
+
+      getCurrentTN()
+    }
   }
 
-	function getCurrentTN() {
-		let smallest = Number(location[0].weatherElement[3].elementValue)
-		let smallestIndex = 0
-		for (let i = 0; i < location.length; i++) {
-			let comparison = Number(location[i].weatherElement[3].elementValue)
-			if (comparison < smallest && comparison !== -99) {
-				smallest = Number(location[i].weatherElement[3].elementValue)
-				smallestIndex = i
-			}
-		}
-		
-		currentTN = data.records.location[smallestIndex]
-		// console.log(currentTN)
-		// console.log(smallest)
-	}
+  function getCurrentTN() {
+    let smallest = Number(location[0].weatherElement[3].elementValue)
+    let smallestIndex = 0
+    for (let i = 0; i < location.length; i++) {
+      let comparison = Number(location[i].weatherElement[3].elementValue)
+      if (comparison < smallest && comparison !== -99) {
+        smallest = Number(location[i].weatherElement[3].elementValue)
+        smallestIndex = i
+      }
+    }
+
+    currentTN = data.records.location[smallestIndex]
+    // console.log(currentTN)
+    // console.log(smallest)
+  }
 </script>
 
 <main class="w-screen h-screen flex flex-col items-center bg-gray-200">
-	<h3 class="m-3">三明治讀書會期末考</h3>
-	<section class="first w-1/5 bg-white m-3 p-5 rounded-lg shadow-md font-light">
-		<h6>第一題：</h6>
-		<div>
-			{#if currentTN}
-				<div class="currentTN">
-					<div>
-						縣市：{currentTN.parameter[0].parameterValue}
-					</div>
-					<div>
-						行政區：{currentTN.parameter[2].parameterValue}
-					</div>
-					<div>
-						測站名稱：{currentTN.locationName}
-					</div>
-					<div>
-						溫度：{currentTN.weatherElement[3].elementValue}
-					</div>
-					<div>
-						座標：{currentTN.lat} <span class="mx-1"></span> {currentTN.lon}
-					</div>
-				</div>
-			{/if}
-		</div>
-	</section>
-	<section class="second w-1/5 bg-white m-3 p-5 rounded-lg shadow-md font-light">
+  <h3 class="m-3">三明治讀書會期末考</h3>
+  <section class="first w-1/5 bg-white m-3 p-5 rounded-lg shadow-md font-light">
+    <h6>第一題：</h6>
+    <div>
+      {#if currentTN}
+        <div class="currentTN">
+          <div>
+            縣市：{currentTN.parameter[0].parameterValue}
+          </div>
+          <div>
+            行政區：{currentTN.parameter[2].parameterValue}
+          </div>
+          <div>
+            測站名稱：{currentTN.locationName}
+          </div>
+          <div>
+            溫度：{currentTN.weatherElement[3].elementValue}
+          </div>
+          <div>
+            座標：{currentTN.lat} <span class="mx-1"></span>
+            {currentTN.lon}
+          </div>
+        </div>
+      {/if}
+    </div>
+  </section>
+  <section
+    class="second w-1/5 bg-white m-3 p-5 rounded-lg shadow-md font-light"
+  ></section>
 
-	</section>
+  <section
+    class="third w-1/5 bg-white m-3 p-5 rounded-lg shadow-md font-light"
+  ></section>
 
-	<section class="third w-1/5 bg-white m-3 p-5 rounded-lg shadow-md font-light">
-
-	</section>
-
-	<section class="forth w-1/5 bg-white m-3 p-5 rounded-lg shadow-md font-light">
-
-	</section>
+  <section
+    class="forth w-1/5 bg-white m-3 p-5 rounded-lg shadow-md font-light"
+  ></section>
 </main>
 
 <style global>
