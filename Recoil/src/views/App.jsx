@@ -1,8 +1,20 @@
-import { useEffect, useState,useCallback } from 'react'
+
 import Task from "../components/Task"
 import clsx from "clsx"
-import {queryCwb} from "../api/api"
+import {useWeatherAPI} from "./hooks"
 
+
+function getTop(quantity,cb,series){
+  const data = sort(cb ,series);
+  return data.slice(0,quantity)
+}
+function reduce(cb,series,init=null){
+  return series.reduce(cb,init)
+}
+function sort(cond,series){
+  return series.sort(cond)
+}
+const compose = (enhance,func) => enhance(func);
 
 class StationInfo{
   constructor({locationName,lat,lon,weatherElement,time,parameter}){
@@ -19,28 +31,8 @@ class StationInfo{
   }
 }
 
-function useWeatherAPI(path,body){
-  const [series,setSeries] = useState(null);
-  const api = useCallback(async()=>{
-    const result = await queryCwb(path, body);
-    setSeries(result.records)
-  },[]);
-  useEffect(api,[api])
-  return series
-}
-
-function useReduce(cb,series,init=null){
-  return series.reduce(cb,init)
-}
-function useSort(cond,series){
-  return series.sort(cond)
-}
-const useCompose = (enhance,func) => enhance(func);
-
-function QuestionOne(){
-  const data = useWeatherAPI("O-A0001-001",{elementName:['TEMP']});
-  if(!data) return (<div>loading</div>)
-  const station = useReduce((acc,val)=>{
+function useCurrentLowest(data){
+  const station = reduce((acc,val)=>{
     if(acc !== null){
       const newTemp = val.weatherElement[0].elementValue;
       const preTemp = acc.weatherElement[0].elementValue;
@@ -50,6 +42,13 @@ function QuestionOne(){
     }
     return val
   },data.location);
+  return new StationInfo(station)
+}
+
+function QuestionOne(){
+  const data = useWeatherAPI("O-A0001-001",{elementName:['TEMP']});
+  if(!data) return (<div>loading</div>)
+  const currentLowest = useCurrentLowest(data);
   return (
     <>
       <Task.Question
@@ -66,7 +65,7 @@ function QuestionOne(){
           </>)}
         />
         <Task.Anwser title="當下最低溫的點">
-          {JSON.stringify(new StationInfo(station))}
+          {JSON.stringify(currentLowest)}
         </Task.Anwser>
     </>
   )
@@ -89,26 +88,31 @@ const handleClassify = (acc,val)=>{
   }
 }
 
-const filterStation = (data) =>{ 
-  const series = Object.entries(data);
-  return series.map(([key,list])=>{
-    const getLowest = (acc,val)=>{
-      return val.weatherElement[1].elementValue < acc.weatherElement[1].elementValue ? val : acc
-    }
-    return [key,useReduce(getLowest,list,list[0])]
-  })
+
+function findStations(series){
+  const filterStation = (data) =>{ 
+    const series = Object.entries(data);
+    return series.map(([key,list])=>{
+      const getLowest = (acc,val)=>{
+        return val.weatherElement[1].elementValue < acc.weatherElement[1].elementValue ? val : acc
+      }
+      return [key,reduce(getLowest,list,list[0])]
+    })
+  }
+  const lowestStations = compose(
+    filterStation,
+    reduce(
+      handleClassify,
+      series,
+      {})
+  );
+  return lowestStations
 }
 function QuestionTwo(){
   const data = useWeatherAPI("O-A0001-001",{elementName:['ELEV','TEMP']});
   if(!data) return (<div>loading</div>)
   const filterError = (data) => data.filter(station=> Number(station.weatherElement[1].elementValue) !== -99)
-  const lowestStations = useCompose(
-    filterStation,
-    useReduce(
-      handleClassify,
-      filterError(data.location),
-      {})
-  );
+  const stationSeries = findStations(filterError(data.location));
   return (
     <>
       <Task.Question
@@ -119,7 +123,7 @@ function QuestionTwo(){
         </>)}
       />
       {
-      lowestStations.map(([key,station])=>(
+      stationSeries.map(([key,station])=>(
         <Task.Anwser title={key}>
           <span>{ JSON.stringify(new StationInfo(station))}</span>
         </Task.Anwser>
@@ -129,10 +133,7 @@ function QuestionTwo(){
   )
 }
 
-function useTop(quantity,cb,series){
-  const data = useSort(cb ,series);
-  return data.slice(0,quantity)
-}
+
  
 const ascendingOrder = (pre,val)=> Number(val.weatherElement[0].elementValue) - Number(pre.weatherElement[0].elementValue)
 const getDistriction = (acc,val)=>{
@@ -152,9 +153,9 @@ const getDistriction = (acc,val)=>{
 function QuestionThree(){
   const data = useWeatherAPI("O-A0002-001",{elementName:['HOUR_24']});
   if(!data) return (<div>loading</div>)
-  const top20 = useTop(20,ascendingOrder,data.location);
+  const top20 = getTop(20,ascendingOrder,data.location);
   const topList = top20.map(sensor=>(<div>{sensor.locationName}: {sensor.weatherElement[0].elementValue}</div>));
-  const distriction = useReduce(getDistriction,top20,{});
+  const distriction = reduce(getDistriction,top20,{});
   const count = Object.keys(distriction).map(key => (<div>{key}: {distriction[key].length}</div>));
   return (
     <>
