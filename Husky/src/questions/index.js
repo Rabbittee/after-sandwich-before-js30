@@ -3,6 +3,11 @@ export class Question {
     this.title = title;
     this.answer = null;
     this.calcFn = calcFn;
+    this.queue = Promise.resolve();
+  }
+
+  chain(callback) {
+    return (this.queue = this.queue.then(callback));
   }
 
   static createSection(title, answer) {
@@ -35,23 +40,28 @@ export class Question {
     return section;
   }
 
-  async getAnswer(query) {
-    this.answer = await this.calcFn(query);
+  getAnswer(query) {
+    this.chain(async () => {
+      this.answer = await this.calcFn(query);
+    });
     return this;
   }
 
   output(app) {
-    if (this.answer == null || this.title == null) {
-      throw "no answer";
-    }
-    const showText = JSON.stringify(this.answer, null, "    ");
-    const titleSection = Question.createSection(this.title);
-    const answerSection = Question.createSection("Answer：", showText);
+    this.chain(async () => {
+      if (this.answer == null || this.title == null) {
+        throw "no answer";
+      }
+      const showText = JSON.stringify(this.answer, null, "    ");
+      const titleSection = Question.createSection(this.title);
+      const answerSection = Question.createSection("Answer：", showText);
 
-    const div = document.createElement("div");
-    div.classList.add("space-y-6");
-    div.appendChild(titleSection);
-    div.appendChild(answerSection);
-    app.appendChild(div);
+      const div = document.createElement("div");
+      div.classList.add("space-y-6");
+      div.appendChild(titleSection);
+      div.appendChild(answerSection);
+      app.appendChild(div);
+    });
+    return this;
   }
 }

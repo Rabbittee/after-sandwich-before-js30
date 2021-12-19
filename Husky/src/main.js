@@ -5,12 +5,6 @@ import { question as q3 } from "./questions/q3";
 
 const app = document.getElementById("app");
 
-await q1.getAnswer({ field: "TEMP", calc: "MIN" }).then((q) => q.output(app));
-
-await q2
-  .getAnswer({ field: "TEMP", calc: "MIN", step: 500 })
-  .then((q) => q.output(app));
-
-await q3
-  .getAnswer({ field: "HOUR_24", calc: "MAX", rank: 20 })
-  .then((q) => q.output(app));
+await q1.getAnswer({ field: "TEMP", calc: "MIN" }).output(app);
+await q2.getAnswer({ field: "TEMP", calc: "MIN", step: 500 }).output(app);
+await q3.getAnswer({ field: "HOUR_24", calc: "MAX", rank: 20 }).output(app);
