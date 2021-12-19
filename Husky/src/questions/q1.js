@@ -1,10 +1,13 @@
-import CWBApi from "../api/cwb";
-import { CWBToken } from "../config";
+import { CWBApi } from "../api/cwb";
+import { Question } from ".";
 
-const cwb = new CWBApi(CWBToken);
+const title =
+  "第一題：找到全台當下最低溫的點，並列出 縣市 行政區 測站名稱 溫度 座標";
 
-const question = async (field = "TEMP", calc = "MIN") => {
-  const data = await cwb.getCurrentWeather([field]);
+const calcFn = async (query = { field: "TEMP", calc: "MIN" }) => {
+  const { field, calc } = query;
+  const cwb = new CWBApi();
+  const data = await cwb.getCurrent([field], "weather");
 
   const calcMethod = {
     MIN: (min, curr) => (curr.weather[field] < min.weather[field] ? curr : min),
@@ -16,4 +19,4 @@ const question = async (field = "TEMP", calc = "MIN") => {
     .reduce(calcMethod[calc]);
 };
 
-export { question };
+export const question = new Question(title, calcFn);
