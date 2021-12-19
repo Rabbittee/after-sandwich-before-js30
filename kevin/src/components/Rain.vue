@@ -51,7 +51,7 @@ export default {
             const { status, top20_rain } = await new Rain();
             this.status = status;
             this.top20_rain = top20_rain;
-            console.log("第三題", top20_rain);
+            console.log("第三題 近 24 小時前 20 名降雨量:", top20_rain);
         },
     },
 };
