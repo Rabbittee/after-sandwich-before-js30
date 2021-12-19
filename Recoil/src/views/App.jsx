@@ -16,12 +16,13 @@ function sort(cond,series){
 }
 const compose = (enhance,func) => enhance(func);
 
+
 class StationInfo{
   constructor({locationName,lat,lon,weatherElement,time,parameter}){
     this.name = locationName;
     this.geoLocation = {lat,lon};
-    this.distriction = parameter.reduce((acc,val)=>({...acc,[val.parameterName]:val.parameterValue}),{});
-    this.weather = weatherElement.reduce((acc,val)=>({...acc,[val.elementName]:val.elementValue}),{});
+    this.distriction = reduce((acc,val)=>({...acc,[val.parameterName]:val.parameterValue}),parameter,{});
+    this.weather = reduce((acc,val)=>({...acc,[val.elementName]:val.elementValue}),weatherElement,{});
     this.time = time;
   }
   get info(){
@@ -30,25 +31,30 @@ class StationInfo{
     }
   }
 }
-
-function useCurrentLowest(data){
-  const station = reduce((acc,val)=>{
-    if(acc !== null){
-      const newTemp = val.weatherElement[0].elementValue;
-      const preTemp = acc.weatherElement[0].elementValue;
-      if( Number(newTemp) === -99 ) return acc
-      if( Number(newTemp) < Number(preTemp)) return val
-      return acc
-    }
-    return val
-  },data.location);
-  return new StationInfo(station)
+function find(data){
+  return function (cond){
+    return reduce(cond,data);
+  }
 }
+
+const toFormat = (to,series) => series.map(to);
 
 function QuestionOne(){
   const data = useWeatherAPI("O-A0001-001",{elementName:['TEMP']});
   if(!data) return (<div>loading</div>)
-  const currentLowest = useCurrentLowest(data);
+  const stationSeries = toFormat(station=>new StationInfo(station),data.location).filter(station=>
+    Number(station.weather.TEMP) !== -99
+  );
+  const getLowestTempTempStation = find(stationSeries);
+  const station = getLowestTempTempStation((acc,val)=>{
+    if(acc !== null){
+      const newTemp = val.weather.TEMP;
+      const preTemp = acc.weather.TEMP;
+      if( Number(newTemp) < Number(preTemp)) return val
+      return acc
+    }
+    return val
+  });
   return (
     <>
       <Task.Question
@@ -65,7 +71,7 @@ function QuestionOne(){
           </>)}
         />
         <Task.Anwser title="當下最低溫的點">
-          {JSON.stringify(currentLowest)}
+          {data.location.length !== 0 ? JSON.stringify(station) : "咦!?我的答案跑去哪了"}
         </Task.Anwser>
     </>
   )
@@ -73,8 +79,8 @@ function QuestionOne(){
 
 
 
-const handleClassify = (acc,val)=>{
-  const elevation = Math.ceil(val.weatherElement[0].elementValue/500) * 500;
+const handleClassify = (acc,val) => {
+  const elevation = Math.ceil(val.weather.ELEV/500) * 500;
   const range =  `${elevation-500}-${elevation}`;
   if(!acc.hasOwnProperty(range)){
     return {
@@ -89,30 +95,26 @@ const handleClassify = (acc,val)=>{
 }
 
 
-function findStations(series){
+function findStations(cond,series){
   const filterStation = (data) =>{ 
     const series = Object.entries(data);
     return series.map(([key,list])=>{
-      const getLowest = (acc,val)=>{
-        return val.weatherElement[1].elementValue < acc.weatherElement[1].elementValue ? val : acc
-      }
-      return [key,reduce(getLowest,list,list[0])]
+      return [key,reduce(cond,list,list[0])]
     })
   }
-  const lowestStations = compose(
-    filterStation,
-    reduce(
-      handleClassify,
-      series,
-      {})
-  );
-  return lowestStations
+  return compose(filterStation,reduce(handleClassify,series,{}));
 }
+
 function QuestionTwo(){
   const data = useWeatherAPI("O-A0001-001",{elementName:['ELEV','TEMP']});
   if(!data) return (<div>loading</div>)
-  const filterError = (data) => data.filter(station=> Number(station.weatherElement[1].elementValue) !== -99)
-  const stationSeries = findStations(filterError(data.location));
+  const stationSeries = toFormat(station => 
+      new StationInfo(station),
+      data.location
+    ).filter(station=>
+      Number(station.weather.TEMP) !== -99
+    );
+  const lowestTempEach500 = findStations((acc,val)=>val.weather.TEMP < acc.weather.TEMP ? val : acc,stationSeries);
   return (
     <>
       <Task.Question
@@ -123,11 +125,15 @@ function QuestionTwo(){
         </>)}
       />
       {
-      stationSeries.map(([key,station])=>(
-        <Task.Anwser title={key}>
-          <span>{ JSON.stringify(new StationInfo(station))}</span>
-        </Task.Anwser>
-      ))
+        data.location.length  ? lowestTempEach500.map(([key,station])=>(
+          <Task.Anwser title={key}>
+            <span>{ JSON.stringify(station)}</span>
+          </Task.Anwser>
+        )): (
+          <Task.Anwser>
+            可惡!第二題要找的測站也被偷走了
+          </Task.Anwser>
+        )
       }
     </>
   )
@@ -135,9 +141,9 @@ function QuestionTwo(){
 
 
  
-const ascendingOrder = (pre,val)=> Number(val.weatherElement[0].elementValue) - Number(pre.weatherElement[0].elementValue)
-const getDistriction = (acc,val)=>{
-  const cityName = val.parameter[0].parameterValue
+const ascendingOrder = (pre,val)=> Number(val.weather.HOUR_24) - Number(pre.weather.HOUR_24)
+const counter = (acc,val)=>{
+  const cityName = val.distriction.CITY
   if(!acc.hasOwnProperty(cityName)){
     return {
       [cityName]: [val],
@@ -153,9 +159,15 @@ const getDistriction = (acc,val)=>{
 function QuestionThree(){
   const data = useWeatherAPI("O-A0002-001",{elementName:['HOUR_24']});
   if(!data) return (<div>loading</div>)
-  const top20 = getTop(20,ascendingOrder,data.location);
-  const topList = top20.map(sensor=>(<div>{sensor.locationName}: {sensor.weatherElement[0].elementValue}</div>));
-  const distriction = reduce(getDistriction,top20,{});
+  const stationSeries = toFormat(station => 
+    new StationInfo(station),
+    data.location
+  ).filter(station=>
+    Number(station.weather.TEMP) !== -99
+  );
+  const top20 = getTop(20,ascendingOrder,stationSeries);
+  const topList = top20.map(sensor=>(<div>{sensor.name}: {sensor.weather.HOUR_24}</div>));
+  const distriction = reduce(counter,top20,{});
   const count = Object.keys(distriction).map(key => (<div>{key}: {distriction[key].length}</div>));
   return (
     <>
@@ -190,15 +202,15 @@ function getCountryInfo(data){
 function QuestionFour(){
   const data = useWeatherAPI("F-D0047-051",{elementName:['MaxT','MinT']});
   if(!data) return (<div>loading</div>)
-  const getDistriction = getCountryInfo(data.locations[0]);
-  const distriction = getDistriction("安樂區");
-  const minTempSeries = distriction.weatherElement[0].time
-  const maxTempSeries = distriction.weatherElement[1].time
+  const counter = getCountryInfo(data.locations[0]);
+  const distriction = counter("安樂區");
+  const minTempSeries = distriction.weatherElement[0].time;
+  const maxTempSeries = distriction.weatherElement[1].time;
   const minTemp = Math.min(...minTempSeries.map(point=>point.elementValue[0].value)) 
   const maxTemp = Math.max(...maxTempSeries.map(point=>point.elementValue[0].value)) 
 
   const tempDiffSeries = maxTempSeries.map((point,index)=>point.elementValue[0].value - minTempSeries[index].elementValue[0].value);
-  const maxTempDiff = Math.max(...tempDiffSeries)
+  const maxTempDiff = Math.max(...tempDiffSeries);
   return (
     <>
       <Task.Question

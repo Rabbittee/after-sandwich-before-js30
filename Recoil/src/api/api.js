@@ -16,7 +16,7 @@
  * @property {number} offset - 限制最多回傳的資料，預設為回傳全部筆數 .
  * @property {string} locationName - 測站代碼，請參考https://e-service.cwb.gov.tw/wdps/obs/state.htm ，預設為全部回傳.
  * @property {FormatProps} format - 指定從第幾筆後開始回傳，預設為第 0 筆開始回傳 . 
- * @property {ElementNameProps[]} elementName - weather elements. 
+ * @property {ElementNameProps[]} elementName - 天氣因子. 
  * @property {ParameterNameProps[]} parameterName - id or name. 
  */
 
@@ -24,27 +24,22 @@
 const serialize = (props, format= () => {}) => {
   return Object.keys(props).map((key) => format(props,key));
 };
-
-function queryAPI(baseUrl, Authorization) {
-    /**
-     *  @param {string} apth
-     *  @param {QueryWeatherConditions} queryStringProps
-     */
-    
-    if(!Authorization){
-      throw Error("Please type token of CWB")
-    }
-  return async function (
-    path,
-    queryStringProps
-  ) {
+function handleQueryString(props,key){
+  if(Array.isArray(props[key])) return `&${key}=${props[key].join(",")}`
+  return ""
+}
+function queryAPI(baseUrl, Authorization) {   
+  if(!Authorization){
+    throw Error("Please type token of CWB");
+  }
+  /**
+   *  @param {string} apth
+   *  @param {QueryWeatherConditions} queryStringProps
+   */
+  return async function (path, queryStringProps) {
       const auth = new URLSearchParams({Authorization})
-      const queryStrings = queryStringProps
-        ? serialize( queryStringProps,(props,key) => `&${key}=${props[key].join(",")}`)
-        : "";
-      return fetch(baseUrl + path + `?${auth}` + queryStrings).then((response) =>
-        response.json()
-      );
+      const queryStrings = queryStringProps ? serialize( queryStringProps,handleQueryString) : "";
+      return fetch(baseUrl + path + `?${auth}` + queryStrings).then((response) => response.json())
   };
 }
 export const queryCwb = queryAPI(
