@@ -1,0 +1,17 @@
+@tailwind base;
+
+@tailwind components;
+
+@tailwind utilities;
+
+@layer base {
+    body {
+        @apply bg-yellow-100;
+    }
+}
+
+@layer components {
+    .container {
+        @apply px-2;
+    }
+}
