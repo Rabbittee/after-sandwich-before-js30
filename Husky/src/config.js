@@ -3,7 +3,7 @@ export const CWB = {
   host: "https://opendata.cwb.gov.tw",
   datastore: {
     weather: {
-      apiPath: "api/v1/rest/datastore/O-A0001-001",
+      apiPath: "api/v1/rest/datastore/O-A0003-001",
       elementName: [
         "ELEV",
         "WDIR",

@@ -1,8 +1,6 @@
-@import url("https://fonts.googleapis.com/css2?family=Space+Mono&display=swap");
+@import "./assets/tailwind.css";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import url("https://fonts.googleapis.com/css2?family=Space+Mono&display=swap");
 
 * {
   font-family: "Space Mono", monospace, sans-serif;

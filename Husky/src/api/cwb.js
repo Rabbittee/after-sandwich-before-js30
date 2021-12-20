@@ -1,6 +1,23 @@
 import { CWB } from "../config";
 import Api from "./api";
 
+const _mapping = (site) => {
+  site.weather = site.weatherElement.reduce((acc, curr) => {
+    acc[curr.elementName] = Number(curr.elementValue);
+    return acc;
+  }, {});
+  site.parameter = site.parameter.reduce((acc, curr) => {
+    acc[curr.parameterName] = curr.parameterValue;
+    return acc;
+  }, {});
+  site.obsTime = site.time.obsTime;
+  site.lat = Number(site.lat);
+  site.lon = Number(site.lon);
+  delete site.time;
+  delete site.weatherElement;
+  return site;
+};
+
 class CWBApi extends Api {
   constructor() {
     super();
@@ -12,22 +29,7 @@ class CWBApi extends Api {
     const now = new Date();
     return data.records.location
       .filter((site) => (now - new Date(site.time.obsTime)) / 1000 / 60 < 90)
-      .map((site) => {
-        site.weather = site.weatherElement.reduce((acc, curr) => {
-          acc[curr.elementName] = Number(curr.elementValue);
-          return acc;
-        }, {});
-        site.parameter = site.parameter.reduce((acc, curr) => {
-          acc[curr.parameterName] = curr.parameterValue;
-          return acc;
-        }, {});
-        site.obsTime = site.time.obsTime;
-        site.lat = Number(site.lat);
-        site.lon = Number(site.lon);
-        delete site.time;
-        delete site.weatherElement;
-        return site;
-      });
+      .map(_mapping);
   }
 
   async getCurrent(selectElement = [], datastore = "weather") {
