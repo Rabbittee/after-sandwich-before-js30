@@ -22,7 +22,6 @@ export const answer3 = async () => {
   const currentArray = [];
 
   for (let i = 0; i < 20; i++) {
-    const j = 0;
     const { locationName, parameter, weatherElement, stationId } = filterDatas[i];
 
     const answerArray = {
