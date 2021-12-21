@@ -25,8 +25,10 @@ const _currentFormat = (data) => {
     .map(_currentMapping);
 };
 
-const _forecastFormat = (data) => {
-  return data.records.locations[0].location[0].weatherElement;
+const _forecastFormat = (data, locationName) => {
+  return data.records.locations[0].location.find(
+    (location) => location.locationName === locationName
+  ).weatherElement;
 };
 
 class CWBApi extends Api {
@@ -50,17 +52,17 @@ class CWBApi extends Api {
     return _currentFormat(data);
   }
 
-  async getForecast(selectElement = [], locationName = ["臺北市"]) {
+  async getForecast(selectElement = [], locationName = "臺北市") {
     const datastore = "forecast";
     const { apiPath, elementName } = CWB.datastore[datastore];
     selectElement = elementName.filter((name) => selectElement.includes(name));
     const query = {
       elementName: selectElement.join(","),
-      locationName: locationName.join(","),
+      locationName: locationName,
       Authorization: this.token,
     };
     const data = await this.fetch(apiPath, query);
-    return _forecastFormat(data);
+    return _forecastFormat(data, locationName);
   }
 }
 

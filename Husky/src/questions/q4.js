@@ -54,7 +54,7 @@ const title =
 const calcFn = async (query = { field: "T", locationName: "臺北市" }) => {
   const { field, locationName } = query;
   const cwb = new CWBApi();
-  let data = await cwb.getForecast([field], [locationName]);
+  let data = await cwb.getForecast([field], locationName);
   data = _zipData(data);
 
   return {
