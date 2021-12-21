@@ -1,4 +1,4 @@
-import { getCurrentData, answers } from '../script.js';
+import { getCurrentData } from '../script.js';
 
 const apiPath = 'api/v1/rest/datastore/O-A0002-001';
 export const answer3 = async () => {
@@ -19,7 +19,7 @@ export const answer3 = async () => {
     return valueB - valueA;
   });
 
-  const currentArray = [];
+  const answerObj = {};
 
   for (let i = 0; i < 20; i++) {
     const { locationName, parameter, weatherElement, stationId } = filterDatas[i];
@@ -31,11 +31,11 @@ export const answer3 = async () => {
     };
     const cityName = parameter[cityIndex].parameterValue;
 
-    if (currentArray[cityName]) {
-      currentArray[cityName].push(answerArray);
+    if (answerObj[cityName]) {
+      answerObj[cityName].push(answerArray);
     } else {
-      currentArray[cityName] = [{ ...answerArray }];
+      answerObj[cityName] = [{ ...answerArray }];
     }
   }
-  answers.push({ ...currentArray });
+  return answerObj;
 };

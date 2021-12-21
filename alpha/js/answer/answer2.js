@@ -1,4 +1,4 @@
-import { getCurrentData, errorCode, answers } from '../script.js';
+import { getCurrentData, errorCode } from '../script.js';
 
 const apiPath = 'api/v1/rest/datastore/O-A0001-001';
 export const answer2 = async () => {
@@ -51,5 +51,5 @@ export const answer2 = async () => {
       }
       tempArray.push(answerArray);
     }
-    answers.push(tempArray);
+    return tempArray;
 };

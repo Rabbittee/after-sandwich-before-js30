@@ -1,4 +1,4 @@
-import { getCurrentData, answers } from '../script.js';
+import { getCurrentData } from '../script.js';
 
 const apiPath = 'api/v1/rest/datastore/F-D0047-089';
 export const answer4 = async () => {
@@ -44,5 +44,5 @@ export const answer4 = async () => {
     單日最大溫差: maxDif,
   };
 
-  answers.push(answerObj);
+  return answerObj;
 };
