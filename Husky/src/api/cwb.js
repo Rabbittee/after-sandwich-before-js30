@@ -19,7 +19,7 @@ const currentMapping = (site) => {
 };
 
 const currentFormat = (data) => {
-  const now = new Date();
+  // const now = new Date();
   // .filter((site) => (now - new Date(site.time.obsTime)) / 1000 / 60 < 90)
   return data.records.location.map(currentMapping);
 };
