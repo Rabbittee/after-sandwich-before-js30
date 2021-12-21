@@ -1,4 +1,5 @@
 import { CWBApi } from "../api/cwb";
+import { calcMethod } from "../utils";
 import { Question } from ".";
 
 const title =
@@ -9,14 +10,10 @@ const calcFn = async (query = { field: "TEMP", calc: "MIN" }) => {
   const cwb = new CWBApi();
   const data = await cwb.getCurrent([field], "weather");
 
-  const calcMethod = {
-    MIN: (min, curr) => (curr.weather[field] < min.weather[field] ? curr : min),
-    MAX: (min, curr) => (curr.weather[field] < min.weather[field] ? min : curr),
-  };
-
+  const getValue = (item) => item.weather[field];
   return data
     .filter((site) => site.weather[field] !== -99)
-    .reduce(calcMethod[calc]);
+    .reduce(calcMethod[calc](getValue));
 };
 
 export const question = new Question(title, calcFn);

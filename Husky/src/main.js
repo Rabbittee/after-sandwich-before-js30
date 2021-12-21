@@ -9,5 +9,5 @@ const app = document.getElementById("app");
 
 await q1.getAnswer({ field: "TEMP", calc: "MIN" }).output(app);
 await q2.getAnswer({ field: "TEMP", calc: "MIN", step: 500 }).output(app);
-await q3.getAnswer({ field: "HOUR_24", calc: "MAX", rank: 20 }).output(app);
+await q3.getAnswer({ field: "HOUR_24", calc: "TOP", rank: 20 }).output(app);
 await q4.getAnswer({ field: "T", locationName: "臺北市" }).output(app);

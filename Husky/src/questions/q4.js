@@ -1,4 +1,5 @@
 import { CWBApi } from "../api/cwb";
+import { calcMethod } from "../utils";
 import { Question } from ".";
 
 // {
@@ -30,7 +31,7 @@ const _zipData = (weather) => {
     });
 };
 
-const mergeDate = (data, field) => {
+const _mergeDate = (data, field) => {
   return Object.entries(
     data.reduce((acc, curr) => {
       const date = curr.dataTime.slice(0, 10);
@@ -40,10 +41,10 @@ const mergeDate = (data, field) => {
       acc[date].push(curr.weather[field]);
       return acc;
     }, {})
-  ).sort((a, b) => (a[0] > b[0] ? 1 : -1));
+  ).sort(calcMethod.BOTTOM((item) => item[0]));
 };
 
-const findMaxDiff = (arr) => {
+const _findMaxDiff = (arr) => {
   arr = arr.sort();
   return arr.slice(-1)[0] - arr.slice(0)[0];
 };
@@ -57,21 +58,19 @@ const calcFn = async (query = { field: "T", locationName: "臺北市" }) => {
   let data = await cwb.getForecast([field], locationName);
   data = _zipData(data);
 
+  const getValue = (item) => item.weather[field];
+
   return {
-    min: data.reduce((min, curr) =>
-      curr.weather[field] < min.weather[field] ? curr : min
-    ),
-    max: data.reduce((max, curr) =>
-      curr.weather[field] > max.weather[field] ? curr : max
-    ),
-    maxDiff: mergeDate(data, field)
+    min: data.reduce(calcMethod.MIN(getValue)),
+    max: data.reduce(calcMethod.MAX(getValue)),
+    maxDiff: _mergeDate(data, field)
       .map(([date, arr]) => {
         return {
           date: date,
-          diff: findMaxDiff(arr),
+          diff: _findMaxDiff(arr),
         };
       })
-      .reduce((max, curr) => (curr.diff > max.diff ? curr : max)),
+      .reduce(calcMethod.MAX((date) => date.diff)),
   };
 };
 

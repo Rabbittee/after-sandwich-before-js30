@@ -1,4 +1,5 @@
 import { CWBApi } from "../api/cwb";
+import { calcMethod } from "../utils";
 import { Question } from ".";
 
 const title =
@@ -10,27 +11,22 @@ const calcFn = async (query = { field: "TEMP", calc: "MIN", step: 500 }) => {
   const cwb = new CWBApi();
   const data = await cwb.getCurrent([field, elevElement], "weather");
 
-  const calcMethod = {
-    MIN: (min, curr) => (curr.weather[field] < min.weather[field] ? curr : min),
-    MAX: (min, curr) => (curr.weather[field] < min.weather[field] ? min : curr),
+  const getValue = (item) => item.weather[field];
+  const fillZero = (int) => ("0000" + int).slice(-4);
+  const getElevRange = (curr) => {
+    const rangeBase = Math.floor(curr.weather[elevElement] / step) * step;
+    return `${fillZero(rangeBase + 1)}-${fillZero(rangeBase + step)}`;
   };
 
-  const fillZero = (int) => ("0000" + int).slice(-4);
-
   return data
-    .map((site) => {
-      const rangeBase = Math.floor(site.weather[elevElement] / step) * step;
-      site.elevRange = `${fillZero(rangeBase + 1)}-${fillZero(
-        rangeBase + step
-      )}`;
-      return site;
-    })
-    .filter((site) => site.weather[field] !== -99)
+    .filter((site) => getValue(site) !== -99)
     .reduce((acc, curr) => {
-      if (acc[curr.elevRange]) {
-        acc[curr.elevRange] = calcMethod[calc](acc[curr.elevRange], curr);
+      const elevRange = getElevRange(curr);
+
+      if (acc[elevRange]) {
+        acc[elevRange] = calcMethod[calc](getValue)(acc[elevRange], curr);
       } else {
-        acc[curr.elevRange] = curr;
+        acc[elevRange] = curr;
       }
       return acc;
     }, {});
