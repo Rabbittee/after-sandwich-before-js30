@@ -1,13 +1,11 @@
-export class Question {
+import { Chain } from "../utils";
+
+export class Question extends Chain {
   constructor(title, calcFn) {
+    super();
     this.title = title;
     this.answer = null;
     this.calcFn = calcFn;
-    this.queue = Promise.resolve();
-  }
-
-  chain(callback) {
-    return (this.queue = this.queue.then(callback));
   }
 
   static createSection(title, answer) {
@@ -41,14 +39,14 @@ export class Question {
   }
 
   getAnswer(query) {
-    this.chain(async () => {
+    Question.chain(async () => {
       this.answer = await this.calcFn(query);
     });
     return this;
   }
 
   output(app) {
-    this.chain(async () => {
+    Question.chain(async () => {
       if (this.answer == null || this.title == null) {
         throw "no answer";
       }

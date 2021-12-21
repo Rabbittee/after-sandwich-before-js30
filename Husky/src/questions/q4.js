@@ -51,14 +51,9 @@ const calcFn = async (query = { fields: ["MinT", "MaxT"] }) => {
     maxT: data.reduce((max, curr) =>
       curr.weather["MaxT"] > max.weather["MaxT"] ? curr : max
     ).weather["MaxT"],
-    // maxDiff: data
-    //   .map((period) => {
-    //     period.weather.diffT = period.weather["MaxT"] - period.weather["MinT"];
-    //     return period;
-    //   })
-    //   .reduce((max, curr) =>
-    //     curr.weather["diffT"] > max.weather["diffT"] ? curr : max
-    //   ).weather["diffT"],
+    // maxDiff: data.map((period) => {
+    //   period.date = period
+    // })
   };
 };
 
