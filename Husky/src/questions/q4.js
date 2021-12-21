@@ -10,7 +10,7 @@ import { Question } from ".";
 //   },
 // };
 
-const _zipData = (weather) => {
+const zipData = (weather) => {
   return weather
     .map((curr) => {
       return curr.time.map((period) => {
@@ -31,43 +31,48 @@ const _zipData = (weather) => {
     });
 };
 
-const _mergeDate = (data, field) => {
+const mergeSameDate = (data, getValue) => {
   return Object.entries(
     data.reduce((acc, curr) => {
       const date = curr.dataTime.slice(0, 10);
       if (acc[date] == null) {
         acc[date] = [];
       }
-      acc[date].push(curr.weather[field]);
+      acc[date].push(getValue(curr));
       return acc;
     }, {})
   ).sort(calcMethod.BOTTOM((item) => item[0]));
 };
 
-const _findMaxDiff = (arr) => {
+const findMaxDiff = (arr) => {
   arr = arr.sort();
-  return arr.slice(-1)[0] - arr.slice(0)[0];
+  const max = arr.slice(-1)[0];
+  const min = arr.slice(0)[0];
+  return {
+    range: `${min}~${max}`,
+    diff: max - min,
+  };
 };
 
 const title =
-  "第四題：自己所在的縣市-鄉鎮，未來一週的最低溫與最高溫分別為多少？且單日溫差最大為多少？";
+  "第四題：自己所在的縣市，未來兩天的最低溫與最高溫分別為多少？且最大單日溫差為多少？";
 
 const calcFn = async (query = { field: "T", locationName: "臺北市" }) => {
   const { field, locationName } = query;
   const cwb = new CWBApi();
   let data = await cwb.getForecast([field], locationName);
-  data = _zipData(data);
+  data = zipData(data);
 
-  const getValue = (item) => item.weather[field];
+  const getValue = (site) => site.weather[field];
 
   return {
     min: data.reduce(calcMethod.MIN(getValue)),
     max: data.reduce(calcMethod.MAX(getValue)),
-    maxDiff: _mergeDate(data, field)
+    maxDiff: mergeSameDate(data, getValue)
       .map(([date, arr]) => {
         return {
-          date: date,
-          diff: _findMaxDiff(arr),
+          ...{ date: date },
+          ...findMaxDiff(arr),
         };
       })
       .reduce(calcMethod.MAX((date) => date.diff)),

@@ -28,6 +28,7 @@ export const CWB = {
         "VIS",
         "Weather",
       ],
+      noData: -99,
     },
     precipitation: {
       apiPath: "api/v1/rest/datastore/O-A0002-001",
@@ -41,6 +42,7 @@ export const CWB = {
         "HOUR_24",
         "NOW",
       ],
+      noData: -999,
     },
     forecast: {
       apiPath: "api/v1/rest/datastore/F-D0047-089",
