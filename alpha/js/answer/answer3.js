@@ -4,12 +4,12 @@ const apiPath = 'api/v1/rest/datastore/O-A0002-001';
 export const answer3 = async () => {
   const data = await getCurrentData(apiPath);
 
-  const locationDatas = data.records.location;
+  const locationData = data.records.location;
   const dayMaxTempIndex = 6;
   const cityIndex = 0;
   const errorCode = '-999.00';
 
-  const filterDatas = locationDatas.filter(
+  const filterDatas = locationData.filter(
     (item) => item.weatherElement[dayMaxTempIndex].elementValue.toString() !== errorCode
   );
 

@@ -1,25 +1,25 @@
-import { getCurrentData, errorCode } from "../script.js";
+import { getCurrentData, errorCode } from '../script.js';
 
 const apiPath = 'api/v1/rest/datastore/O-A0001-001';
 export const answer1 = async () => {
   const data = await getCurrentData(apiPath);
 
-  const locationDatas = data.records.location;
+  const locationData = data.records.location;
 
   const tempIndex = 3;
   const cityIndex = 0;
   const townIndex = 2;
 
-  const currentObj = locationDatas
-  .filter(function(item) {
-    return item.weatherElement[tempIndex].elementValue !== errorCode;
-  })
-  .reduce(function (prev, item) {
+  const currentObj = locationData
+    .filter(function (item) {
+      return item.weatherElement[tempIndex].elementValue !== errorCode;
+    })
+    .reduce(function (prev, item) {
       return parseFloat(item.weatherElement[tempIndex].elementValue) <
         parseFloat(prev.weatherElement[tempIndex].elementValue)
         ? item
         : prev;
-  });
+    });
 
   const { locationName, parameter, weatherElement, lat, lon } = currentObj;
   const answerArray = {
@@ -30,8 +30,7 @@ export const answer1 = async () => {
     座標: {
       lat: lat,
       lon: lon,
-    }
-  } 
+    },
+  };
   return answerArray;
-  
 };
