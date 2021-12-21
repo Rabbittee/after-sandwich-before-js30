@@ -1,67 +1,19 @@
-const getCurrentData = async () => {
-  const cwbHost = 'https://opendata.cwb.gov.tw';
-  const apiPath = 'api/v1/rest/datastore/O-A0001-001';
-  let paramsObj = {
-    Authorization: 'CWB-34AC2BFB-2272-41E3-84FE-AAF40C0C42AA',
-  };
-  let searchParams = new URLSearchParams(paramsObj);
+const cwbHost = 'https://opendata.cwb.gov.tw';
+// const apiPath = 'api/v1/rest/datastore/O-A0001-001';
+const paramsObj = {
+  Authorization: 'CWB-34AC2BFB-2272-41E3-84FE-AAF40C0C42AA',
+};
+export const errorCode = '-99';
+
+export async function getCurrentData(apiPath) {
+  const searchParams = new URLSearchParams(paramsObj);
   const response = await fetch(`${cwbHost}/${apiPath}?${searchParams.toString()}`);
 
   const data = await response.json();
-  console.log(data);
-
-  const answerOne = data.records.location.reduce(function (res, obj) {
-    return parseFloat(obj.weatherElement[3].elementValue) <
-      parseFloat(res.weatherElement[3].elementValue) && obj.weatherElement[3].elementValue !== '-99'
-      ? obj
-      : res;
-  });
-  max = Math.max(...data.records.location.map((item) => item.weatherElement[0].elementValue));
-  answers[0] = {
-    city: answerOne.parameter[0].parameterValue,
-    town: answerOne.parameter[2].parameterValue,
-    name: answerOne.locationName,
-    temp: answerOne.weatherElement[3].elementValue,
-    location: {
-      lon: answerOne.lon,
-      lat: answerOne.lat,
-    },
-  };
-
-  console.log(max);
-  console.log(answerOne);
-
-  //two
-  let answerTwo = [];
-  for (let i = 500; i - 500 < max; i += 500) {
-    const j = i - 500;
-    const answerTwoArray = data.records.location.filter(function (item) {
-      return (
-        item.weatherElement[0].elementValue < i &&
-        item.weatherElement[0].elementValue > j &&
-        item.weatherElement[3].elementValue.toString() !== '-99'
-      );
-    });
-    const answerTwoT = answerTwoArray.reduce(function (res, obj) {
-      return parseFloat(obj.weatherElement[3].elementValue) <
-        parseFloat(res.weatherElement[3].elementValue)
-        ? obj
-        : res;
-    });
-    const answerTwoRes = {
-      city: answerTwoT.parameter[0].parameterValue,
-      town: answerTwoT.parameter[2].parameterValue,
-      name: answerTwoT.locationName,
-      temp: answerTwoT.weatherElement[3].elementValue,
-      EVE: answerTwoT.weatherElement[0].elementValue,
-    };
-    answerTwo.push(answerTwoRes);
-  }
-  answers[1] = answerTwo;
-  console.log(answerTwo);
-
-  render();
+  console.log(data)
+  return data;
 };
+
 
 const getCurrenDataForThree = async () => {
   const cwbHost = 'https://opendata.cwb.gov.tw';
@@ -105,7 +57,7 @@ const getCurrenDataForFour = async () => {
 
   const data = await response.json();
   console.log(data);
- 
+
   const fourFirst = Math.max(
     ...data.records.locations[0].location[16].weatherElement[12].time.map(
       (item) => item.elementValue[0].value
@@ -115,11 +67,11 @@ const getCurrenDataForFour = async () => {
     ...data.records.locations[0].location[16].weatherElement[8].time.map(
       (item) => item.elementValue[0].value
     )
-  )
-  const maxTemp = data.records.locations[0].location[16].weatherElement[12]
-  const minTemp = data.records.locations[0].location[16].weatherElement[8]
-  const arry = []
-  for (let i = 0 ; i < maxTemp.time.length; i++) {
+  );
+  const maxTemp = data.records.locations[0].location[16].weatherElement[12];
+  const minTemp = data.records.locations[0].location[16].weatherElement[8];
+  const arry = [];
+  for (let i = 0; i < maxTemp.time.length; i++) {
     const dif = maxTemp.time[i].elementValue[0].value - minTemp.time[i].elementValue[0].value;
     arry.push(dif);
   }
@@ -133,12 +85,11 @@ const getCurrenDataForFour = async () => {
   render();
 };
 
-const answers = new Array(4).fill({});
-getCurrentData();
-getCurrenDataForThree();
-getCurrenDataForFour();
+export const answers = new Array();
+console.log(answers)
 
-function render() {
+
+export function render() {
   answers.forEach((answer, index) => {
     const answer_node = document.getElementById(`answer_${index + 1}`);
     const showText = JSON.stringify(answer, null, '    ');
