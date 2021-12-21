@@ -1,9 +1,8 @@
-import { getCurrentData, errorCode, answers } from '../script.js';
+import { getCurrentData, answers } from '../script.js';
 
 const apiPath = 'api/v1/rest/datastore/F-D0047-089';
 export const answer4 = async () => {
   const data = await getCurrentData(apiPath);
-  console.log(data);
 
   const myCityIndex = 3;
   const locationIndex = 0;
