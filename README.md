@@ -6,6 +6,7 @@
 - [cola](https://rabbittee.github.io/after-sandwich-before-js30/cola/)
 - [奶卷](https://rabbittee.github.io/after-sandwich-before-js30/Recoil/dist/)
 - [\凱文超強/](https://rabbittee.github.io/after-sandwich-before-js30/kevin/dist/)
+- [Husky](https://rabbittee.github.io/after-sandwich-before-js30/Husky/dist/)
 
 #### 文件更新紀錄
 
