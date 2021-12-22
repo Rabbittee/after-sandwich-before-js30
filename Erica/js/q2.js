@@ -1,5 +1,4 @@
 import { render, getLocation, getWeather } from './methods.js';
-import './utils.js'
 
 /** Q2 */
 export default function q2(datas) {
