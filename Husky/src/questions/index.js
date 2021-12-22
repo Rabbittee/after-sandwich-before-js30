@@ -1,10 +1,11 @@
 import { Chain } from "../utils";
 
 export class Question extends Chain {
+  answer = null;
+
   constructor(title, calcFn) {
     super();
     this.title = title;
-    this.answer = null;
     this.calcFn = calcFn;
   }
 

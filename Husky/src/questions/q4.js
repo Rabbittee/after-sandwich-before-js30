@@ -1,5 +1,5 @@
 import { CWBApi } from "../api/cwb";
-import { calcMethod } from "../utils";
+import { CALC_METHOD } from "../utils";
 import { Question } from ".";
 
 // {
@@ -41,7 +41,7 @@ const mergeSameDate = (data, getValue) => {
       acc[date].push(getValue(curr));
       return acc;
     }, {})
-  ).sort(calcMethod.BOTTOM((item) => item[0]));
+  ).sort(CALC_METHOD.bottom((item) => item[0]));
 };
 
 const findMaxDiff = (arr) => {
@@ -66,8 +66,8 @@ const calcFn = async (query = { field: "T", locationName: "臺北市" }) => {
   const getValue = (site) => site.weather[field];
 
   return {
-    min: data.reduce(calcMethod.MIN(getValue)),
-    max: data.reduce(calcMethod.MAX(getValue)),
+    min: data.reduce(CALC_METHOD.min(getValue)),
+    max: data.reduce(CALC_METHOD.max(getValue)),
     maxDiff: mergeSameDate(data, getValue)
       .map(([date, arr]) => {
         return {
@@ -75,7 +75,7 @@ const calcFn = async (query = { field: "T", locationName: "臺北市" }) => {
           ...findMaxDiff(arr),
         };
       })
-      .reduce(calcMethod.MAX((date) => date.diff)),
+      .reduce(CALC_METHOD.max((date) => date.diff)),
   };
 };
 

@@ -13,12 +13,14 @@ const currentMapping = (site) => {
   site.obsTime = site.time.obsTime;
   site.lat = Number(site.lat);
   site.lon = Number(site.lon);
-  delete site.time;
-  delete site.weatherElement;
-  return site;
+  const { time, weatherElement, ...rest } = site;
+  return rest;
 };
 
 const currentFormat = (data) => {
+  // There may be a long delay in updating the observation time of CWB API data
+  // Otherwise, it should be filtered stations that have not reported for a long time
+  // ex. filter data obsTime over 90 minutes
   // const now = new Date();
   // .filter((site) => (now - new Date(site.time.obsTime)) / 1000 / 60 < 90)
   return data.records.location.map(currentMapping);
@@ -33,16 +35,30 @@ const forecastFormat = (data, locationName) => {
 class CWBApi extends Api {
   constructor() {
     super();
-    this.token = CWB.token;
-    this.host = CWB.host;
+  }
+  get token() {
+    return CWB.token;
+  }
+  get host() {
+    return CWB.host;
+  }
+
+  static datastoreParameter(datastore) {
+    const { apiPath, elementName } = CWB.datastore[datastore];
+    return {
+      apiPath,
+      elementName,
+    };
   }
 
   async getCurrent(selectElement = [], datastore = "weather") {
-    const { apiPath, elementName } = CWB.datastore[datastore];
-    selectElement = elementName.filter((name) => selectElement.includes(name));
+    const { apiPath, elementName } = CWBApi.datastoreParameter(datastore);
+    const allowSelectElement = elementName.filter((name) =>
+      selectElement.includes(name)
+    );
 
     const query = {
-      elementName: selectElement.join(","),
+      elementName: allowSelectElement.join(","),
       parameterName: "CITY,TOWN",
       Authorization: this.token,
     };
@@ -53,10 +69,12 @@ class CWBApi extends Api {
 
   async getForecast(selectElement = [], locationName = "臺北市") {
     const datastore = "forecast";
-    const { apiPath, elementName } = CWB.datastore[datastore];
-    selectElement = elementName.filter((name) => selectElement.includes(name));
+    const { apiPath, elementName } = CWBApi.datastoreParameter(datastore);
+    const allowSelectElement = elementName.filter((name) =>
+      selectElement.includes(name)
+    );
     const query = {
-      elementName: selectElement.join(","),
+      elementName: allowSelectElement.join(","),
       locationName: locationName,
       Authorization: this.token,
     };
