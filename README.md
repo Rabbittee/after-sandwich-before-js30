@@ -2,15 +2,23 @@
 
 ### 兔群成果
 
-- [Alpha](https://rabbittee.github.io/after-sandwich-before-js30/alpha/)
+- [Alpha](https://rabbittee.github.io/after-sandwich-before-js30/alpha/js/)
 - [cola](https://rabbittee.github.io/after-sandwich-before-js30/cola/)
 - [奶卷](https://rabbittee.github.io/after-sandwich-before-js30/Recoil/dist/)
 - [\凱文超強/](https://rabbittee.github.io/after-sandwich-before-js30/kevin/dist/)
+- [Husky](https://rabbittee.github.io/after-sandwich-before-js30/Husky/dist/)
+
+#### 文件更新紀錄
+
+`2021-12-21 14:45`: 新增三種資料格式文件說明，第四題需求變動
 
 ### 氣象資料
 
 - [氣象局開放資料清單](https://opendata.cwb.gov.tw/dist/opendata-swagger.html?urls.primaryName=openAPI)
 - [自動氣象站-氣象觀測資料格式](https://opendata.cwb.gov.tw/opendatadoc/DIV2/A0001-001.pdf)
+- [自動雨量站-雨量觀測資料格式](https://opendata.cwb.gov.tw/opendatadoc/DIV2/A0002-001.pdf)
+- [局屬氣象站資料格式](https://opendata.cwb.gov.tw/opendatadoc/DIV2/A0003-001.pdf)
+- [預報 XML 產品預報因子欄位中文說明表](https://opendata.cwb.gov.tw/opendatadoc/MFC/D0047.pdf)
 - [申請帳號取得 token](https://opendata.cwb.gov.tw/user/authkey)
 
 ### 上傳格式

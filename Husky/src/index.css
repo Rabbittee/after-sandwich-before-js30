@@ -1,0 +1,12 @@
+@import "./assets/tailwind.css";
+
+@import url("https://fonts.googleapis.com/css2?family=Space+Mono&display=swap");
+
+* {
+  font-family: "Space Mono", monospace, sans-serif;
+}
+
+html,
+body {
+  background: #f6f8ff;
+}
