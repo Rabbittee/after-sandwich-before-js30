@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Final</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="//unpkg.com/alpinejs" defer></script>
+  <script src="dist/index.js" defer></script>
+
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Space+Mono&display=swap");
+
+    * {
+      font-family: "Space Mono", monospace, sans-serif;
+    }
+
+    html,
+    body {
+      background: #f6f8ff;
+    }
+  </style>
+
+  <style type="text/tailwindcss">
+    main {
+      @apply flex flex-col w-screen max-w-3xl mx-auto my-16 space-y-6;
+    }
+
+    section {
+      @apply bg-white text-black text-opacity-70 rounded-2xl shadow-xl p-8;
+    }
+
+    mark {
+      @apply bg-blue-900 text-white;
+    }
+
+    small {
+      @apply block;
+    }
+
+    strong {
+      @apply font-black;
+    }
+
+    textarea {
+      @apply w-full p-4 text-black text-opacity-70 text-sm;
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <h1 class="text-2xl font-black">JS讀書會後測啦</h1>
+
+    <!-- 第一題 -->
+    <section>
+      <strong>題目一：</strong>
+      <p>
+        找到全台當下最低溫的點，並列出
+
+        <template x-data="{ items: [ '縣市', '行政區', '測站名稱', '溫度', '座標' ] }" x-for="item in items">
+          <mark x-text="item" class="mr-1" />
+        </template>
+
+        <small>(透過中央氣象局ＡＰＩ取得全台測站即時資料)</small>
+        <small>(API: v1/rest/datastore/O-A0001-001)</small>
+      </p>
+    </section>
+
+    <section>
+      <strong>Answer：</strong>
+      <textarea id="answer-1" disabled></textarea>
+    </section>
+
+    <!-- 第二題 -->
+    <section>
+      <strong>題目二：</strong>
+      <p>
+        同上，針對不同海拔高度找出最低溫測站，每<mark>500m</mark>一組，並回傳object
+
+        <small>(API: v1/rest/datastore/O-A0001-001)</small>
+      </p>
+    </section>
+
+    <section>
+      <strong>Answer：格式自己定辣，我懶</strong>
+      <textarea id="answer-2" disabled></textarea>
+    </section>
+
+    <!-- 第三題 -->
+    <section>
+      <strong>題目三：格式自己定辣，我懶</strong>
+      <p>
+        近<mark>24小時</mark>降雨量<mark>前20名</mark>是哪些？<br>
+
+        分別統計整理列在哪些<mark>縣市</mark>？
+
+        <small>HOUR_24欄位為近24小時的累積降雨量</small>
+        <small>(API: /v1/rest/datastore/O-A0002-001)</small>
+      </p>
+    </section>
+
+    <section>
+      <strong>Answer：</strong>
+      <textarea id="answer-3" disabled></textarea>
+    </section>
+
+    <!-- 第四題 -->
+    <section>
+      <strong>題目四：格式自己定辣，我懶</strong>
+
+      <p>
+        自己所在的縣市-鄉鎮，未來一週的<mark>最低溫</mark>與<mark>最高溫</mark>分別為多少？<br>
+
+        且<mark>單日溫差</mark>最大為多少？
+
+        <small>(API: ​/v1​/rest​/datastore​/F-D0047-00XX系列)</small>
+      </p>
+    </section>
+
+    <section>
+      <strong>Answer：</strong>
+      <textarea id="answer-4" disabled></textarea>
+    </section>
+  </main>
+</body>
+
+</html>
