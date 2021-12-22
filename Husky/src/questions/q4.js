@@ -35,7 +35,7 @@ const mergeSameDate = (data, getValue) => {
   return Object.entries(
     data.reduce((acc, curr) => {
       const date = curr.dataTime.slice(0, 10);
-      if (acc[date] == null) {
+      if (acc[date] === undefined) {
         acc[date] = [];
       }
       acc[date].push(getValue(curr));

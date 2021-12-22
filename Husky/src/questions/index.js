@@ -5,6 +5,9 @@ export class Question extends Chain {
 
   constructor(title, calcFn) {
     super();
+    if (title === null || title === undefined) {
+      throw "no title";
+    }
     this.title = title;
     this.calcFn = calcFn;
   }
@@ -48,7 +51,7 @@ export class Question extends Chain {
 
   output(app) {
     Question.chain(async () => {
-      if (this.answer == null || this.title == null) {
+      if (this.answer == null) {
         throw "no answer";
       }
       const showText = JSON.stringify(this.answer, null, "    ");

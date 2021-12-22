@@ -2,18 +2,18 @@ import { CWB } from "../config";
 import Api from "./api";
 
 const currentMapping = (site) => {
-  site.weather = site.weatherElement.reduce((acc, curr) => {
+  const { time, weatherElement, ...rest } = site;
+  rest.weather = weatherElement.reduce((acc, curr) => {
     acc[curr.elementName] = Number(curr.elementValue);
     return acc;
   }, {});
-  site.parameter = site.parameter.reduce((acc, curr) => {
+  rest.parameter = rest.parameter.reduce((acc, curr) => {
     acc[curr.parameterName] = curr.parameterValue;
     return acc;
   }, {});
-  site.obsTime = site.time.obsTime;
-  site.lat = Number(site.lat);
-  site.lon = Number(site.lon);
-  const { time, weatherElement, ...rest } = site;
+  rest.obsTime = time.obsTime;
+  rest.lat = Number(rest.lat);
+  rest.lon = Number(rest.lon);
   return rest;
 };
 
