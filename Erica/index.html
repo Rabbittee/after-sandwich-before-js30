@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Final Exam</title>
+    <link rel="stylesheet" href="./css/main.css">
+    <script src="./js/index.js" type="module" defer></script>
+</head>
+<body class="bg-slate-100">
+    <div class="max-w-screen-lg mx-auto px-5 py-10 space-y-6">
+        <h1 class="text-2xl px-5 font-semibold text-slate-700">JS讀書會期末考</h1>
+        
+        <main class="shadow-lg shadow-slate-200 p-8 rounded-lg bg-white space-y-6">
+            <nav class="space-x-2 flex">
+                <a href="#answer1" class="btn active">全台最低溫</a>
+                <a href="#answer2" class="btn">最低溫測站</a>
+                <a href="#answer3" class="btn">降雨量</a>
+                <a href="#answer4" class="btn">未來一週天氣預報</a>
+            </nav>
+            
+            <section id="answer1" class="show">
+                <h3 class="mb-5 flex place-items-center">
+                    找到全台當下最低溫的點，並列出<code>縣市</code><code>行政區</code><code>測站名稱</code><code>溫度</code><code>座標</code>
+                </h3>
+                <hr class="border-0 border-b border-gray-200 mb-5">
+                <div class="answer">1</div>
+            </section>
+
+            <section id="answer2">
+                <h3 class="mb-5 flex place-items-center">
+                    針對不同海拔高度找出最低溫測站，每<code>500m</code>一組，並回傳<code>object</code>
+                </h3>
+                <hr class="border-0 border-b border-gray-200 mb-5">
+                <div class="answer">2</div>
+            </section>
+
+            <section id="answer3">
+                <h3 class="mb-5 flex place-items-center">
+                    近24小時降雨量前20名是哪些？分別統計整理列在哪些縣市？
+                </h3>
+                <hr class="border-0 border-b border-gray-200 mb-5">
+                <div class="answer"></div>
+            </section>
+
+            <section id="answer4">
+                <h3 class="mb-5 flex place-items-center">
+                    自己所在的縣市-鄉鎮，未來一週的最低溫與最高溫分別為多少？且單日溫差最大為多少？
+                </h3>
+                <hr class="border-0 border-b border-gray-200 mb-5">
+                <div class="answer"></div>
+            </section>
+        </main>
+    </div>
+    
+</body>
+</html>
