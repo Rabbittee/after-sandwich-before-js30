@@ -1,4 +1,4 @@
-import { getCurrentData, answers } from '../script.js';
+import { getCurrentData } from '../script.js';
 
 const apiPath = 'api/v1/rest/datastore/F-D0047-089';
 export const answer4 = async () => {
@@ -8,41 +8,41 @@ export const answer4 = async () => {
   const locationIndex = 0;
   const elementIndex = 0;
   const weatherIndex = 3;
-  const locationDatas = data.records.locations[locationIndex];
-  const { weatherElement } = locationDatas.location[myCityIndex];
+  const locationData = data.records.locations[locationIndex];
+  const { weatherElement } = locationData.location[myCityIndex];
 
   const tempArray = weatherElement[weatherIndex].time;
 
   const maxTemp = Math.max(...tempArray.map((item) => item.elementValue[elementIndex].value));
   const minTemp = Math.min(...tempArray.map((item) => item.elementValue[elementIndex].value));
 
-  const dif = [];
+  const diff = [];
   function getDate(val) {
     return new Date(val).getDate();
   }
 
-  const leng = tempArray.length;
+  const length = tempArray.length;
 
-  for (let i = 0; i < leng - 1; i++) {
+  for (let i = 0; i < length - 1; i++) {
     const next = tempArray[i].dataTime;
     const nextTemp = tempArray[i].elementValue[elementIndex].value;
-    for (let j = 1; j < leng; j++) {
+    for (let j = 1; j < length; j++) {
       const prev = tempArray[j].dataTime;
       const prevTemp = tempArray[j].elementValue[elementIndex].value;
-      let difValue = 0;
+
       if (getDate(prev) === getDate(next)) {
-        difValue = Math.abs(prevTemp - nextTemp);
-        dif.push(difValue);
+        const diffValue = Math.abs(prevTemp - nextTemp);
+        diff.push(diffValue);
       }
     }
   }
 
-  const maxDif = Math.max(...dif);
+  const maxDiff = Math.max(...diff);
   const answerObj = {
     最高溫: maxTemp,
     最低溫: minTemp,
-    單日最大溫差: maxDif,
+    單日最大溫差: maxDiff,
   };
 
-  answers.push(answerObj);
+  return answerObj;
 };

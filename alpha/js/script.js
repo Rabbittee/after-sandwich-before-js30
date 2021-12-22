@@ -13,9 +13,7 @@ export async function getCurrentData(apiPath) {
   return data;
 };
 
-export const answers = new Array();
-
-export function render() {
+export function render(answers) {
   answers.forEach((answer, index) => {
     const answer_node = document.getElementById(`answer_${index + 1}`);
     const showText = JSON.stringify(answer, null, '    ');
