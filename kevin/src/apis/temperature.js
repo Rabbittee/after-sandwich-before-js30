@@ -1,34 +1,38 @@
-import { weatherCurrentRecord, helpers } from "./weather.js";
-
-const { getElementValueByKey, getParameterValueByKey } = helpers;
+import { getWeatherCurrentRecord } from "./weather.js";
+import { getElementValueByKey, getParameterValueByKey, unAvailableValue } from "./helpers.js";
 
 export async function Temperature() {
-    const { data, status } = await weatherCurrentRecord({
+    const { data, status } = await getWeatherCurrentRecord({
         elementName: "TEMP,ELEV",
+        parameterName: "CITY,TOWN",
     });
 
     /**
      *  * 調整資料結構
      *  {Array}
      */
-    const refactorData = data.records.location.map(item => {
-        const temp = Number(getElementValueByKey(item.weatherElement, "TEMP"));
-        const elev = Number(getElementValueByKey(item.weatherElement, "ELEV"));
-        return {
-            latLon: {
-                lat: item.lat,
-                lon: item.lon,
-            },
-            location: {
-                name: item.locationName,
-                city: getParameterValueByKey(item.parameter, "CITY"),
-                town: getParameterValueByKey(item.parameter, "TOWN"),
-            },
-            time: item.time && item.time.obsTime,
-            temperature: temp,
-            locationElev: elev,
-        };
-    });
+    const refactorData = data.records.location
+        .map(item => {
+            const temp = Number(getElementValueByKey(item.weatherElement, "TEMP"));
+            const elev = Number(getElementValueByKey(item.weatherElement, "ELEV"));
+            return {
+                latLon: {
+                    lat: item.lat,
+                    lon: item.lon,
+                },
+                location: {
+                    name: item.locationName,
+                    city: getParameterValueByKey(item.parameter, "CITY"),
+                    town: getParameterValueByKey(item.parameter, "TOWN"),
+                },
+                time: item.time && item.time.obsTime,
+                temperature: temp,
+                locationElev: elev,
+            };
+        })
+        .filter(
+            item => Number(item.temperature) !== unAvailableValue && Number(item.locationElev) !== unAvailableValue
+        );
 
     /**
      *  * 最低溫的地區
@@ -38,7 +42,6 @@ export async function Temperature() {
         const currentTemp = currentLocation.temperature;
 
         if (Object.keys(result).length === 0) return currentLocation;
-        if (Number(currentTemp) === -99) return result;
 
         return Number(currentTemp) > Number(result.temperature) ? result : currentLocation;
     }, {});
@@ -47,13 +50,12 @@ export async function Temperature() {
      *  * 各海拔最低溫地區
      *  {Object}
      */
-    const lowestLocationByElev = refactorData.reduce((all, current) => {
+    const lowestLocationByElevation = refactorData.reduce((all, current) => {
         const tempCurrent = current.temperature;
         const elevCurrent = current.locationElev;
         const level = Math.floor(elevCurrent / 500) * 500;
 
         if (isNaN(tempCurrent) || isNaN(elevCurrent)) return all;
-        if (current.temperature === -99) return all;
 
         if (all[level] === undefined) {
             all[level] = current;
@@ -65,8 +67,11 @@ export async function Temperature() {
             all[level] = current;
         } else if (tempInAll === tempCurrent) {
             // * 同溫度
-            all[level].sameTemp =
-                all[level].sameTemp === undefined ? [all[level], current] : [...all[level].sameTemp, current];
+            const existSameTempArray = all[level].sameTemp || [all[level]];
+            all[level] = {
+                ...all[level],
+                sameTemp: [...existSameTempArray, current],
+            };
         }
         return all;
     }, {});
@@ -75,7 +80,7 @@ export async function Temperature() {
      *  * 各海拔排列，最低溫的地區
      *  {Array}
      */
-    const sortedLowestLocationByElev = Object.entries(lowestLocationByElev)
+    const sortedLowestLocationByElevation = Object.entries(lowestLocationByElevation)
         .map(([elev, item]) => {
             return { ...item, elev };
         })
@@ -87,7 +92,7 @@ export async function Temperature() {
         data,
         status,
         lowestLocation,
-        lowestLocationByElev,
-        sortedLowestLocationByElev,
+        lowestLocationByElevation,
+        sortedLowestLocationByElevation,
     };
 }

@@ -4,13 +4,13 @@
             <li class="space-y-2">
                 <h2 class="font-bold text-xl">第一題</h2>
                 <Card>
-                    <Lowest-temp />
+                    <LowestTemp />
                 </Card>
             </li>
             <li class="space-y-2">
                 <h2 class="font-bold text-xl">第二題</h2>
                 <Card>
-                    <LowTempByElev />
+                    <LowTempByElevation />
                 </Card>
             </li>
             <li class="space-y-2">
@@ -31,7 +31,7 @@
 
 <script>
 import LowestTemp from "@/components/LowestTemp.vue";
-import LowTempByElev from "@/components/LowTempByElev.vue";
+import LowTempByElevation from "@/components/LowTempByElevation.vue";
 import Rain from "@/components/Rain.vue";
 import WeeklyWeather from "@/components/WeeklyWeather.vue";
 import Card from "@/components/Card.vue";
@@ -39,7 +39,7 @@ export default {
     name: "App",
     components: {
         Card,
-        LowTempByElev,
+        LowTempByElevation,
         LowestTemp,
         Rain,
         WeeklyWeather,

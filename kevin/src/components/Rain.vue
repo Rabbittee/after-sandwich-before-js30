@@ -1,7 +1,7 @@
 <template>
     <div class="text-gray-900 space-y-4">
-        <template v-if="top20_rain && status === 200">
-            <div v-for="(each, i) in top20_rain" :key="`rain-${i}`">
+        <template v-if="top20RainLocations && status === 200">
+            <div v-for="(each, i) in top20RainLocations" :key="`rain-${i}`">
                 <div class="flex flex-wrap gap-x-10 gap-y-2">
                     <div class="flex justify-between w-full">
                         <h2 class="text-gray-900 font-bold text-xs">降雨量第 {{ i + 1 }} 名</h2>
@@ -38,7 +38,7 @@ export default {
     data() {
         return {
             status: null,
-            top20_rain: null,
+            top20RainLocations: null,
         };
     },
 
@@ -48,10 +48,10 @@ export default {
 
     methods: {
         async getData() {
-            const { status, top20_rain } = await new Rain();
+            const { status, top20RainLocations } = await Rain();
             this.status = status;
-            this.top20_rain = top20_rain;
-            console.log("第三題 近 24 小時前 20 名降雨量:", top20_rain);
+            this.top20RainLocations = top20RainLocations;
+            console.log("第三題 近 24 小時前 20 名降雨量:", top20RainLocations);
         },
     },
 };

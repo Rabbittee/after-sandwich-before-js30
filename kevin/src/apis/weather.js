@@ -4,26 +4,14 @@ const axios = Axios.create({
     baseURL: "https://opendata.cwb.gov.tw/api/v1/rest/datastore/",
 });
 
-const Authorization = "CWB-A00AAFC4-FFD9-4A03-A760-7F9336CE62FC";
-const Params = (params = {}) => {
+const authorization = "CWB-A00AAFC4-FFD9-4A03-A760-7F9336CE62FC";
+const concatParamsForApi = (params = {}) => {
     return {
         params: {
-            Authorization,
+            authorization,
             ...params,
         },
     };
-};
-
-const getElementValueByKey = (obj, key) => obj.find(element => element.elementName === key).elementValue;
-const getTimeByKey = (obj, key) => obj.find(element => element.elementName === key).time;
-const getParameterValueByKey = (obj, key) => obj.find(element => element.parameterName === key).parameterValue;
-const dealAvailableValue = value => (Number(value) === -99 ? null : value);
-
-export const helpers = {
-    getElementValueByKey,
-    getParameterValueByKey,
-    getTimeByKey,
-    dealAvailableValue,
 };
 
 export const allLocations = [
@@ -52,12 +40,12 @@ export const allLocations = [
 ];
 
 /**
- *  GET /v1/rest/datastore/O-A0001-001
- *  自動氣象站-氣象觀測資料
+ *  GET /v1/rest/datastore/O-A0003-001
+ *  局屬氣象站-現在天氣觀測報告
  *  @returns {Promise}
  */
-export function weatherCurrentRecord(params = {}) {
-    return axios.get("/O-A0001-001", Params(params));
+export function getWeatherCurrentRecord(params = {}) {
+    return axios.get("/O-A0003-001", concatParamsForApi(params));
 }
 
 /**
@@ -65,8 +53,8 @@ export function weatherCurrentRecord(params = {}) {
  *  自動雨量站-雨量觀測資料
  *  @returns {Promise}
  */
-export function rainCurrentRecord(params = {}) {
-    return axios.get("/O-A0002-001", Params(params));
+export function getRainCurrentRecord(params = {}) {
+    return axios.get("/O-A0002-001", concatParamsForApi(params));
 }
 
 /**
@@ -74,6 +62,15 @@ export function rainCurrentRecord(params = {}) {
  *  鄉鎮天氣預報-臺灣未來1週天氣預報
  *  @returns {Promise}
  */
-export function weeklyWeatherForecast(params = {}) {
-    return axios.get("/F-D0047-091", Params(params));
+export function getWeeklyWeatherForecast(params = {}) {
+    return axios.get("/F-D0047-091", concatParamsForApi(params));
+}
+
+/**
+ *  GET /v1/rest/datastore/F-D0047-089
+ *  鄉鎮天氣預報-臺灣未來 2 天天氣預報
+ *  @returns {Promise}
+ */
+export function getTwoDaysForecast(params = {}) {
+    return axios.get("/F-D0047-089", concatParamsForApi(params));
 }

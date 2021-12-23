@@ -1,25 +1,17 @@
-import { rainCurrentRecord, helpers } from "./weather.js";
+import { getRainCurrentRecord } from "./weather.js";
+import { getElementValueByKey, getParameterValueByKey } from "./helpers.js";
 
-const { getElementValueByKey, getParameterValueByKey } = helpers;
+export async function Rain() {
+    const apiResponse = await getRainCurrentRecord({
+        elementName: "HOUR_24",
+        parameterName: "CITY,TOWN",
+    });
+    const { status, data } = apiResponse;
 
-export class Rain {
-    constructor() {
-        return (async () => {
-            this.apiResponse = await rainCurrentRecord({
-                elementName: "HOUR_24",
-                parameterName: "CITY,TOWN",
-            });
-            this.status = this.apiResponse.status;
-            this.data = this.apiResponse.data;
-
-            return this;
-        })();
-    }
-
-    get top20_rain() {
-        if (this.status !== 200) return null;
+    function getTop20Rain() {
+        if (status !== 200) return null;
         // TODO 同名次??
-        const _top20_rain = this.data.records.location
+        return data.records.location
             .map(item => {
                 return {
                     latLon: {
@@ -42,6 +34,11 @@ export class Rain {
                 return Number(next.hour_24) - Number(prev.hour_24);
             })
             .slice(0, 20);
-        return _top20_rain;
     }
+
+    return {
+        status,
+        data,
+        top20RainLocations: getTop20Rain(),
+    };
 }
