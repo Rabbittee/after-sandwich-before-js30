@@ -1,6 +1,11 @@
-fetch(
-  "https://opendata.cwb.gov.tw/api/v1/rest/datastore/O-A0001-001?Authorization=CWB-1E70461D-B346-4378-A55A-DB337F9BD7C5"
-)
+const baseURL = "https://opendata.cwb.gov.tw/api";
+const token = "CWB-1E70461D-B346-4378-A55A-DB337F9BD7C5";
+const apiPathA = "/v1/rest/datastore/O-A0001-001";
+const apiPathB = "/v1/rest/datastore/F-D0047-063";
+let a = `${baseURL}${apiPathA}?Authorization=${token}`;
+let b = `${baseURL}${apiPathB}?Authorization=${token}`;
+
+fetch(a)
   .then(function (response) {
     return response.json();
   })
@@ -14,9 +19,7 @@ fetch(
     console.log(err);
   });
 
-fetch(
-  "https://opendata.cwb.gov.tw/api/v1/rest/datastore/F-D0047-063?Authorization=CWB-1E70461D-B346-4378-A55A-DB337F9BD7C5&format=JSON&locationName=%E5%85%A7%E6%B9%96%E5%8D%80&elementName"
-)
+fetch(b)
   .then(function (response) {
     return response.json();
   })
@@ -107,13 +110,13 @@ function findMountain(data) {
       four.push(obj);
     }
   }
-  
   // sort
-  const newArray = [five, one, oneFive, two, twoFive, three, threeFive, four]
-  for (i = 0 ; i < newArray.length ; i++) {
+  const newArray = [five, one, oneFive, two, twoFive, three, threeFive, four];
+  for (i = 0; i < newArray.length; i++) {
     newArray[i].sort(function (a, b) {
+      Number(a.temp, b.temp);
       return a.temp - b.temp;
-    })
+    });
   }
 
   document.getElementById("examTwo_answer").innerHTML = `
