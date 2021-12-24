@@ -47,7 +47,7 @@ function QuestionTwo() {
           {Object.keys(lowestTempEach500).map((elevation) => (
             <li>
               <div>{elevation}</div>
-              <div>{JSON.stringify(lowestTempEach500["0-500"])}</div>
+              <div>{JSON.stringify(lowestTempEach500[elevation])}</div>
             </li>
           ))}
         </ul>
