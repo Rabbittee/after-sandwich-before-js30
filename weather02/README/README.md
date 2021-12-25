@@ -1,27 +1,10 @@
 # js 三明治後測
 
-### 兔群成果
-
-- [Alpha](https://rabbittee.github.io/after-sandwich-before-js30/alpha/js/)
-- [cola](https://rabbittee.github.io/after-sandwich-before-js30/cola/)
-- [奶卷](https://rabbittee.github.io/after-sandwich-before-js30/Recoil/dist/)
-- [\凱文超強/](https://rabbittee.github.io/after-sandwich-before-js30/kevin/dist/)
-- [Husky](https://rabbittee.github.io/after-sandwich-before-js30/Husky/dist/)
-- [Kirby](https://rabbittee.github.io/after-sandwich-before-js30/kirby/)
-- [鳥胃](https://rabbittee.github.io/after-sandwich-before-js30/Erica/)
-- [小金](https://rabbittee.github.io/after-sandwich-before-js30/weather02/)
-
-#### 文件更新紀錄
-
-`2021-12-21 14:45`: 新增三種資料格式文件說明，第四題需求變動
-
 ### 氣象資料
 
 - [氣象局開放資料清單](https://opendata.cwb.gov.tw/dist/opendata-swagger.html?urls.primaryName=openAPI)
 - [自動氣象站-氣象觀測資料格式](https://opendata.cwb.gov.tw/opendatadoc/DIV2/A0001-001.pdf)
-- [自動雨量站-雨量觀測資料格式](https://opendata.cwb.gov.tw/opendatadoc/DIV2/A0002-001.pdf)
-- [局屬氣象站資料格式](https://opendata.cwb.gov.tw/opendatadoc/DIV2/A0003-001.pdf)
-- [預報 XML 產品預報因子欄位中文說明表](https://opendata.cwb.gov.tw/opendatadoc/MFC/D0047.pdf)
+- [中央氣象局氣象資料開放平臺 – 資料擷取使用說明](chrome-extension://bocbaocobfecmglnmeaeppambideimao/pdf/viewer.html?file=https%3A%2F%2Fopendata.cwb.gov.tw%2Fopendatadoc%2FCWB_Opendata_API_V1.2.pdf)
 - [申請帳號取得 token](https://opendata.cwb.gov.tw/user/authkey)
 
 ### 上傳格式

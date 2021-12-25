@@ -1,0 +1,16 @@
+{
+  "name": "final_exam",
+  "version": "1.0.0",
+  "description": "",
+  "main": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "npx tailwindcss -i ./css/style.css -o ./css/main.css --watch --minify",
+    "start": "npm run watch"
+  },
+  "author": "Erica",
+  "license": "ISC",
+  "devDependencies": {
+    "tailwindcss": "^3.0.7"
+  }
+}
