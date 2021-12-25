@@ -8,6 +8,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "dayjs": "^1.10.7",
+    "prettier": "^2.5.1",
     "vue": "^3.2.23"
   },
   "devDependencies": {
