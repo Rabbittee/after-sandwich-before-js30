@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .btn {
+        @apply text-slate-400  bg-slate-200 rounded-lg px-5 py-2
+        transition-all hover:bg-slate-400 hover:text-white;
+    }
+
+    .btn.active {
+        @apply text-white bg-rose-500 hover:bg-rose-500;
+    }
+}
+
+section {
+    @apply hidden p-5 rounded-lg text-sm font-mono text-slate-600 bg-slate-50 max-h-96 overflow-y-auto;
+}
+
+section.show {
+    display: block;
+}
+
+code {
+    @apply py-1 px-2 mx-0.5 rounded bg-slate-200 text-xs;
+}
