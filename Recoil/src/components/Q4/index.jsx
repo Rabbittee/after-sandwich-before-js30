@@ -1,7 +1,7 @@
 import Task from "../Task";
 import { useWeatherByDistrict } from "../hooks";
 import { find, pipe } from "../../utils";
-
+import { TempCard } from "../Card";
 const normalizeTime = (data) =>
   data.reduce((acc, val) => {
     const key = val.dataTime.slice(0, 10);
@@ -52,13 +52,25 @@ function QuestionFour() {
         <br />且<span className="bg-blue-900 text-white">最大單日溫差</span>
         為多少？
         <small className="block">
-          (API: ​/v1​/rest​/datastore​/F-D0047-089)
+          (API: /v1/rest/datastore/F-D0047-089)
         </small>
       </Task.Question>
-      <Task.Answer title="未來一週的最低溫與最高溫:">
-        <div>{`最低溫:${JSON.stringify(lowestTemp)}°C`}</div>
-        <div>{`最高溫:${JSON.stringify(maxestTemp)}°C`}</div>
-        <div>{`單日溫差最大為:${JSON.stringify(maxDiffTemp)}`}</div>
+      <Task.Answer title="未來一週的最低溫與最高溫:" className="bg-[url('/src/assets/images/bg_snow.jpg')]">
+        <TempCard
+          title={"最低溫"}
+          temp={lowestTemp.elementValue[0].value}
+          time={lowestTemp.dataTime}
+        />
+        <TempCard
+          title={"最高溫"}
+          temp={maxestTemp.elementValue[0].value}
+          time={maxestTemp.dataTime}
+        />
+        <TempCard
+          title={"單日溫差最大"}
+          temp={maxDiffTemp.diffTemp}
+          time={maxDiffTemp.date}
+        />
       </Task.Answer>
     </>
   );

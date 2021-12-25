@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 import { queryCwb } from "../api/api";
-import { StationInfo,DistrictInfo } from "../utils";
+import { StationInfo, DistrictInfo } from "../utils";
 /**
  *  @param {string} path
  *  @param {QueryWeatherConditions} body
@@ -30,11 +30,10 @@ export function useWeatherByDistrict(path, body) {
           (station) => new DistrictInfo(station)
         );
       })
-      // .then((data) =>
-      //   data.filter((station) => Number(station.weather.TEMP) !== -99)
-      // )
+      .then((data) =>
+        data.filter((station) => Number(station.weather.TEMP) !== -99)
+      )
       .then((data) => setSeries(data));
   }, []);
   return series;
 }
-

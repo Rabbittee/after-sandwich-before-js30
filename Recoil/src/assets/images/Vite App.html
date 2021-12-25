@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<!-- saved from url=(0061)http://localhost:3000/after-sandwich-before-js30/Recoil/dist/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script type="module" src="./Vite App_files/client"></script>
+    <script type="module">
+import RefreshRuntime from "/after-sandwich-before-js30/Recoil/dist/@react-refresh"
+RefreshRuntime.injectIntoGlobalHook(window)
+window.$RefreshReg$ = () => {}
+window.$RefreshSig$ = () => (type) => type
+window.__vite_plugin_react_preamble_installed__ = true
+</script>
+
+    
+    <link rel="icon" type="image/svg+xml" href="http://localhost:3000/after-sandwich-before-js30/Recoil/dist/src/favicon.svg">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vite App</title>
+  <style type="text/css">/*
+! tailwindcss v3.0.1 | MIT License | https://tailwindcss.com
+*//*
+1. Prevent padding and border from affecting element width. (https://github.com/mozdevs/cssremedy/issues/4)
+2. Allow adding a border to an element by just adding a border-width. (https://github.com/tailwindcss/tailwindcss/pull/116)
+*/
+
+*,
+::before,
+::after {
+  box-sizing: border-box; /* 1 */
+  border-width: 0; /* 2 */
+  border-style: solid; /* 2 */
+  border-color: currentColor; /* 2 */
+}
+
+::before,
+::after {
+  --tw-content: '';
+}
+
+/*
+1. Use a consistent sensible line-height in all browsers.
+2. Prevent adjustments of font size after orientation changes in iOS.
+3. Use a more readable tab size.
+4. Use the user's configured `sans` font-family by default.
+*/
+
+html {
+  line-height: 1.5; /* 1 */
+  -webkit-text-size-adjust: 100%; /* 2 */
+  -moz-tab-size: 4; /* 3 */
+  -o-tab-size: 4;
+     tab-size: 4; /* 3 */
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; /* 4 */
+}
+
+/*
+1. Remove the margin in all browsers.
+2. Inherit line-height from `html` so users can set them as a class directly on the `html` element.
+*/
+
+body {
+  margin: 0; /* 1 */
+  line-height: inherit; /* 2 */
+}
+
+/*
+1. Add the correct height in Firefox.
+2. Correct the inheritance of border color in Firefox. (https://bugzilla.mozilla.org/show_bug.cgi?id=190655)
+3. Ensure horizontal rules are visible by default.
+*/
+
+hr {
+  height: 0; /* 1 */
+  color: inherit; /* 2 */
+  border-top-width: 1px; /* 3 */
+}
+
+/*
+Add the correct text decoration in Chrome, Edge, and Safari.
+*/
+
+abbr[title] {
+  -webkit-text-decoration: underline dotted;
+          text-decoration: underline dotted;
+}
+
+/*
+Remove the default font size and weight for headings.
+*/
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+/*
+Reset links to optimize for opt-in styling instead of opt-out.
+*/
+
+a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+/*
+Add the correct font weight in Edge and Safari.
+*/
+
+b,
+strong {
+  font-weight: bolder;
+}
+
+/*
+1. Use the user's configured `mono` font family by default.
+2. Correct the odd `em` font sizing in all browsers.
+*/
+
+code,
+kbd,
+samp,
+pre {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; /* 1 */
+  font-size: 1em; /* 2 */
+}
+
+/*
+Add the correct font size in all browsers.
+*/
+
+small {
+  font-size: 80%;
+}
+
+/*
+Prevent `sub` and `sup` elements from affecting the line height in all browsers.
+*/
+
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+sup {
+  top: -0.5em;
+}
+
+/*
+1. Remove text indentation from table contents in Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=999088, https://bugs.webkit.org/show_bug.cgi?id=201297)
+2. Correct table border color inheritance in all Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=935729, https://bugs.webkit.org/show_bug.cgi?id=195016)
+3. Remove gaps between table borders by default.
+*/
+
+table {
+  text-indent: 0; /* 1 */
+  border-color: inherit; /* 2 */
+  border-collapse: collapse;  /* 3 */
+}
+
+/*
+1. Change the font styles in all browsers.
+2. Remove the margin in Firefox and Safari.
+3. Remove default padding in all browsers.
+*/
+
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit; /* 1 */
+  font-size: 100%; /* 1 */
+  line-height: inherit; /* 1 */
+  color: inherit; /* 1 */
+  margin: 0; /* 2 */
+  padding: 0; /* 3 */
+}
+
+/*
+Remove the inheritance of text transform in Edge and Firefox.
+*/
+
+button,
+select {
+  text-transform: none;
+}
+
+/*
+1. Correct the inability to style clickable types in iOS and Safari.
+2. Remove default button styles.
+*/
+
+button,
+[type='button'],
+[type='reset'],
+[type='submit'] {
+  -webkit-appearance: button; /* 1 */
+  background-color: transparent; /* 2 */
+  background-image: none; /* 2 */
+}
+
+/*
+Use the modern Firefox focus style for all focusable elements.
+*/
+
+:-moz-focusring {
+  outline: auto;
+}
+
+/*
+Remove the additional `:invalid` styles in Firefox. (https://github.com/mozilla/gecko-dev/blob/2f9eacd9d3d995c937b4251a5557d95d494c9be1/layout/style/res/forms.css#L728-L737)
+*/
+
+:-moz-ui-invalid {
+  box-shadow: none;
+}
+
+/*
+Add the correct vertical alignment in Chrome and Firefox.
+*/
+
+progress {
+  vertical-align: baseline;
+}
+
+/*
+Correct the cursor style of increment and decrement buttons in Safari.
+*/
+
+::-webkit-inner-spin-button,
+::-webkit-outer-spin-button {
+  height: auto;
+}
+
+/*
+1. Correct the odd appearance in Chrome and Safari.
+2. Correct the outline style in Safari.
+*/
+
+[type='search'] {
+  -webkit-appearance: textfield; /* 1 */
+  outline-offset: -2px; /* 2 */
+}
+
+/*
+Remove the inner padding in Chrome and Safari on macOS.
+*/
+
+::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+/*
+1. Correct the inability to style clickable types in iOS and Safari.
+2. Change font properties to `inherit` in Safari.
+*/
+
+::-webkit-file-upload-button {
+  -webkit-appearance: button; /* 1 */
+  font: inherit; /* 2 */
+}
+
+/*
+Add the correct display in Chrome and Safari.
+*/
+
+summary {
+  display: list-item;
+}
+
+/*
+Removes the default spacing and border for appropriate elements.
+*/
+
+blockquote,
+dl,
+dd,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+hr,
+figure,
+p,
+pre {
+  margin: 0;
+}
+
+fieldset {
+  margin: 0;
+  padding: 0;
+}
+
+legend {
+  padding: 0;
+}
+
+ol,
+ul,
+menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/*
+Prevent resizing textareas horizontally by default.
+*/
+
+textarea {
+  resize: vertical;
+}
+
+/*
+1. Reset the default placeholder opacity in Firefox. (https://github.com/tailwindlabs/tailwindcss/issues/3300)
+2. Set the default placeholder color to the user's configured gray 400 color.
+*/
+
+input::-moz-placeholder, textarea::-moz-placeholder {
+  opacity: 1;  /* 1 */
+  color: #9ca3af; /* 2 */
+}
+
+input:-ms-input-placeholder, textarea:-ms-input-placeholder {
+  opacity: 1;  /* 1 */
+  color: #9ca3af; /* 2 */
+}
+
+input::placeholder,
+textarea::placeholder {
+  opacity: 1;  /* 1 */
+  color: #9ca3af; /* 2 */
+}
+
+/*
+Set the default cursor for buttons.
+*/
+
+button,
+[role="button"] {
+  cursor: pointer;
+}
+
+/*
+Make sure disabled buttons don't get the pointer cursor.
+*/
+:disabled {
+  cursor: default;
+}
+
+/*
+1. Make replaced elements `display: block` by default. (https://github.com/mozdevs/cssremedy/issues/14)
+2. Add `vertical-align: middle` to align replaced elements more sensibly by default. (https://github.com/jensimmons/cssremedy/issues/14#issuecomment-634934210)
+   This can trigger a poorly considered lint error in some tools but is included by design.
+*/
+
+img,
+svg,
+video,
+canvas,
+audio,
+iframe,
+embed,
+object {
+  display: block; /* 1 */
+  vertical-align: middle; /* 2 */
+}
+
+/*
+Constrain images and videos to the parent width and preserve their intrinsic aspect ratio. (https://github.com/mozdevs/cssremedy/issues/14)
+*/
+
+img,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+/*
+Ensure the default browser behavior of the `hidden` attribute.
+*/
+
+[hidden] {
+  display: none;
+}
+
+.border {
+  --tw-border-opacity: 1;
+  border-color: rgb(229 231 235 / var(--tw-border-opacity));
+}
+
+.shadow-md, .shadow-xl {
+  --tw-ring-offset-shadow: 0 0 #0000;
+  --tw-ring-shadow: 0 0 #0000;
+  --tw-shadow: 0 0 #0000;
+  --tw-shadow-colored: 0 0 #0000;
+}
+
+.filter {
+  --tw-blur: var(--tw-empty,/*!*/ /*!*/);
+  --tw-brightness: var(--tw-empty,/*!*/ /*!*/);
+  --tw-contrast: var(--tw-empty,/*!*/ /*!*/);
+  --tw-grayscale: var(--tw-empty,/*!*/ /*!*/);
+  --tw-hue-rotate: var(--tw-empty,/*!*/ /*!*/);
+  --tw-invert: var(--tw-empty,/*!*/ /*!*/);
+  --tw-saturate: var(--tw-empty,/*!*/ /*!*/);
+  --tw-sepia: var(--tw-empty,/*!*/ /*!*/);
+  --tw-drop-shadow: var(--tw-empty,/*!*/ /*!*/);
+  --tw-filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+
+.backdrop-blur-md, .backdrop-blur-sm {
+  --tw-backdrop-blur: var(--tw-empty,/*!*/ /*!*/);
+  --tw-backdrop-brightness: var(--tw-empty,/*!*/ /*!*/);
+  --tw-backdrop-contrast: var(--tw-empty,/*!*/ /*!*/);
+  --tw-backdrop-grayscale: var(--tw-empty,/*!*/ /*!*/);
+  --tw-backdrop-hue-rotate: var(--tw-empty,/*!*/ /*!*/);
+  --tw-backdrop-invert: var(--tw-empty,/*!*/ /*!*/);
+  --tw-backdrop-opacity: var(--tw-empty,/*!*/ /*!*/);
+  --tw-backdrop-saturate: var(--tw-empty,/*!*/ /*!*/);
+  --tw-backdrop-sepia: var(--tw-empty,/*!*/ /*!*/);
+  --tw-backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
+}
+.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+.my-16 {
+  margin-top: 4rem;
+  margin-bottom: 4rem;
+}
+.my-2 {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+.ml-2 {
+  margin-left: 0.5rem;
+}
+.ml-auto {
+  margin-left: auto;
+}
+.block {
+  display: block;
+}
+.flex {
+  display: flex;
+}
+.h-full {
+  height: 100%;
+}
+.h-fit {
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+}
+.w-screen {
+  width: 100vw;
+}
+.w-full {
+  width: 100%;
+}
+.max-w-3xl {
+  max-width: 48rem;
+}
+.flex-row {
+  flex-direction: row;
+}
+.flex-col {
+  flex-direction: column;
+}
+.items-end {
+  align-items: flex-end;
+}
+.justify-start {
+  justify-content: flex-start;
+}
+.justify-center {
+  justify-content: center;
+}
+.gap-x-2 {
+  -moz-column-gap: 0.5rem;
+       column-gap: 0.5rem;
+}
+.gap-y-2 {
+  row-gap: 0.5rem;
+}
+.space-y-6 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(1.5rem * var(--tw-space-y-reverse));
+}
+.overflow-hidden {
+  overflow: hidden;
+}
+.rounded-md {
+  border-radius: 0.375rem;
+}
+.rounded-2xl {
+  border-radius: 1rem;
+}
+.border {
+  border-width: 1px;
+}
+.bg-blue-900 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(30 58 138 / var(--tw-bg-opacity));
+}
+.bg-white {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
+.bg-slate-100 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(241 245 249 / var(--tw-bg-opacity));
+}
+.bg-slate-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(100 116 139 / var(--tw-bg-opacity));
+}
+.bg-slate-200 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(226 232 240 / var(--tw-bg-opacity));
+}
+.bg-slate-600 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(71 85 105 / var(--tw-bg-opacity));
+}
+.bg-opacity-30 {
+  --tw-bg-opacity: 0.3;
+}
+.bg-opacity-25 {
+  --tw-bg-opacity: 0.25;
+}
+.bg-opacity-60 {
+  --tw-bg-opacity: 0.6;
+}
+.bg-opacity-40 {
+  --tw-bg-opacity: 0.4;
+}
+.bg-\[url\(\'\/src\/assets\/images\/q3_bg\.jpeg\'\)\] {
+  background-image: url('/after-sandwich-before-js30/Recoil/dist/src/assets/images/q3_bg.jpeg');
+}
+.bg-\[url\(\'\/src\/assets\/images\/bg_snow\.jpeg\'\)\] {
+  background-image: url('/src/assets/images/bg_snow.jpeg');
+}
+.bg-\[url\(\'\/src\/assets\/images\/bg_snow\.jpg\'\)\] {
+  background-image: url('/after-sandwich-before-js30/Recoil/dist/src/assets/images/bg_snow.jpg');
+}
+.bg-cover {
+  background-size: cover;
+}
+.p-8 {
+  padding: 2rem;
+}
+.p-4 {
+  padding: 1rem;
+}
+.py-2 {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+.px-2 {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+.px-4 {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+.pl-2 {
+  padding-left: 0.5rem;
+}
+.pl-1 {
+  padding-left: 0.25rem;
+}
+.pl-4 {
+  padding-left: 1rem;
+}
+.text-2xl {
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+.text-lg {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+.text-sm {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+.text-base {
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+.text-4xl {
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+}
+.font-black {
+  font-weight: 900;
+}
+.font-bold {
+  font-weight: 700;
+}
+.text-white {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+.text-black {
+  --tw-text-opacity: 1;
+  color: rgb(0 0 0 / var(--tw-text-opacity));
+}
+.text-slate-200 {
+  --tw-text-opacity: 1;
+  color: rgb(226 232 240 / var(--tw-text-opacity));
+}
+.text-slate-900 {
+  --tw-text-opacity: 1;
+  color: rgb(15 23 42 / var(--tw-text-opacity));
+}
+.text-opacity-70 {
+  --tw-text-opacity: 0.7;
+}
+.shadow-md {
+  --tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+.shadow-xl {
+  --tw-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --tw-shadow-colored: 0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+.outline-none {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+.filter {
+  filter: var(--tw-filter);
+}
+.backdrop-blur-md {
+  --tw-backdrop-blur: blur(12px);
+  -webkit-backdrop-filter: var(--tw-backdrop-filter);
+          backdrop-filter: var(--tw-backdrop-filter);
+}
+.backdrop-blur-sm {
+  --tw-backdrop-blur: blur(4px);
+  -webkit-backdrop-filter: var(--tw-backdrop-filter);
+          backdrop-filter: var(--tw-backdrop-filter);
+}
+
+</style></head>
+  <body>
+    <div id="root"><div class="App"><main class="flex flex-col w-screen max-w-3xl mx-auto my-16 space-y-6"><h4 class="text-2xl font-black">JS讀書會後測啦</h4><section class="bg-white text-black text-opacity-70 rounded-2xl shadow-xl p-8"><h6 class="text-md font-black">題目一:</h6>找到全台當下最低溫的點，並列出<span class="bg-blue-900 text-white">縣市</span><span class="bg-blue-900 text-white">行政區</span><span class="bg-blue-900 text-white">測站名稱</span><span class="bg-blue-900 text-white">溫度</span><span class="bg-blue-900 text-white">座標</span><small class="block">(透過中央氣象局ＡＰＩ取得全台測站即時資料)</small><small class="block">(API: v1/rest/datastore/O-A0001-001)</small></section><section class="bg-white text-black text-opacity-70 rounded-2xl shadow-xl p-8"><h6 class="text-md font-black">當下最低溫的點</h6><div class="w-full p-4 text-black bg-slate-100 rounded-md outline-none my-2 text-opacity-70 text-sm  h-fit"><div class="w-full h-full bg-cover rounded-md bg-[url(&#39;/src/assets/images/bg_snow.jpg&#39;)]"><div class="rounded-md overflow-hidden filter backdrop-blur-sm flex flex-col gap-y-2 px-4 py-2 text-slate-200 bg-slate-600 bg-opacity-40"><fieldset class="border rounded-md px-4 py-2"><legend class="text-lg font-bold"></legend><div class="flex flex-col"><div><span class="text-lg font-bold font-lg">玉山風口</span><span class="text-sm font-bold font-lg ml-2">3860公尺</span></div><section class="flex flex-row"><div><div class="text-sm"> 南投縣 信義鄉</div><div>時間: 2021-12-25 07:00:00</div></div><div class="text-4xl ml-auto"><span>-1</span><span class="text-lg">°C</span></div></section></div></fieldset></div></div></div></section><section class="bg-white text-black text-opacity-70 rounded-2xl shadow-xl p-8"><h6 class="text-md font-black">題目二:</h6>同上，針對不同海拔高度找出最低溫測站，每<span class="bg-blue-900 text-white">500m</span>一組，並回傳object<small class="block">(API: v1/rest/datastore/O-A0001-001)</small></section><section class="bg-white text-black text-opacity-70 rounded-2xl shadow-xl p-8"><h6 class="text-md font-black">Answer:</h6><div class="w-full p-4 text-black bg-slate-100 rounded-md outline-none my-2 text-opacity-70 text-sm  h-fit"><div class="w-full h-full bg-cover rounded-md bg-[url(&#39;/src/assets/images/bg_snow.jpg&#39;)]"><div class="rounded-md overflow-hidden filter backdrop-blur-sm flex flex-col gap-y-2 px-4 py-2 text-slate-200 bg-slate-600 bg-opacity-40"><ul><li><fieldset class="border rounded-md px-4 py-2"><legend class="text-lg font-bold px-2">0-500</legend><div class="flex flex-col"><div><span class="text-lg font-bold font-lg">泰平</span><span class="text-sm font-bold font-lg ml-2">422公尺</span></div><section class="flex flex-row"><div><div class="text-sm"> 新北市 雙溪區</div><div>時間: 2021-12-25 07:00:00</div></div><div class="text-4xl ml-auto"><span>12.6</span><span class="text-lg">°C</span></div></section></div></fieldset></li><li><fieldset class="border rounded-md px-4 py-2"><legend class="text-lg font-bold px-2">500-1000</legend><div class="flex flex-col"><div><span class="text-lg font-bold font-lg">五指山</span><span class="text-sm font-bold font-lg ml-2">685公尺</span></div><section class="flex flex-row"><div><div class="text-sm"> 新北市 汐止區</div><div>時間: 2021-12-25 07:00:00</div></div><div class="text-4xl ml-auto"><span>11.7</span><span class="text-lg">°C</span></div></section></div></fieldset></li><li><fieldset class="border rounded-md px-4 py-2"><legend class="text-lg font-bold px-2">1000-1500</legend><div class="flex flex-col"><div><span class="text-lg font-bold font-lg">大屯山</span><span class="text-sm font-bold font-lg ml-2">1079公尺</span></div><section class="flex flex-row"><div><div class="text-sm"> 臺北市 北投區</div><div>時間: 2021-12-25 07:00:00</div></div><div class="text-4xl ml-auto"><span>8.8</span><span class="text-lg">°C</span></div></section></div></fieldset></li><li><fieldset class="border rounded-md px-4 py-2"><legend class="text-lg font-bold px-2">1500-2000</legend><div class="flex flex-col"><div><span class="text-lg font-bold font-lg">太平山</span><span class="text-sm font-bold font-lg ml-2">1942公尺</span></div><section class="flex flex-row"><div><div class="text-sm"> 宜蘭縣 大同鄉</div><div>時間: 2021-12-25 07:00:00</div></div><div class="text-4xl ml-auto"><span>6</span><span class="text-lg">°C</span></div></section></div></fieldset></li><li><fieldset class="border rounded-md px-4 py-2"><legend class="text-lg font-bold px-2">2000-2500</legend><div class="flex flex-col"><div><span class="text-lg font-bold font-lg">向陽</span><span class="text-sm font-bold font-lg ml-2">2280公尺</span></div><section class="flex flex-row"><div><div class="text-sm"> 臺東縣 海端鄉</div><div>時間: 2021-12-25 07:00:00</div></div><div class="text-4xl ml-auto"><span>8.6</span><span class="text-lg">°C</span></div></section></div></fieldset></li><li><fieldset class="border rounded-md px-4 py-2"><legend class="text-lg font-bold px-2">2500-3000</legend><div class="flex flex-col"><div><span class="text-lg font-bold font-lg">多加屯</span><span class="text-sm font-bold font-lg ml-2">2619公尺</span></div><section class="flex flex-row"><div><div class="text-sm"> 宜蘭縣 大同鄉</div><div>時間: 2021-12-25 07:00:00</div></div><div class="text-4xl ml-auto"><span>3.3</span><span class="text-lg">°C</span></div></section></div></fieldset></li><li><fieldset class="border rounded-md px-4 py-2"><legend class="text-lg font-bold px-2">3000-3500</legend><div class="flex flex-col"><div><span class="text-lg font-bold font-lg">桃山A</span><span class="text-sm font-bold font-lg ml-2">3313公尺</span></div><section class="flex flex-row"><div><div class="text-sm"> 臺中市 和平區</div><div>時間: 2021-12-25 07:00:00</div></div><div class="text-4xl ml-auto"><span>1.9</span><span class="text-lg">°C</span></div></section></div></fieldset></li><li><fieldset class="border rounded-md px-4 py-2"><legend class="text-lg font-bold px-2">3500-4000</legend><div class="flex flex-col"><div><span class="text-lg font-bold font-lg">玉山風口</span><span class="text-sm font-bold font-lg ml-2">3860公尺</span></div><section class="flex flex-row"><div><div class="text-sm"> 南投縣 信義鄉</div><div>時間: 2021-12-25 07:00:00</div></div><div class="text-4xl ml-auto"><span>-1</span><span class="text-lg">°C</span></div></section></div></fieldset></li></ul></div></div></div></section><section class="bg-white text-black text-opacity-70 rounded-2xl shadow-xl p-8"><h6 class="text-md font-black">題目三:格式自己定辣，我懶</h6>近<span class="bg-blue-900 text-white">24小時</span>降雨量<span class="bg-blue-900 text-white">前20名</span>是哪些？<br>分別統計整理列在哪些<span class="bg-blue-900 text-white">縣市</span>？<small class="block">HOUR_24欄位為近24小時的累積降雨量</small><small class="block">(API: /v1/rest/datastore/O-A0002-001)</small></section><section class="bg-white text-black text-opacity-70 rounded-2xl shadow-xl p-8"><h6 class="text-md font-black">近24小時降雨量前20名:</h6><div class="w-full p-4 text-black bg-slate-100 rounded-md outline-none my-2 text-opacity-70 text-sm  h-fit"><div class="w-full h-full bg-cover rounded-md bg-[url(&#39;/src/assets/images/q3_bg.jpeg&#39;)]"><div class="rounded-md overflow-hidden filter backdrop-blur-sm flex flex-col gap-y-2 px-4 py-2 text-slate-200 bg-slate-600 bg-opacity-40"><ul><li><fieldset class="border rounded-md px-4 py-2"><legend class="text-lg font-bold px-2">臺北市</legend><ul class="flex flex-row gap-x-2"><li><div class="shadow-md rounded-md py-2 flex flex-col justify-start bg-white bg-opacity-30"><h2 class="w-full text-md font-bold px-2">茶製場</h2><span class="w-full flex justify-center">20</span></div></li></ul></fieldset></li><li><fieldset class="border rounded-md px-4 py-2"><legend class="text-lg font-bold px-2">宜蘭縣</legend><ul class="flex flex-row gap-x-2"><li><div class="shadow-md rounded-md py-2 flex flex-col justify-start bg-white bg-opacity-30"><h2 class="w-full text-md font-bold px-2">桃源谷</h2><span class="w-full flex justify-center">20.5</span></div></li></ul></fieldset></li><li><fieldset class="border rounded-md px-4 py-2"><legend class="text-lg font-bold px-2">新北市</legend><ul class="flex flex-row gap-x-2"><li><div class="shadow-md rounded-md py-2 flex flex-col justify-start bg-white bg-opacity-30"><h2 class="w-full text-md font-bold px-2">三貂嶺</h2><span class="w-full flex justify-center">27</span></div></li><li><div class="shadow-md rounded-md py-2 flex flex-col justify-start bg-white bg-opacity-30"><h2 class="w-full text-md font-bold px-2">太平</h2><span class="w-full flex justify-center">24.5</span></div></li><li><div class="shadow-md rounded-md py-2 flex flex-col justify-start bg-white bg-opacity-30"><h2 class="w-full text-md font-bold px-2">泰平</h2><span class="w-full flex justify-center">24</span></div></li><li><div class="shadow-md rounded-md py-2 flex flex-col justify-start bg-white bg-opacity-30"><h2 class="w-full text-md font-bold px-2">火燒寮</h2><span class="w-full flex justify-center">21</span></div></li></ul></fieldset></li><li><fieldset class="border rounded-md px-4 py-2"><legend class="text-lg font-bold px-2">屏東縣</legend><ul class="flex flex-row gap-x-2"><li><div class="shadow-md rounded-md py-2 flex flex-col justify-start bg-white bg-opacity-30"><h2 class="w-full text-md font-bold px-2">壽卡</h2><span class="w-full flex justify-center">29</span></div></li><li><div class="shadow-md rounded-md py-2 flex flex-col justify-start bg-white bg-opacity-30"><h2 class="w-full text-md font-bold px-2">牡丹</h2><span class="w-full flex justify-center">24</span></div></li><li><div class="shadow-md rounded-md py-2 flex flex-col justify-start bg-white bg-opacity-30"><h2 class="w-full text-md font-bold px-2">牡丹池山</h2><span class="w-full flex justify-center">23.5</span></div></li></ul></fieldset></li><li><fieldset class="border rounded-md px-4 py-2"><legend class="text-lg font-bold px-2">臺東縣</legend><ul class="flex flex-row gap-x-2"><li><div class="shadow-md rounded-md py-2 flex flex-col justify-start bg-white bg-opacity-30"><h2 class="w-full text-md font-bold px-2">蘭嶼高中</h2><span class="w-full flex justify-center">29.5</span></div></li><li><div class="shadow-md rounded-md py-2 flex flex-col justify-start bg-white bg-opacity-30"><h2 class="w-full text-md font-bold px-2">忠勇</h2><span class="w-full flex justify-center">29</span></div></li><li><div class="shadow-md rounded-md py-2 flex flex-col justify-start bg-white bg-opacity-30"><h2 class="w-full text-md font-bold px-2">達仁林場</h2><span class="w-full flex justify-center">26</span></div></li><li><div class="shadow-md rounded-md py-2 flex flex-col justify-start bg-white bg-opacity-30"><h2 class="w-full text-md font-bold px-2">壽卡</h2><span class="w-full flex justify-center">24</span></div></li><li><div class="shadow-md rounded-md py-2 flex flex-col justify-start bg-white bg-opacity-30"><h2 class="w-full text-md font-bold px-2">樟原(1)</h2><span class="w-full flex justify-center">23</span></div></li><li><div class="shadow-md rounded-md py-2 flex flex-col justify-start bg-white bg-opacity-30"><h2 class="w-full text-md font-bold px-2">膽曼</h2><span class="w-full flex justify-center">20.5</span></div></li></ul></fieldset></li><li><fieldset class="border rounded-md px-4 py-2"><legend class="text-lg font-bold px-2">花蓮縣</legend><ul class="flex flex-row gap-x-2"><li><div class="shadow-md rounded-md py-2 flex flex-col justify-start bg-white bg-opacity-30"><h2 class="w-full text-md font-bold px-2">高山聚落</h2><span class="w-full flex justify-center">34.5</span></div></li><li><div class="shadow-md rounded-md py-2 flex flex-col justify-start bg-white bg-opacity-30"><h2 class="w-full text-md font-bold px-2">東里國中</h2><span class="w-full flex justify-center">24.5</span></div></li><li><div class="shadow-md rounded-md py-2 flex flex-col justify-start bg-white bg-opacity-30"><h2 class="w-full text-md font-bold px-2">太安</h2><span class="w-full flex justify-center">24.5</span></div></li><li><div class="shadow-md rounded-md py-2 flex flex-col justify-start bg-white bg-opacity-30"><h2 class="w-full text-md font-bold px-2">東里</h2><span class="w-full flex justify-center">24</span></div></li><li><div class="shadow-md rounded-md py-2 flex flex-col justify-start bg-white bg-opacity-30"><h2 class="w-full text-md font-bold px-2">加路蘭山</h2><span class="w-full flex justify-center">22.5</span></div></li></ul></fieldset></li></ul></div></div></div></section><section class="bg-white text-black text-opacity-70 rounded-2xl shadow-xl p-8"><h6 class="text-md font-black">題目四:格式自己定辣，我懶</h6>自己所在的縣市，未來兩天的<span class="bg-blue-900 text-white">最低溫</span>與<span class="bg-blue-900 text-white">最高溫</span>分別為多少？<br>且<span class="bg-blue-900 text-white">最大單日溫差</span>為多少？<small class="block">(API: /v1/rest/datastore/F-D0047-089)</small></section><section class="bg-white text-black text-opacity-70 rounded-2xl shadow-xl p-8"><h6 class="text-md font-black">未來一週的最低溫與最高溫:</h6><div class="w-full p-4 text-black bg-slate-100 rounded-md outline-none my-2 text-opacity-70 text-sm  h-fit"><div class="w-full h-full bg-cover rounded-md bg-[url(&#39;/src/assets/images/bg_snow.jpg&#39;)]"><div class="rounded-md overflow-hidden filter backdrop-blur-sm flex flex-col gap-y-2 px-4 py-2 text-slate-200 bg-slate-600 bg-opacity-40"><fieldset class="border rounded-md px-4 py-2"><legend class="text-lg font-bold px-2">最低溫</legend><div class="flex items-end"><section><span class="text-2xl font-bold">12</span><span class="text-sm">°C</span></section><span class="ml-auto">2021-12-27 06:00:00</span></div></fieldset><fieldset class="border rounded-md px-4 py-2"><legend class="text-lg font-bold px-2">最高溫</legend><div class="flex items-end"><section><span class="text-2xl font-bold">16</span><span class="text-sm">°C</span></section><span class="ml-auto">2021-12-25 09:00:00</span></div></fieldset><fieldset class="border rounded-md px-4 py-2"><legend class="text-lg font-bold px-2">單日溫差最大</legend><div class="flex items-end"><section><span class="text-2xl font-bold">3</span><span class="text-sm">°C</span></section><span class="ml-auto">2021-12-27</span></div></fieldset></div></div></div></section></main></div></div>
+    <script type="module" src="./Vite App_files/main.jsx"></script>
+  
+
+</body></html>

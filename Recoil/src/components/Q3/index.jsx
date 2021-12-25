@@ -1,7 +1,7 @@
 import Task from "../Task";
 import { useWeatherAPI } from "../hooks";
 import { top } from "../../utils";
-
+import { Card } from "../Card";
 const handleDistrict = (acc, val) => {
   const cityName = val.district.CITY;
   if (!acc.hasOwnProperty(cityName)) {
@@ -28,8 +28,9 @@ function StationCard({ name, weather }) {
 function Country({ name, stations }) {
   return (
     <li>
-      <h4 className="text-lg font-bold">{name}</h4>
-      <ul className="flex flex-row gap-x-2">{stations.map(StationCard)}</ul>
+      <Card title={name}>
+        <ul className="flex flex-row gap-x-2">{stations.map(StationCard)}</ul>
+      </Card>
     </li>
   );
 }
@@ -58,12 +59,11 @@ function QuestionThree() {
         ？<small className="block">HOUR_24欄位為近24小時的累積降雨量</small>
         <small className="block">(API: /v1/rest/datastore/O-A0002-001)</small>
       </Task.Question>
-      <Task.Answer title="近24小時降雨量前20名:">
-        <div className="w-full h-full bg-[url('/src/assets/images/q3_bg.jpeg')] rounded-md overflow-hidden">
-          <ul className="flex flex-col gap-y-2  bg-cover px-4 py-2 filter backdrop-blur-md">
-            {distribute}
-          </ul>
-        </div>
+      <Task.Answer
+        title="近24小時降雨量前20名:"
+        className="bg-[url('/src/assets/images/q3_bg.jpeg')]"
+      >
+        <ul>{distribute}</ul>
       </Task.Answer>
     </>
   );

@@ -1,7 +1,7 @@
 import Task from "../Task";
 import { useWeatherAPI } from "../hooks";
 import { pipe, find, lowestTempCond } from "../../utils";
-
+import { StationCard } from "../Card";
 const classifyRange = (acc, val) => {
   const elevation = Math.ceil(val.weather.ELEV / 500) * 500;
   const range = `${elevation - 500}-${elevation}`;
@@ -34,6 +34,22 @@ function QuestionTwo() {
     handleRange,
     findLowestByRange
   )(data);
+
+  const stations = Object.keys(lowestTempEach500).map((elevation) => {
+    const { name, district, weather, time } = lowestTempEach500[elevation];
+    return (
+      <li>
+        <StationCard
+          type={elevation}
+          name={name}
+          elevation={weather.ELEV}
+          district={`${district.CITY} ${district.TOWN}`}
+          temp={weather.TEMP}
+          time={time.obsTime}
+        />
+      </li>
+    );
+  });
   return (
     <>
       <Task.Question title="題目二:">
@@ -42,15 +58,8 @@ function QuestionTwo() {
         一組，並回傳object
         <small className="block">(API: v1/rest/datastore/O-A0001-001)</small>
       </Task.Question>
-      <Task.Answer>
-        <ul>
-          {Object.keys(lowestTempEach500).map((elevation) => (
-            <li>
-              <div>{elevation}</div>
-              <div>{JSON.stringify(lowestTempEach500[elevation])}</div>
-            </li>
-          ))}
-        </ul>
+      <Task.Answer className="bg-[url('/src/assets/images/bg_snow.jpg')]">
+        <ul>{stations}</ul>
       </Task.Answer>
     </>
   );
