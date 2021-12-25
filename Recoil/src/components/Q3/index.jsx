@@ -17,9 +17,12 @@ const handleDistrict = (acc, val) => {
 function StationCard({ name, weather }) {
   return (
     <li>
-      <div className="shadow-md rounded-md py-2 flex flex-col justify-start bg-white bg-opacity-30">
-        <h2 className="w-full text-md font-bold px-2">{name}</h2>
-        <span className="w-full flex justify-center">{weather.HOUR_24}</span>
+      <div className="shadow-md rounded-md p-2 flex flex-col justify-center items-center bg-white bg-opacity-20">
+        <h2 className="text-md font-bold px-2">{name}</h2>
+        <div className="w-full flex justify-center items-end">
+          <span className="text-base font-bold">{weather.HOUR_24}</span>
+          <span className="ml-1">毫米</span>
+        </div>
       </div>
     </li>
   );
@@ -29,7 +32,7 @@ function Country({ name, stations }) {
   return (
     <li>
       <Card title={name}>
-        <ul className="flex flex-row gap-x-2">{stations.map(StationCard)}</ul>
+        <ul className="flex flex-row flex-wrap gap-x-2 gap-y-4">{stations.map(StationCard)}</ul>
       </Card>
     </li>
   );
