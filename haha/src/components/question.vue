@@ -4,17 +4,17 @@
             >問題 {{ question.id }}: {{ question.item }}</span
         >
         <div class="bg-blue-300 w-3/5 h-auto rounded-md my-2 shadow-xl">
-            <answer
+            <answerGroup
                 :id="question.id"
                 :src="src[question.id - 1]"
                 :parameter="parameter[question.id - 1]"
-            ></answer>
+            ></answerGroup>
         </div>
     </div>
 </template>
 <script setup>
 import { defineProps } from '@vue/runtime-core'
-import answer from './answer.vue'
+import answerGroup from './answerGroup.vue'
 import { lastOneDay, lastTwoDay } from '../constants/parameter.js'
 
 defineProps({
