@@ -20,6 +20,8 @@ export const lowestTempCond = (acc, val) => {
   return val;
 };
 
+export const groupBy = (handler) => (data) => data.reduce(handler, {});
+
 export class StationInfo {
   constructor({ locationName, lat, lon, weatherElement, time, parameter }) {
     this.name = locationName;

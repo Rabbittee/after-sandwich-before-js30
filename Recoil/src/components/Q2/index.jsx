@@ -1,9 +1,9 @@
 import Task from "../Task";
 import { useWeatherAPI } from "../hooks";
-import { pipe, find, lowestTempCond } from "../../utils";
+import { pipe, find, lowestTempCond, groupBy } from "../../utils";
 import { StationCard } from "../Card";
 
-const range = (acc, val) => {
+const elevation = (acc, val) => {
   const elevation = Math.ceil(val.weather.ELEV / 500) * 500;
   const range = `${elevation - 500}-${elevation}`;
   if (acc.hasOwnProperty(range)) {
@@ -16,16 +16,14 @@ const range = (acc, val) => {
   };
 };
 
-const each = (cond) => (data) => data.reduce(cond, {});
-
 const sortByElevation = (data) =>
   data.sort((a, b) => a.weather.ELEV - b.weather.ELEV);
 
-const findLowestTemp = (data) =>
-  Object.keys(data).reduce(
+const findLowestTemp = (data) =>{
+  return Object.keys(data).reduce(
     (acc, val) => ({ ...acc, [val]: find(lowestTempCond)(data[val]) }),
     {}
-  );
+  )};
 
 function QuestionTwo() {
   const data = useWeatherAPI("/v1/rest/datastore/O-A0001-001", {
@@ -36,7 +34,7 @@ function QuestionTwo() {
 
   const stationByRange = pipe(
     sortByElevation,
-    each(range),
+    groupBy(elevation),
     findLowestTemp
   )(data);
 

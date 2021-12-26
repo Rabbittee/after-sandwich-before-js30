@@ -1,13 +1,13 @@
 import Task from "../Task";
 import { useWeatherAPI } from "../hooks";
-import { top, pipe } from "../../utils";
+import { top, pipe, groupBy } from "../../utils";
 import { Card } from "../Card";
 
 const filterTop20 = top(
   20,
   (pre, val) => val.weather.HOUR_24 - pre.weather.HOUR_24
 );
-const classifyDistrict = (acc, val) => {
+const district = (acc, val) => {
   const cityName = val.district.CITY;
   if (!acc.hasOwnProperty(cityName)) {
     return {
@@ -51,8 +51,6 @@ function Country({ name, stations }) {
   );
 }
 
-const handleDistrict = (data) => data.reduce(classifyDistrict, {});
-
 
 function QuestionThree() {
 
@@ -62,7 +60,7 @@ function QuestionThree() {
 
   if (!data) return <div>loading</div>;
 
-  const top20 = pipe(filterTop20,handleDistrict)(data);
+  const top20 = pipe(filterTop20,groupBy(district))(data);
 
   const districts = Object.keys(top20).map((key) => (
     <Country name={key} stations={top20[key]} key={key} />
