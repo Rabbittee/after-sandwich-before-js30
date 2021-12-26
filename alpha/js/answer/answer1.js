@@ -1,36 +1,43 @@
-import { getCurrentData, errorCode } from '../script.js';
+import { getCurrentData, token } from '../fetch.js';
+import { getElementValue, getParameterValue } from '../utils.js';
+import { temp, city, town } from '../global.js';
 
-const apiPath = 'api/v1/rest/datastore/O-A0001-001';
+const apiPath = 'O-A0001-001';
+const { Authorization } = token;
+const paramsObj = {
+  Authorization: Authorization,
+  parameterName: [city, town],
+  elementName: temp,
+};
+
 export const answer1 = async () => {
-  const data = await getCurrentData(apiPath);
+  const data = await getCurrentData(apiPath, paramsObj);
 
   const locationData = data.records.location;
 
-  const tempIndex = 3;
-  const cityIndex = 0;
-  const townIndex = 2;
 
   const currentObj = locationData
-    .filter(function (item) {
-      return item.weatherElement[tempIndex].elementValue !== errorCode;
+    .filter( (item) => {
+      return getElementValue(item.weatherElement, temp) > 0;
     })
-    .reduce(function (prev, item) {
-      return parseFloat(item.weatherElement[tempIndex].elementValue) <
-        parseFloat(prev.weatherElement[tempIndex].elementValue)
+    .reduce((prev, item) => {
+      return Number(getElementValue(item.weatherElement, temp)) <
+        Number(getElementValue(prev.weatherElement, temp))
         ? item
         : prev;
     });
 
-  const { locationName, parameter, weatherElement, lat, lon } = currentObj;
-  const answerArray = {
-    縣市: parameter[cityIndex].parameterValue,
-    行政區: parameter[townIndex].parameterValue,
+  const { locationName, lat, lon, parameter, weatherElement } = currentObj;
+  
+  const answer = {
+    縣市: getParameterValue(parameter, city),
+    行政區: getParameterValue(parameter, town),
     測站名稱: locationName,
-    溫度: weatherElement[tempIndex].elementValue,
+    溫度: getElementValue(weatherElement, temp),
     座標: {
       lat: lat,
       lon: lon,
     },
   };
-  return answerArray;
+  return answer;
 };

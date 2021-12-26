@@ -1,4 +1,4 @@
-import { getCurrentData } from '../script.js';
+import { getCurrentData } from '../fetch.js';
 
 const apiPath = 'api/v1/rest/datastore/F-D0047-089';
 export const answer4 = async () => {
