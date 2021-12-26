@@ -1,8 +1,8 @@
-import { getCurrentData, token } from '../fetch.js';
-import { getElementValue, getParameterValue } from '../utils.js';
-import { temp, city, town } from '../global.js';
+import { getCurrentData, token } from "../fetch.js";
+import { getElementValue, getParameterValue } from "../utils.js";
+import { temp, city, town } from "../global.js";
 
-const apiPath = 'O-A0001-001';
+const apiPath = "O-A0001-001";
 const { Authorization } = token;
 const paramsObj = {
   Authorization: Authorization,
@@ -15,9 +15,8 @@ export const answer1 = async () => {
 
   const locationData = data.records.location;
 
-
   const currentObj = locationData
-    .filter( (item) => {
+    .filter((item) => {
       return getElementValue(item.weatherElement, temp) > 0;
     })
     .reduce((prev, item) => {
@@ -28,7 +27,7 @@ export const answer1 = async () => {
     });
 
   const { locationName, lat, lon, parameter, weatherElement } = currentObj;
-  
+
   const answer = {
     縣市: getParameterValue(parameter, city),
     行政區: getParameterValue(parameter, town),

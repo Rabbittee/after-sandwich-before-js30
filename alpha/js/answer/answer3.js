@@ -1,8 +1,8 @@
-import { getCurrentData, token } from '../fetch.js';
-import { getElementValue, getParameterValue } from '../utils.js';
-import { city, town, rain } from '../global.js';
+import { getCurrentData, token } from "../fetch.js";
+import { getElementValue, getParameterValue } from "../utils.js";
+import { city, town, rain } from "../global.js";
 
-const apiPath = 'O-A0002-001';
+const apiPath = "O-A0002-001";
 const { Authorization } = token;
 const paramsObj = {
   Authorization: Authorization,

@@ -1,4 +1,4 @@
-import { answer1, answer2, answer3 } from './answer/index.js';
+import { answer1, answer2, answer3, answer4 } from './answer/index.js';
 
 function render(answers) {
   answers.forEach((answer, index) => {
@@ -14,5 +14,5 @@ function render(answers) {
  * render 就直接拿傳入的參數來使用，
  * 就不用事先宣告 answer 的 array。
  */
-const totalAnswer = await Promise.all([answer1(), answer2(), answer3()]);
+const totalAnswer = await Promise.all([answer1(), answer2(), answer3(), answer4()]);
 render(totalAnswer);
