@@ -17,7 +17,7 @@ export const answer2 = async () => {
   const answer = locationData.reduce((acc, cur) => {
     const { locationName: name, parameter, weatherElement } = cur;
     const tempValue = getElementValue(weatherElement, temp);
-    const altitude = getElementValue(weatherElement, elev);
+    const elevation = getElementValue(weatherElement, elev);
     const cityName = getParameterValue(parameter, city);
     const townName = getParameterValue(parameter, town);
 
@@ -30,7 +30,7 @@ export const answer2 = async () => {
     const next =
       tempObj?.temp < tempValue
         ? tempObj
-        : { 縣市: cityName, 行政區: townName, 測站名稱: name, 海拔: altitude };
+        : { 縣市: cityName, 行政區: townName, 測站名稱: name, 海拔: elevation };
 
     return {
       ...acc,
