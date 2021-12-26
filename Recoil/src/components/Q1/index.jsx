@@ -33,7 +33,7 @@ function QuestionOne() {
           elevation={weather.ELEV}
           district={`${district.CITY} ${district.TOWN}`}
           temp={weather.TEMP}
-          time={time.obsTime}
+          time={time}
         />
       </Task.Answer>
     </>

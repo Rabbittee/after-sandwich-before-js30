@@ -19,11 +19,11 @@ const elevation = (acc, val) => {
 const sortByElevation = (data) =>
   data.sort((a, b) => a.weather.ELEV - b.weather.ELEV);
 
-const findLowestTemp = (data) =>{
-  return Object.keys(data).reduce(
+const findLowestTemp = (data) =>
+  Object.keys(data).reduce(
     (acc, val) => ({ ...acc, [val]: find(lowestTempCond)(data[val]) }),
     {}
-  )};
+  );
 
 function QuestionTwo() {
   const data = useWeatherAPI("/v1/rest/datastore/O-A0001-001", {
@@ -48,7 +48,7 @@ function QuestionTwo() {
           elevation={weather.ELEV}
           district={`${district.CITY} ${district.TOWN}`}
           temp={weather.TEMP}
-          time={time.obsTime}
+          time={time}
         />
       </li>
     );

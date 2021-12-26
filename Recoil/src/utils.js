@@ -10,14 +10,10 @@ export const toFormat = (to, series) => series.map(to);
 export const top = (quantity, cb) => (series) =>
   series.sort(cb).slice(0, quantity);
 
-export const lowestTempCond = (acc, val) => {
-  if (acc !== null) {
-    const newTemp = val.weather.TEMP;
-    const preTemp = acc.weather.TEMP;
-    if (Number(newTemp) < Number(preTemp)) return val;
-    return acc;
-  }
-  return val;
+export const lowestTempCond = (acc, val, index) => {
+  if (index === 0) return acc;
+  if (val.weather.TEMP < acc.weather.TEMP) return val;
+  return acc;
 };
 
 export const groupBy = (handler) => (data) => data.reduce(handler, {});
@@ -39,7 +35,7 @@ export class StationInfo {
       (acc, val) => ({ ...acc, [val.elementName]: Number(val.elementValue) }),
       {}
     );
-    this.time = time;
+    this.time = time.obsTime;
   }
 }
 export class DistrictInfo {

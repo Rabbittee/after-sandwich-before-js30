@@ -9,14 +9,14 @@ const filterTop20 = top(
 );
 const district = (acc, val) => {
   const cityName = val.district.CITY;
-  if (!acc.hasOwnProperty(cityName)) {
-    return {
-      [cityName]: [val],
-      ...acc,
-    };
+  if (acc.hasOwnProperty(cityName)) {
+    acc[cityName].push(val);
+    return acc;
   }
-  acc[cityName].push(val);
-  return acc;
+  return {
+    [cityName]: [val],
+    ...acc,
+  };
 };
 
 function StationCard({ name, weather }) {
@@ -51,17 +51,14 @@ function Country({ name, stations }) {
   );
 }
 
-
 function QuestionThree() {
-
   const data = useWeatherAPI("/v1/rest/datastore/O-A0002-001", {
     elementName: ["HOUR_24"],
   });
 
   if (!data) return <div>loading</div>;
 
-  const top20 = pipe(filterTop20,groupBy(district))(data);
-
+  const top20 = pipe(filterTop20, groupBy(district))(data);
   const districts = Object.keys(top20).map((key) => (
     <Country name={key} stations={top20[key]} key={key} />
   ));
