@@ -16,20 +16,16 @@ const range = (acc, val) => {
   };
 };
 
-
 const each = (cond) => (data) => data.reduce(cond, {});
-
 
 const sortByElevation = (data) =>
   data.sort((a, b) => a.weather.ELEV - b.weather.ELEV);
-
 
 const findLowestTemp = (data) =>
   Object.keys(data).reduce(
     (acc, val) => ({ ...acc, [val]: find(lowestTempCond)(data[val]) }),
     {}
   );
-
 
 function QuestionTwo() {
   const data = useWeatherAPI("/v1/rest/datastore/O-A0001-001", {
@@ -41,7 +37,7 @@ function QuestionTwo() {
   const stationByRange = pipe(
     sortByElevation,
     each(range),
-    findLowestTemp,
+    findLowestTemp
   )(data);
 
   const stationCards = Object.keys(stationByRange).map((elevation) => {
