@@ -41,7 +41,7 @@ export class StationInfo {
   }
 }
 export class DistrictInfo {
-  constructor({ locationName, lat, lon, weatherElement, time, parameter }) {
+  constructor({ locationName, lat, lon, weatherElement, time }) {
     this.name = locationName;
     this.geoLocation = { lat, lon };
     this.weather = weatherElement.reduce(

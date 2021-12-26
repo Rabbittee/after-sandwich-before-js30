@@ -1,8 +1,13 @@
 import Task from "../Task";
 import { useWeatherAPI } from "../hooks";
-import { top } from "../../utils";
+import { top, pipe } from "../../utils";
 import { Card } from "../Card";
-const handleDistrict = (acc, val) => {
+
+const filterTop20 = top(
+  20,
+  (pre, val) => val.weather.HOUR_24 - pre.weather.HOUR_24
+);
+const classifyDistrict = (acc, val) => {
   const cityName = val.district.CITY;
   if (!acc.hasOwnProperty(cityName)) {
     return {
@@ -16,7 +21,7 @@ const handleDistrict = (acc, val) => {
 
 function StationCard({ name, weather }) {
   return (
-    <li>
+    <li key={name}>
       <div className="shadow-md rounded-md p-2 flex flex-col justify-center items-center bg-white bg-opacity-20">
         <h2 className="text-md font-bold px-2">{name}</h2>
         <div className="w-full flex justify-center items-end">
@@ -32,26 +37,37 @@ function Country({ name, stations }) {
   return (
     <li>
       <Card title={name}>
-        <ul className="flex flex-row flex-wrap gap-x-2 gap-y-4">{stations.map(StationCard)}</ul>
+        <ul className="flex flex-row flex-wrap gap-x-2 gap-y-4">
+          {stations.map((station) => (
+            <StationCard
+              key={station.name}
+              name={station.name}
+              weather={station.weather}
+            />
+          ))}
+        </ul>
       </Card>
     </li>
   );
 }
 
+const handleDistrict = (data) => data.reduce(classifyDistrict, {});
+
+
 function QuestionThree() {
+
   const data = useWeatherAPI("/v1/rest/datastore/O-A0002-001", {
     elementName: ["HOUR_24"],
   });
+
   if (!data) return <div>loading</div>;
-  const getTop20 = top(
-    20,
-    (pre, val) => val.weather.HOUR_24 - pre.weather.HOUR_24
-  );
-  const top20 = getTop20(data);
-  const district = top20.reduce(handleDistrict, {});
-  const distribute = Object.keys(district).map((key) => (
-    <Country name={key} stations={district[key]} />
+
+  const top20 = pipe(filterTop20,handleDistrict)(data);
+
+  const districts = Object.keys(top20).map((key) => (
+    <Country name={key} stations={top20[key]} key={key} />
   ));
+
   return (
     <>
       <Task.Question title="題目三:格式自己定辣，我懶">
@@ -66,7 +82,7 @@ function QuestionThree() {
         title="近24小時降雨量前20名:"
         className="bg-[url('/src/assets/images/q3_bg.jpeg')]"
       >
-        <ul>{distribute}</ul>
+        <ul>{districts}</ul>
       </Task.Answer>
     </>
   );

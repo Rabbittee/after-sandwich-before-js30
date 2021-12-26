@@ -2,25 +2,33 @@ import Task from "../Task";
 import { useWeatherByDistrict } from "../hooks";
 import { find, pipe } from "../../utils";
 import { TempCard } from "../Card";
-const normalizeTime = (data) =>
+
+
+const classifyTemp = (data) =>
   data.reduce((acc, val) => {
-    const key = val.dataTime.slice(0, 10);
+    const key = val.dataTime.substring(0, 10);
     const temp = Number(val.elementValue[0].value);
-    if (!acc.hasOwnProperty(key)) {
-      return {
-        ...acc,
-        [key]: [temp],
-      };
+
+    if (acc.hasOwnProperty(key)) {
+      acc[key].push(temp);
+      return acc;
     }
-    acc[key].push(temp);
-    return acc;
+
+    return {
+      ...acc,
+      [key]: [temp],
+    };
+
   }, {});
-const diffTempByDay = (data) =>
+
+
+const computeTempDiff = (data) =>
   data.map(([date, temps]) => ({
     date,
     diffTemp: Math.max(...temps) - Math.min(...temps),
   }));
-const getMaxDiffTemp = (data) =>
+
+const findMaxTempDiff = (data) =>
   find((acc, val) => (acc.diffTemp < val.diffTemp ? val : acc))(data);
 
 function QuestionFour() {
@@ -28,21 +36,26 @@ function QuestionFour() {
     locationName: ["基隆市"],
     elementName: ["T"],
   });
+
   if (!data) return <div>loading</div>;
+
   const tempSeries = data[0].weather.T.time;
-  const maxestTemp = find((pre, val) =>
+
+  const heighestTemp = find((pre, val) =>
     pre.elementValue[0].value > val.elementValue[0].value ? pre : val
   )(tempSeries);
+
   const lowestTemp = find((pre, val) =>
     pre.elementValue[0].value < val.elementValue[0].value ? pre : val
   )(tempSeries);
 
   const maxDiffTemp = pipe(
-    normalizeTime,
+    classifyTemp,
     Object.entries,
-    diffTempByDay,
-    getMaxDiffTemp
+    computeTempDiff,
+    findMaxTempDiff
   )(tempSeries);
+
   return (
     <>
       <Task.Question title="題目四:格式自己定辣，我懶">
@@ -51,11 +64,12 @@ function QuestionFour() {
         <span className="bg-blue-900 text-white">最高溫</span>分別為多少？
         <br />且<span className="bg-blue-900 text-white">最大單日溫差</span>
         為多少？
-        <small className="block">
-          (API: /v1/rest/datastore/F-D0047-089)
-        </small>
+        <small className="block">(API: /v1/rest/datastore/F-D0047-089)</small>
       </Task.Question>
-      <Task.Answer title="未來一週的最低溫與最高溫:" className="bg-[url('/src/assets/images/bg_snow.jpg')]">
+      <Task.Answer
+        title="未來一週的最低溫與最高溫:"
+        className="bg-[url('/src/assets/images/bg_snow.jpg')]"
+      >
         <TempCard
           title={"最低溫"}
           temp={lowestTemp.elementValue[0].value}
@@ -63,8 +77,8 @@ function QuestionFour() {
         />
         <TempCard
           title={"最高溫"}
-          temp={maxestTemp.elementValue[0].value}
-          time={maxestTemp.dataTime}
+          temp={heighestTemp.elementValue[0].value}
+          time={heighestTemp.dataTime}
         />
         <TempCard
           title={"單日溫差最大"}
