@@ -8,8 +8,8 @@ function QuestionOne() {
     elementName: ["TEMP", "ELEV"],
   });
   if (!data) return <div>loading</div>;
-  const findStation = find(lowestTempCond);
-  const { name, district, weather, time } = findStation(data);
+  const findLowestTemp = find(lowestTempCond);
+  const { name, district, weather, time } = findLowestTemp(data);
   return (
     <>
       <Task.Question title="題目一:">

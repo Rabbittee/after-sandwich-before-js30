@@ -2,7 +2,8 @@ import Task from "../Task";
 import { useWeatherAPI } from "../hooks";
 import { pipe, find, lowestTempCond } from "../../utils";
 import { StationCard } from "../Card";
-const classifyRange = (acc, val) => {
+
+const range = (acc, val) => {
   const elevation = Math.ceil(val.weather.ELEV / 500) * 500;
   const range = `${elevation - 500}-${elevation}`;
   if (acc.hasOwnProperty(range)) {
@@ -15,30 +16,34 @@ const classifyRange = (acc, val) => {
   };
 };
 
+const each = (cond) => (data) => data.reduce(cond, {});
+
+const sortByElevation = (data) =>
+  data.sort((a, b) => a.weather.ELEV - b.weather.ELEV);
+
+const findLowestTemp = (data) =>
+  Object.keys(data).reduce(
+    (acc, val) => ({ ...acc, [val]: find(lowestTempCond)(data[val]) }),
+    {}
+  );
+
 function QuestionTwo() {
   const data = useWeatherAPI("/v1/rest/datastore/O-A0001-001", {
     elementName: ["ELEV", "TEMP"],
   });
+
   if (!data) return <div>loading</div>;
-  const filterLowest = find(lowestTempCond);
-  const findLowestByRange = (data) =>
-    Object.keys(data).reduce(
-      (acc, val) => ({ ...acc, [val]: filterLowest(data[val]) }),
-      {}
-    );
-  const handleRange = (data) => data.reduce(classifyRange, {});
-  const sortRange = (data) =>
-    data.sort((a, b) => a.weather.ELEV - b.weather.ELEV);
-  const lowestTempEach500 = pipe(
-    sortRange,
-    handleRange,
-    findLowestByRange
+
+  const stationByRange = pipe(
+    sortByElevation,
+    each(range),
+    findLowestTemp
   )(data);
 
-  const stations = Object.keys(lowestTempEach500).map((elevation) => {
-    const { name, district, weather, time } = lowestTempEach500[elevation];
+  const stationCards = Object.keys(stationByRange).map((elevation) => {
+    const { name, district, weather, time } = stationByRange[elevation];
     return (
-      <li>
+      <li key={elevation}>
         <StationCard
           type={elevation}
           name={name}
@@ -50,6 +55,7 @@ function QuestionTwo() {
       </li>
     );
   });
+
   return (
     <>
       <Task.Question title="題目二:">
@@ -59,7 +65,7 @@ function QuestionTwo() {
         <small className="block">(API: v1/rest/datastore/O-A0001-001)</small>
       </Task.Question>
       <Task.Answer className="bg-[url('/src/assets/images/bg_snow.jpg')]">
-        <ul>{stations}</ul>
+        <ul>{stationCards}</ul>
       </Task.Answer>
     </>
   );
