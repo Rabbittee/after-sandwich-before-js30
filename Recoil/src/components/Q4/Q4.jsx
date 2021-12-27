@@ -25,7 +25,7 @@ const computeTempDiff = (data) =>
   }));
 
 const findMaxTempDiff = find((acc, val) =>
-  acc.diffTemp < val.diffTemp ? val : acc
+  acc.diffTemp > val.diffTemp ? acc : val
 );
 
 function QuestionFour() {
