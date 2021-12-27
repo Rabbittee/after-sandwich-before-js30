@@ -31,7 +31,11 @@ export async function Temperature() {
             };
         })
         .filter(
-            item => Number(item.temperature) !== unAvailableValue && Number(item.locationElev) !== unAvailableValue
+            item =>
+                item.temperature !== unAvailableValue &&
+                item.locationElev !== unAvailableValue &&
+                typeof item.temperature === "number" &&
+                typeof item.locationElev === "number"
         );
 
     /**
@@ -43,7 +47,7 @@ export async function Temperature() {
 
         if (Object.keys(result).length === 0) return currentLocation;
 
-        return Number(currentTemp) > Number(result.temperature) ? result : currentLocation;
+        return currentTemp > result.temperature ? result : currentLocation;
     }, {});
 
     /**
@@ -54,8 +58,6 @@ export async function Temperature() {
         const tempCurrent = current.temperature;
         const elevCurrent = current.locationElev;
         const level = Math.floor(elevCurrent / 500) * 500;
-
-        if (isNaN(tempCurrent) || isNaN(elevCurrent)) return all;
 
         if (all[level] === undefined) {
             all[level] = current;

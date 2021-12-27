@@ -22,7 +22,7 @@
             <li class="space-y-2">
                 <h2 class="font-bold text-xl">第四題</h2>
                 <Card>
-                    <WeeklyWeather />
+                    <Forecast />
                 </Card>
             </li>
         </ul>
@@ -33,7 +33,7 @@
 import LowestTemp from "@/components/LowestTemp.vue";
 import LowTempByElevation from "@/components/LowTempByElevation.vue";
 import Rain from "@/components/Rain.vue";
-import WeeklyWeather from "@/components/WeeklyWeather.vue";
+import Forecast from "@/components/Forecast.vue";
 import Card from "@/components/Card.vue";
 export default {
     name: "App",
@@ -42,7 +42,7 @@ export default {
         LowTempByElevation,
         LowestTemp,
         Rain,
-        WeeklyWeather,
+        Forecast,
     },
 };
 </script>

@@ -24,14 +24,14 @@ export async function Rain() {
                         name: item.locationName,
                     },
                     time: item.time && item.time.obsTime,
-                    hour_24: getElementValueByKey(item.weatherElement, "HOUR_24"),
+                    hour_24: Number(getElementValueByKey(item.weatherElement, "HOUR_24")),
                 };
             })
             .filter(item => {
-                return Number(item.hour_24) >= 0;
+                return item.hour_24 >= 0;
             })
             .sort((prev, next) => {
-                return Number(next.hour_24) - Number(prev.hour_24);
+                return next.hour_24 - prev.hour_24;
             })
             .slice(0, 20);
     }

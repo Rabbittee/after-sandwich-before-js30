@@ -1,4 +1,4 @@
-import { getWeeklyWeatherForecast, allLocations } from "./weather.js";
+import { getWeeklyWeatherForecast } from "./weather.js";
 import { getTimeByKey, dealAvailableValue } from "./helpers.js";
 
 export async function weeklyForecast() {
@@ -68,7 +68,6 @@ export async function weeklyForecast() {
     return {
         locations,
         status,
-        allLocations,
         getLocationTempExtreme,
         getLocationTempMaxDiff,
     };
