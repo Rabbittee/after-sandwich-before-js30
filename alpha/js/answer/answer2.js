@@ -1,55 +1,42 @@
-import { getCurrentData, errorCode } from '../script.js';
+import { getCurrentData, token } from "../fetch.js";
+import { getElementValue, getParameterValue } from "../utils.js";
+import { temp, city, town, elev } from "../global.js";
 
-const apiPath = 'api/v1/rest/datastore/O-A0001-001';
+const apiPath = "O-A0001-001";
+const { Authorization } = token;
+const paramsObj = {
+  Authorization: Authorization,
+  parameterName: [city, town],
+  elementName: [elev, temp],
+};
 export const answer2 = async () => {
-  const data = await getCurrentData(apiPath);
+  const data = await getCurrentData(apiPath, paramsObj);
 
   const locationData = data.records.location;
-  const tempIndex = 3;
-  const cityIndex = 0;
-  const townIndex = 2;
-  const elevIndex = 0;
 
-  const maxElev = Math.max(
-    ...locationData.map((item) => {
-      return item.weatherElement[elevIndex].elementValue;
-    })
-  );
+  const answer = locationData.reduce((acc, cur) => {
+    const { locationName: name, parameter, weatherElement } = cur;
+    const tempValue = getElementValue(weatherElement, temp);
+    const elevation = getElementValue(weatherElement, elev);
+    const cityName = getParameterValue(parameter, city);
+    const townName = getParameterValue(parameter, town);
 
-  const tempArray = [];
-  for (let i = 500; i - 500 < maxElev; i += 500) {
-    let j = i - 500;
-    if (j !== 0) j++;
-    const currentObj = locationData
-      .filter((item) => {
-        return item.weatherElement[tempIndex].elementValue !== errorCode;
-      })
-      .filter((item) => {
-        return (
-          item.weatherElement[elevIndex].elementValue < i &&
-          item.weatherElement[elevIndex].elementValue > j
-        );
-      })
-      .reduce(function (prev, item) {
-        return parseFloat(item.weatherElement[tempIndex].elementValue) <
-          parseFloat(prev.weatherElement[tempIndex].elementValue)
-          ? item
-          : prev;
-      });
+    //find pre 500m altitude;
+    const step = (Math.floor(altitude / 500) + 1) * 500;
+    //get pre 500m array;
+    const { [step]: tempObj } = acc;
 
-    const { locationName, parameter, weatherElement, lat, lon } = currentObj;
-    const answerArray = {
-      海拔: `${j}~${i}`,
-      縣市: parameter[cityIndex].parameterValue,
-      行政區: parameter[townIndex].parameterValue,
-      測站名稱: locationName,
-      溫度: weatherElement[tempIndex].elementValue,
-      座標: {
-        lat: lat,
-        lon: lon,
-      },
+    //find next if temp is current value;
+    const next =
+      tempObj?.temp < tempValue
+        ? tempObj
+        : { 縣市: cityName, 行政區: townName, 測站名稱: name, 海拔: elevation };
+
+    return {
+      ...acc,
+      [step]: next,
     };
-    tempArray.push(answerArray);
-  }
-  return tempArray;
+  }, {});
+
+  return answer;
 };

@@ -1,6 +1,13 @@
 import { answer1, answer2, answer3, answer4 } from './answer/index.js';
-import { render } from './script.js';
 
+function render(answers) {
+  answers.forEach((answer, index) => {
+    const answer_node = document.getElementById(`answer_${index + 1}`);
+    const showText = JSON.stringify(answer, null, '    ');
+    answer_node.rows = showText.split('\n').length;
+    answer_node.value = showText;
+  });
+}
 /**
  * 因為 Promise.all 的 response 會是一個 array 且照著順序排列，
  * 所以直接傳入給 render 函式當作參數，
