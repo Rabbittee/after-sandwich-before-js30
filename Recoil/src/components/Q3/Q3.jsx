@@ -1,4 +1,4 @@
-import Task from "../Task";
+import Task from "../Task/Task";
 import { useWeatherAPI } from "../hooks";
 import { top, pipe, groupBy } from "../../utils";
 import { Card } from "../Card";
@@ -38,9 +38,9 @@ function Country({ name, stations }) {
     <li>
       <Card title={name}>
         <ul className="flex flex-row flex-wrap gap-x-2 gap-y-4">
-          {stations.map((station) => (
+          {stations.map((station,index) => (
             <StationCard
-              key={station.name}
+              key={`${station.name}-${index}`}
               name={station.name}
               weather={station.weather}
             />

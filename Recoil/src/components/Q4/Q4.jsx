@@ -1,26 +1,22 @@
-import Task from "../Task";
+import Task from "../Task/Task";
 import { useWeatherByDistrict } from "../hooks";
 import { find, pipe } from "../../utils";
 import { TempCard } from "../Card";
 
-
 const classifyTemp = (data) =>
   data.reduce((acc, val) => {
     const key = val.dataTime.substring(0, 10);
-    const temp = Number(val.elementValue[0].value);
 
     if (acc.hasOwnProperty(key)) {
-      acc[key].push(temp);
+      acc[key].push(val.value);
       return acc;
     }
 
     return {
       ...acc,
-      [key]: [temp],
+      [key]: [val.value],
     };
-
   }, {});
-
 
 const computeTempDiff = (data) =>
   data.map(([date, temps]) => ({
@@ -28,8 +24,9 @@ const computeTempDiff = (data) =>
     diffTemp: Math.max(...temps) - Math.min(...temps),
   }));
 
-const findMaxTempDiff = (data) =>
-  find((acc, val) => (acc.diffTemp < val.diffTemp ? val : acc))(data);
+const findMaxTempDiff = find((acc, val) =>
+  acc.diffTemp < val.diffTemp ? val : acc
+);
 
 function QuestionFour() {
   const data = useWeatherByDistrict("/v1/rest/datastore/F-D0047-089", {
@@ -41,13 +38,13 @@ function QuestionFour() {
 
   const tempSeries = data[0].weather.T.time;
 
-  const heighestTemp = find((pre, val) =>
-    pre.elementValue[0].value > val.elementValue[0].value ? pre : val
-  )(tempSeries);
+  const heighestTemp = find((pre, val) => (pre.value > val.value ? pre : val))(
+    tempSeries
+  );
 
-  const lowestTemp = find((pre, val) =>
-    pre.elementValue[0].value < val.elementValue[0].value ? pre : val
-  )(tempSeries);
+  const lowestTemp = find((pre, val) => (pre.value < val.value ? pre : val))(
+    tempSeries
+  );
 
   const maxDiffTemp = pipe(
     classifyTemp,
@@ -72,12 +69,12 @@ function QuestionFour() {
       >
         <TempCard
           title={"最低溫"}
-          temp={lowestTemp.elementValue[0].value}
+          temp={lowestTemp.value}
           time={lowestTemp.dataTime}
         />
         <TempCard
           title={"最高溫"}
-          temp={heighestTemp.elementValue[0].value}
+          temp={heighestTemp.value}
           time={heighestTemp.dataTime}
         />
         <TempCard

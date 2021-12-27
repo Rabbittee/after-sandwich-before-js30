@@ -39,16 +39,22 @@ export class StationInfo {
   }
 }
 export class DistrictInfo {
-  constructor({ locationName, lat, lon, weatherElement, time }) {
+  constructor({ locationName, lat, lon, weatherElement }) {
     this.name = locationName;
     this.geoLocation = { lat, lon };
     this.weather = weatherElement.reduce(
       (acc, val) => ({
         ...acc,
-        [val.elementName]: { description: val.description, time: val.time },
+        [val.elementName]: {
+          description: val.description,
+          time: val.time.map(({ dataTime, elementValue }) => ({
+            dataTime,
+            value: Number(elementValue[0].value),
+            measures: elementValue[0].measures
+          })),
+        },
       }),
       {}
     );
-    this.time = time;
   }
 }

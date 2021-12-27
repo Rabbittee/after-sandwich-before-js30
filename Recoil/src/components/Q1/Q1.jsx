@@ -1,4 +1,4 @@
-import Task from "../../components/Task";
+import Task from "../Task/Task";
 import { useWeatherAPI } from "../hooks";
 import { find, lowestTempCond } from "../../utils";
 import { StationCard } from "../Card";

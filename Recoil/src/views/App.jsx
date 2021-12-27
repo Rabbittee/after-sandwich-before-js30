@@ -1,8 +1,8 @@
 import clsx from "clsx";
-import QuestionOne from "../components/Q1";
-import QuestionTwo from "../components/Q2";
-import QuestionThree from "../components/Q3";
-import QuestionFour from "../components/Q4";
+import QuestionOne from "../components/Q1/Q1";
+import QuestionTwo from "../components/Q2/Q2";
+import QuestionThree from "../components/Q3/Q3";
+import QuestionFour from "../components/Q4/Q4";
 
 function App() {
   return (
