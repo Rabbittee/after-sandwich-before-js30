@@ -33,8 +33,47 @@ const getCurrentData = async () => {
   
 
   // Q1 變數
-  let minTemp,city,town,name,lon,lat;
+  let minTemp = Infinity,city,town,name,lon,lat;
   // Q2 變數
+  const minInfo = {
+    0: {
+      Location: '', // 觀測站
+      Temporature: Infinity,       // 溫度
+    },
+    1: {
+      Location: '', // 觀測站
+      Temporature: Infinity,       // 溫度
+    },
+    2: {
+      Location: '', // 觀測站
+      Temporature: Infinity,       // 溫度
+    },
+    3: {
+      Location: '', // 觀測站
+      Temporature: Infinity,       // 溫度
+    },
+    4: {
+      Location: '', // 觀測站
+      Temporature: Infinity,       // 溫度
+    },
+    5: {
+      Location: '', // 觀測站
+      Temporature: Infinity,       // 溫度
+    },
+    6: {
+      Location: '', // 觀測站
+      Temporature: Infinity,       // 溫度
+    },
+    7: {
+      Location: '', // 觀測站
+      Temporature: Infinity,       // 溫度
+    },
+    8: {
+      Location: '', // 觀測站
+      Temporature: Infinity,       // 溫度
+    },
+  };
+
   let minTemp500,minTemp1000,minTemp1500,minTemp2000,minTemp2500,minTemp3000,minTemp3500,minTemp4000,minTemp4500;
   let location500,location1000,location1500,location2000,location2500,location3000,location3500,location4000,location4500;
   // Q3 變數
@@ -47,7 +86,7 @@ const getCurrentData = async () => {
     //
     // Q1.取全台當下最低溫
     //
-    if ( minTemp === undefined )
+    if ( minTemp === Infinity )
       minTemp = current.weatherElement[3].elementValue;
     
     else if( chkMinTemp( current.weatherElement[3].elementValue , minTemp ) )
@@ -75,178 +114,55 @@ const getCurrentData = async () => {
     //
     // Q2.針對不同海拔高度找出最低溫測站，每500m一組
     //
-    let height = parseInt( current.weatherElement[0].elementValue / 500 );
-
-    switch ( height ) {
-      case 0:
-        if ( minTemp500 === undefined && location500 === undefined )
-        {
-          minTemp500 = current.weatherElement[3].elementValue;
-          location500 = current.locationName;
-        }
-
-        if( chkMinTemp( current.weatherElement[3].elementValue , minTemp ) )
-        {
-          minTemp500 = current.weatherElement[3].elementValue;
-          location500 = current.locationName;
-        }
-        break;
+    const heightLevel = parseInt( current.weatherElement[0].elementValue / 500 );
+    
+    ( ( heightLevel ) => {
       
-      case 1:
-        if ( minTemp1000 === undefined && location1000 === undefined )
-        {
-          minTemp1000 = current.weatherElement[3].elementValue;
-          location1000 = current.locationName;
-        }
-        
-        if( chkMinTemp( current.weatherElement[3].elementValue , minTemp ) )
-        {
-          minTemp1000 = current.weatherElement[3].elementValue;
-          location1000 = current.locationName;
-        }
-        break;
+      if ( current.weatherElement[3].elementValue !== invalid )
+        minInfo[heightLevel].Temporature = Math.min( minInfo[heightLevel].Temporature , current.weatherElement[3].elementValue );
+      
+      if ( parseFloat( minInfo[heightLevel].Temporature ) === parseFloat( current.weatherElement[3].elementValue ) )
+        minInfo[heightLevel].Location = current.locationName;
 
-      case 2:
-        if ( minTemp1500 === undefined && location1500 === undefined )
-        {
-          minTemp1500 = current.weatherElement[3].elementValue;
-          location1500 = current.locationName;
-        }
-        
-        if( chkMinTemp( current.weatherElement[3].elementValue , minTemp ) )
-        {
-          minTemp1500 = current.weatherElement[3].elementValue;
-          location1500 = current.locationName;
-        }
-        break;
+    } )( heightLevel );
 
-      case 3:
-        if ( minTemp2000 === undefined && location2000 === undefined )
-        {
-          minTemp2000 = current.weatherElement[3].elementValue;
-          location2000 = current.locationName;
-        }
-        
-        if( chkMinTemp( current.weatherElement[3].elementValue , minTemp ) )
-        {
-          minTemp2000 = current.weatherElement[3].elementValue;
-          location2000 = current.locationName;
-        }
-        break;
-
-      case 4:
-        if ( minTemp2500 === undefined && location2500 === undefined )
-        {
-          minTemp2500 = current.weatherElement[3].elementValue;
-          location2500 = current.locationName;
-        }
-        
-        if( chkMinTemp( current.weatherElement[3].elementValue , minTemp ) )
-        {
-          minTemp2500 = current.weatherElement[3].elementValue;
-          location2500 = current.locationName;
-        }
-        break;
-
-      case 5:
-        if ( minTemp3000 === undefined && location3000 === undefined )
-        {
-          minTemp3000 = current.weatherElement[3].elementValue;
-          location3000 = current.locationName;
-        }
-        
-        if( chkMinTemp( current.weatherElement[3].elementValue , minTemp ) )
-        {
-          minTemp3000 = current.weatherElement[3].elementValue;
-          location3000 = current.locationName;
-        }
-        break;
-
-      case 6:
-        if ( minTemp3500 === undefined && location3500 === undefined )
-        {
-          minTemp3500 = current.weatherElement[3].elementValue;
-          location3500 = current.locationName;
-        }
-        
-        if( chkMinTemp( current.weatherElement[3].elementValue , minTemp ) )
-        {
-          minTemp3500 = current.weatherElement[3].elementValue;
-          location3500 = current.locationName;
-        }
-        break;
-
-      case 7:
-        if ( minTemp4000 === undefined && location4000 === undefined )
-        {
-          minTemp4000 = current.weatherElement[3].elementValue;
-          location4000 = current.locationName;
-        }
-        
-        if( chkMinTemp( current.weatherElement[3].elementValue , minTemp ) )
-        {
-          minTemp4000 = current.weatherElement[3].elementValue;
-          location4000 = current.locationName;
-        }
-        break;
-
-      case 8:
-        if ( minTemp4500 === undefined && location4500 === undefined )
-        {
-          minTemp4500 = current.weatherElement[3].elementValue;
-          location4500 = current.locationName;
-          
-        }
-        
-        if( chkMinTemp( current.weatherElement[3].elementValue , minTemp ) )
-        {
-          minTemp4500 = current.weatherElement[3].elementValue;
-          location4500 = current.locationName;
-        }
-        break;
-
-      default:
-        break;
-
-    }
    
-
     answers[1] = {
       "0-500": {
-        "最低溫測站": location500,
-        "溫度": minTemp500,
+        "最低溫測站": minInfo[0].Location,
+        "溫度": minInfo[0].Temporature,
       },
       "501-1000": {
-        "最低溫測站": location1000,
-        "溫度": minTemp1000,
+        "最低溫測站": minInfo[1].Location,
+        "溫度": minInfo[1].Temporature,
       },
       "1001-1500": {
-        "最低溫測站": location1500,
-        "溫度": minTemp1500,
+        "最低溫測站": minInfo[2].Location,
+        "溫度": minInfo[2].Temporature,
       },
       "1501-2000": {
-        "最低溫測站": location2000,
-        "溫度": minTemp2000,
+        "最低溫測站": minInfo[3].Location,
+        "溫度": minInfo[3].Temporature,
       },
       "2001-2500": {
-        "最低溫測站": location2500,
-        "溫度": minTemp2500,
+        "最低溫測站": minInfo[4].Location,
+        "溫度": minInfo[4].Temporature,
       },
       "2501-3000": {
-        "最低溫測站": location3000,
-        "溫度": minTemp3000,
+        "最低溫測站": minInfo[5].Location,
+        "溫度": minInfo[5].Temporature,
       },
       "3001-3500": {
-        "最低溫測站": location3500,
-        "溫度": minTemp3500,
+        "最低溫測站": minInfo[6].Location,
+        "溫度": minInfo[6].Temporature,
       },
       "3501-4000": {
-        "最低溫測站": location4000,
-        "溫度": minTemp4000,
+        "最低溫測站": minInfo[7].Location,
+        "溫度": minInfo[7].Temporature,
       },
       "4001-4500": {
-        "最低溫測站": location4500 || "no Temporature",
-        "溫度": minTemp4500 || "no Location",
+        "最低溫測站": minInfo[7].Location || "No Location",
+        "溫度": minInfo[7].Temporature || "No Temporature",
       },
     };
 
