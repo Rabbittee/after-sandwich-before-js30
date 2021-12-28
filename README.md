@@ -17,11 +17,11 @@
 
 ### 氣象資料
 
-- [氣象局開放資料清單](https://opendata.cwb.gov.tw/dist/opendata-swagger.html?urls.primaryName=openAPI)
-- [自動氣象站-氣象觀測資料格式](https://opendata.cwb.gov.tw/opendatadoc/DIV2/A0001-001.pdf)
-- [自動雨量站-雨量觀測資料格式](https://opendata.cwb.gov.tw/opendatadoc/DIV2/A0002-001.pdf)
-- [局屬氣象站資料格式](https://opendata.cwb.gov.tw/opendatadoc/DIV2/A0003-001.pdf)
-- [預報 XML 產品預報因子欄位中文說明表](https://opendata.cwb.gov.tw/opendatadoc/MFC/D0047.pdf)
+- [氣象局開放資料清單 API Doc](https://opendata.cwb.gov.tw/dist/opendata-swagger.html?urls.primaryName=openAPI)
+- [自動氣象站-氣象觀測資料格式 (for Q1 & Q2)](https://opendata.cwb.gov.tw/opendatadoc/DIV2/A0001-001.pdf)
+- [局屬氣象站資料格式 (for Q2 alternative)](https://opendata.cwb.gov.tw/opendatadoc/DIV2/A0003-001.pdf)
+- [自動雨量站-雨量觀測資料格式 (for Q3)](https://opendata.cwb.gov.tw/opendatadoc/DIV2/A0002-001.pdf)
+- [預報 XML 產品預報因子欄位中文說明表 (for Q4)](https://opendata.cwb.gov.tw/opendatadoc/MFC/D0047.pdf)
 - [申請帳號取得 token](https://opendata.cwb.gov.tw/user/authkey)
 
 ### 上傳格式
