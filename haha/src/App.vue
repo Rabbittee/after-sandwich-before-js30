@@ -30,7 +30,7 @@
                     {{ btn }}
                 </div>
             </template>
-            <div class="bg-gray-300 rounded-lg h-40">
+            <div class="bg-gray-300 rounded-lg h-auto">
                 <Component :is="questionCard[state.btnClick].Comp"></Component>
             </div>
         </div>
