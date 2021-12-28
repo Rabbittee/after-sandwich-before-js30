@@ -1,4 +1,4 @@
-import Task from "../../components/Task";
+import Task from "../Task/Task";
 import { useWeatherAPI } from "../hooks";
 import { find, lowestTempCond } from "../../utils";
 import { StationCard } from "../Card";
@@ -33,7 +33,7 @@ function QuestionOne() {
           elevation={weather.ELEV}
           district={`${district.CITY} ${district.TOWN}`}
           temp={weather.TEMP}
-          time={time.obsTime}
+          time={time}
         />
       </Task.Answer>
     </>

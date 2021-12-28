@@ -1,22 +1,22 @@
-import Task from "../Task";
+import Task from "../Task/Task";
 import { useWeatherAPI } from "../hooks";
-import { top, pipe } from "../../utils";
+import { top, pipe, groupBy } from "../../utils";
 import { Card } from "../Card";
 
 const filterTop20 = top(
   20,
   (pre, val) => val.weather.HOUR_24 - pre.weather.HOUR_24
 );
-const classifyDistrict = (acc, val) => {
+const district = (acc, val) => {
   const cityName = val.district.CITY;
-  if (!acc.hasOwnProperty(cityName)) {
-    return {
-      [cityName]: [val],
-      ...acc,
-    };
+  if (acc.hasOwnProperty(cityName)) {
+    acc[cityName].push(val);
+    return acc;
   }
-  acc[cityName].push(val);
-  return acc;
+  return {
+    [cityName]: [val],
+    ...acc,
+  };
 };
 
 function StationCard({ name, weather }) {
@@ -38,9 +38,9 @@ function Country({ name, stations }) {
     <li>
       <Card title={name}>
         <ul className="flex flex-row flex-wrap gap-x-2 gap-y-4">
-          {stations.map((station) => (
+          {stations.map((station,index) => (
             <StationCard
-              key={station.name}
+              key={`${station.name}-${index}`}
               name={station.name}
               weather={station.weather}
             />
@@ -51,19 +51,14 @@ function Country({ name, stations }) {
   );
 }
 
-const handleDistrict = (data) => data.reduce(classifyDistrict, {});
-
-
 function QuestionThree() {
-
   const data = useWeatherAPI("/v1/rest/datastore/O-A0002-001", {
     elementName: ["HOUR_24"],
   });
 
   if (!data) return <div>loading</div>;
 
-  const top20 = pipe(filterTop20,handleDistrict)(data);
-
+  const top20 = pipe(filterTop20, groupBy(district))(data);
   const districts = Object.keys(top20).map((key) => (
     <Country name={key} stations={top20[key]} key={key} />
   ));
