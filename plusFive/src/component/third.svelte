@@ -34,7 +34,7 @@
         })
         .sort(compare).slice(-20)
       
-      sortedLocation = sortedLocation
+      sortedLocation = sortedLocation.reverse()
     }
   }
 
@@ -46,10 +46,11 @@
   }
 </script>
 
-<h6 class="mb-3">第三題：</h6>
+<h6 class="mb-3">第三題：近24小時降雨量前20名是哪些？分別統計整理列在哪些縣市？</h6>
 <div class="flex flex-wrap justify-center">
-  {#each sortedLocation as location}
+  {#each sortedLocation as location, i}
     <div class="p-1 border border-gray-200 w-32">
+      <div>第{i + 1}名</div>
       <div>
         縣市：{location[0]}
       </div>

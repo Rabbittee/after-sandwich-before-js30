@@ -66,7 +66,7 @@
   }
 </script>
 
-<h6 class="mb-3">第二題：</h6>
+<h6 class="mb-3">第二題：針對不同海拔高度找出最低溫測站，每 500m 一組，並回傳object</h6>
 {#each elevTN as elev}
   <div class="p-1 border border-gray-200">
     <div>

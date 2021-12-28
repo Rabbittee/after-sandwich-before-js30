@@ -43,7 +43,7 @@
   }
 </script>
 
-<h6 class="mb-3">第一題：</h6>
+<h6 class="mb-3">第一題：找到全台當下最低溫的點</h6>
 <div>
   {#if currentTN}
     <div class="p-1 border border-gray-200">

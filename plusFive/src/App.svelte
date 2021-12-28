@@ -9,6 +9,8 @@
   // 2. 練習用別的方法打 API
   // 3. 使用更明確的陣列方法操作（？
   // 4. component 可以分得更明確一點
+  // 5. 第二題要回傳 object，研究如何傳 object
+  // 6. 研究 rollup base url 的東東
   // regionend
 </script>
 
