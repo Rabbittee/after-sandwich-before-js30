@@ -75,143 +75,141 @@ const getCurrentData = async () => {
     //
     // Q2.針對不同海拔高度找出最低溫測站，每500m一組
     //
-    let height = current.weatherElement[0].elementValue;
-    
-    if ( height <= 500 )
-    {
-      if ( minTemp500 === undefined && location500 === undefined )
-      {
-        minTemp500 = current.weatherElement[3].elementValue;
-        location500 = current.locationName;
-      }
+    let height = parseInt( current.weatherElement[0].elementValue / 500 );
 
-      if( chkMinTemp( current.weatherElement[3].elementValue , minTemp ) )
-      {
-        minTemp500 = current.weatherElement[3].elementValue;
-        location500 = current.locationName;
-      }
-    }
+    switch ( height ) {
+      case 0:
+        if ( minTemp500 === undefined && location500 === undefined )
+        {
+          minTemp500 = current.weatherElement[3].elementValue;
+          location500 = current.locationName;
+        }
 
-    else if ( height > 500 && height <= 1000 )
-    {
-      if ( minTemp1000 === undefined && location1000 === undefined )
-      {
-        minTemp1000 = current.weatherElement[3].elementValue;
-        location1000 = current.locationName;
-      }
+        if( chkMinTemp( current.weatherElement[3].elementValue , minTemp ) )
+        {
+          minTemp500 = current.weatherElement[3].elementValue;
+          location500 = current.locationName;
+        }
+        break;
       
-      if( chkMinTemp( current.weatherElement[3].elementValue , minTemp ) )
-      {
-        minTemp1000 = current.weatherElement[3].elementValue;
-        location1000 = current.locationName;
-      }
-    }
-
-    else if ( height > 1000 && height <= 1500 )
-    {
-      if ( minTemp1500 === undefined && location1500 === undefined )
-      {
-        minTemp1500 = current.weatherElement[3].elementValue;
-        location1500 = current.locationName;
-      }
-      
-      if( chkMinTemp( current.weatherElement[3].elementValue , minTemp ) )
-      {
-        minTemp1500 = current.weatherElement[3].elementValue;
-        location1500 = current.locationName;
-      }
-    }
-
-    else if ( height > 1500 && height <= 2000 )
-    {
-      if ( minTemp2000 === undefined && location2000 === undefined )
-      {
-        minTemp2000 = current.weatherElement[3].elementValue;
-        location2000 = current.locationName;
-      }
-      
-      if( chkMinTemp( current.weatherElement[3].elementValue , minTemp ) )
-      {
-        minTemp2000 = current.weatherElement[3].elementValue;
-        location2000 = current.locationName;
-      }
-    }
-
-    else if ( height > 2000 && height <= 2500 )
-    {
-      if ( minTemp2500 === undefined && location2500 === undefined )
-      {
-        minTemp2500 = current.weatherElement[3].elementValue;
-        location2500 = current.locationName;
-      }
-      
-      if( chkMinTemp( current.weatherElement[3].elementValue , minTemp ) )
-      {
-        minTemp2500 = current.weatherElement[3].elementValue;
-        location2500 = current.locationName;
-      }
-    }
-
-    else if ( height > 2500 && height <= 3000 )
-    {
-      if ( minTemp3000 === undefined && location3000 === undefined )
-      {
-        minTemp3000 = current.weatherElement[3].elementValue;
-        location3000 = current.locationName;
-      }
-      
-      if( chkMinTemp( current.weatherElement[3].elementValue , minTemp ) )
-      {
-        minTemp3000 = current.weatherElement[3].elementValue;
-        location3000 = current.locationName;
-      }
-    }
-
-    else if ( height > 3000 && height <= 3500 )
-    {
-      if ( minTemp3500 === undefined && location3500 === undefined )
-      {
-        minTemp3500 = current.weatherElement[3].elementValue;
-        location3500 = current.locationName;
-      }
-      
-      if( chkMinTemp( current.weatherElement[3].elementValue , minTemp ) )
-      {
-        minTemp3500 = current.weatherElement[3].elementValue;
-        location3500 = current.locationName;
-      }
-    }
-    
-    else if ( height > 3500 && height <= 4000 )
-    {
-      if ( minTemp4000 === undefined && location4000 === undefined )
-      {
-        minTemp4000 = current.weatherElement[3].elementValue;
-        location4000 = current.locationName;
-      }
-      
-      if( chkMinTemp( current.weatherElement[3].elementValue , minTemp ) )
-      {
-        minTemp4000 = current.weatherElement[3].elementValue;
-        location4000 = current.locationName;
-      }
-    }
-
-    else if ( height > 4000 && height <= 4500 )
-    {
-      if ( minTemp4500 === undefined && location4500 === undefined )
-      {
-        minTemp4500 = current.weatherElement[3].elementValue;
-        location4500 = current.locationName;
+      case 1:
+        if ( minTemp1000 === undefined && location1000 === undefined )
+        {
+          minTemp1000 = current.weatherElement[3].elementValue;
+          location1000 = current.locationName;
+        }
         
-      }
-      
-      if( chkMinTemp( current.weatherElement[3].elementValue , minTemp ) )
-      {
-        minTemp4500 = current.weatherElement[3].elementValue;
-        location4500 = current.locationName;
-      }
+        if( chkMinTemp( current.weatherElement[3].elementValue , minTemp ) )
+        {
+          minTemp1000 = current.weatherElement[3].elementValue;
+          location1000 = current.locationName;
+        }
+        break;
+
+      case 2:
+        if ( minTemp1500 === undefined && location1500 === undefined )
+        {
+          minTemp1500 = current.weatherElement[3].elementValue;
+          location1500 = current.locationName;
+        }
+        
+        if( chkMinTemp( current.weatherElement[3].elementValue , minTemp ) )
+        {
+          minTemp1500 = current.weatherElement[3].elementValue;
+          location1500 = current.locationName;
+        }
+        break;
+
+      case 3:
+        if ( minTemp2000 === undefined && location2000 === undefined )
+        {
+          minTemp2000 = current.weatherElement[3].elementValue;
+          location2000 = current.locationName;
+        }
+        
+        if( chkMinTemp( current.weatherElement[3].elementValue , minTemp ) )
+        {
+          minTemp2000 = current.weatherElement[3].elementValue;
+          location2000 = current.locationName;
+        }
+        break;
+
+      case 4:
+        if ( minTemp2500 === undefined && location2500 === undefined )
+        {
+          minTemp2500 = current.weatherElement[3].elementValue;
+          location2500 = current.locationName;
+        }
+        
+        if( chkMinTemp( current.weatherElement[3].elementValue , minTemp ) )
+        {
+          minTemp2500 = current.weatherElement[3].elementValue;
+          location2500 = current.locationName;
+        }
+        break;
+
+      case 5:
+        if ( minTemp3000 === undefined && location3000 === undefined )
+        {
+          minTemp3000 = current.weatherElement[3].elementValue;
+          location3000 = current.locationName;
+        }
+        
+        if( chkMinTemp( current.weatherElement[3].elementValue , minTemp ) )
+        {
+          minTemp3000 = current.weatherElement[3].elementValue;
+          location3000 = current.locationName;
+        }
+        break;
+
+      case 6:
+        if ( minTemp3500 === undefined && location3500 === undefined )
+        {
+          minTemp3500 = current.weatherElement[3].elementValue;
+          location3500 = current.locationName;
+        }
+        
+        if( chkMinTemp( current.weatherElement[3].elementValue , minTemp ) )
+        {
+          minTemp3500 = current.weatherElement[3].elementValue;
+          location3500 = current.locationName;
+        }
+        break;
+
+      case 7:
+        if ( minTemp4000 === undefined && location4000 === undefined )
+        {
+          minTemp4000 = current.weatherElement[3].elementValue;
+          location4000 = current.locationName;
+        }
+        
+        if( chkMinTemp( current.weatherElement[3].elementValue , minTemp ) )
+        {
+          minTemp4000 = current.weatherElement[3].elementValue;
+          location4000 = current.locationName;
+        }
+        break;
+
+      case 8:
+        if ( minTemp4500 === undefined && location4500 === undefined )
+        {
+          minTemp4500 = current.weatherElement[3].elementValue;
+          location4500 = current.locationName;
+          
+        }
+        
+        if( chkMinTemp( current.weatherElement[3].elementValue , minTemp ) )
+        {
+          minTemp4500 = current.weatherElement[3].elementValue;
+          location4500 = current.locationName;
+        }
+        break;
+
+      default:
+        break;
+
     }
+   
 
     answers[1] = {
       "0-500": {
