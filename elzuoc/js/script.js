@@ -25,7 +25,7 @@ const getCurrentData = async () => {
   const searchParams = new URLSearchParams(paramsObj);
   const response = await awaitFetch( `${cwbHost}/${apiPathArr[0]}?${searchParams.toString()}` );
   const data = await response.json();
-  // console.log(data);
+  console.log(data);
   
   const responseQ4 = await awaitFetch( `${cwbHost}/${apiPathArr[1]}?${searchParams.toString()}` );
   const dataQ4 = await responseQ4.json();
