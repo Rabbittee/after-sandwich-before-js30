@@ -47,7 +47,7 @@ export default {
 
     methods: {
         async getTemperature() {
-            const { data, status, lowestLocation } = await new Temperature();
+            const { data, status, lowestLocation } = await Temperature();
             this.data = data;
             this.status = status;
             this.lowestLocation = lowestLocation;
