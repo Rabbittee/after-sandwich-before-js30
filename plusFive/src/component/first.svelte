@@ -23,7 +23,6 @@
     if (response.statusText === 'OK') {
       data = await response.json()
       location = await data.records.location
-      // console.log(location)
 
       getCurrentTN()
     }
@@ -41,15 +40,13 @@
     }
 
     currentTN = data.records.location[smallestIndex]
-    // console.log(currentTN)
-    // console.log(smallest)
   }
 </script>
 
-<h6>第一題：</h6>
+<h6 class="mb-3">第一題：</h6>
 <div>
   {#if currentTN}
-    <div class="currentTN">
+    <div class="p-1 border border-gray-200">
       <div>
         縣市：{currentTN.parameter[0].parameterValue}
       </div>
