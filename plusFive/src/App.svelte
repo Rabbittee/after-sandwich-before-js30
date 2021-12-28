@@ -1,6 +1,6 @@
 <script>
   import First from './component/first.svelte'
-	import Second from './component/second.svelte'
+  import Second from './component/second.svelte'
   import Third from './component/third.svelte'
   import Fourth from './component/fourth.svelte'
 
@@ -14,7 +14,9 @@
   // regionend
 </script>
 
-<main class="w-screen h-screen flex flex-col items-center bg-gray-200 overflow-auto">
+<main
+  class="w-screen h-screen flex flex-col items-center bg-gray-200 overflow-auto"
+>
   <h3 class="m-3">三明治讀書會期末考</h3>
   <section class="first w-1/3 bg-white m-3 p-5 rounded-lg shadow-md font-light">
     <First />
@@ -23,11 +25,9 @@
     class="second w-1/3 bg-white m-3 p-5 rounded-lg shadow-md font-light"
   >
     <Second />
-	</section>
+  </section>
 
-  <section
-    class="third w-1/3 bg-white m-3 p-5 rounded-lg shadow-md font-light"
-  >
+  <section class="third w-1/3 bg-white m-3 p-5 rounded-lg shadow-md font-light">
     <Third />
   </section>
 
