@@ -50,7 +50,7 @@ const getCurrentData = async () => {
     if ( minTemp === undefined )
       minTemp = current.weatherElement[3].elementValue;
     
-    if( minTemp != undefined && chkMinTemp( current.weatherElement[3].elementValue , minTemp ) )
+    else if( chkMinTemp( current.weatherElement[3].elementValue , minTemp ) )
     {
       minTemp = current.weatherElement[3].elementValue;
       city = current.parameter[0].parameterValue;
