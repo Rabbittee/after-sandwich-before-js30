@@ -4,8 +4,6 @@
   let data
   let location
   let sortedLocation = []
-  // let HOUR_24_Map = new Map()
-  // let HOUR_24
 
   onMount(async () => {
     await getCurrentData()
@@ -27,7 +25,7 @@
     if (response.statusText === 'OK') {
       data = await response.json()
       location = data.records.location
-      // console.log(location)
+
       sortedLocation = location.filter(function(item, i) {
         return Number(item.weatherElement[0].elementValue) > 0 
         })
@@ -36,9 +34,7 @@
         })
         .sort(compare).slice(-20)
       
-      // HOUR_24_Map.set(Number(item.weatherElement[0].elementValue), item.parameter[0].parameterValue)
       sortedLocation = sortedLocation
-      console.log(sortedLocation)
     }
   }
 
@@ -63,6 +59,3 @@
     </div>
   {/each}
 </div>
-<!-- <div>
-  {sortedLocation[0]}
-</div> -->
