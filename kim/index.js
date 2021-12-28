@@ -37,48 +37,52 @@ function pullAlldata(data) {
 }
 
 // -99 in this weather project mean no data
-const noData = -99
+const noData = -99;
 
 // Exam One
 function findTempMin(data) {
+  // Get Data
   const location = pullAlldata(data);
-  const list = []
+  const list = [];
 
+  // Clean data
   for (const item of location) {
     // Destructuring
     const {
-      lon: lon, 
-      lat: lat, 
+      lon: lon,
+      lat: lat,
       locationName: locationName,
-      time: {obsTime: time}
-      } = item;
+      time: { obsTime: time },
+    } = item;
     const obj = { lon, lat, locationName, time };
-    
+
     for (const param of item.parameter) {
-      if ( param.parameterName === 'CITY' ) {
-        const city = param.parameterValue
-        obj.city = city
-      } else if ( param.parameterName === "TOWN" ) {
-        const town = param.parameterValue
-        obj.town = town
+      if (param.parameterName === "CITY") {
+        const city = param.parameterValue;
+        obj.city = city;
+      } else if (param.parameterName === "TOWN") {
+        const town = param.parameterValue;
+        obj.town = town;
       }
     }
     for (const param of item.weatherElement) {
-      if ( param.elementName === "TEMP") {
-        const temp = param.elementValue
-        const newTemp = Number(temp)
-        if ( newTemp !==  noData) {
-          obj.newTemp = newTemp
+      if (param.elementName === "TEMP") {
+        const temp = param.elementValue;
+        const newTemp = Number(temp);
+        if (newTemp !== noData) {
+          obj.newTemp = newTemp;
         }
       }
     }
-    list.push(obj)
+    list.push(obj);
   }
-  // sort
-  list.sort(function(a, b){
-    return a.newTemp - b.newTemp
-  })
 
+  // Deal data
+  list.sort(function (a, b) {
+    return a.newTemp - b.newTemp;
+  });
+
+  // Render
   document.getElementById("examOne_answer").innerHTML = `
   <li><span>自動氣象站資料-無人自動站氣象資料</span></li>
   <li><span>觀測資料時間</span> ${list[0].time}</li>
@@ -96,76 +100,79 @@ function findMountain(data) {
   // Get data
   const location = pullAlldata(data);
 
-  // Claen data
-  const obj = {}
-  for (const item of location ){
+  // Clean data
+  const array = [];
+  for (const item of location) {
     for (const param of item.weatherElement) {
-      if (param.elementName === 'ELEV') {
-        const elev = Number(param.elementValue)
-        if (elev !== noData) {
-          const newElev = Math.floor(elev / 500) * 500
-          obj.newElev = newElev
+      // TEMP had data so build object
+      const temp = Number(param.elementValue);
+      if (param.elementName === "TEMP" && temp !== noData) {
+        const obj = {};
+        obj.temp = temp;
+
+        // Elev
+        for (const param of item.weatherElement) {
+          if (param.elementName === "ELEV") {
+            const ele = Number(param.elementValue);
+            const newEle = Math.floor(ele / 500) * 500;
+            obj.newEle = newEle;
+          }
+          // LocationName
+          const { locationName: locationName } = item;
+          obj.locationName = locationName;
         }
+        array.push(obj);
       }
     }
-    for (const param of item.parameter) {
-      if ( param.parameterName === 'CITY' ) {
-        const city = param.parameterValue
-        obj.city = city
-      } else if ( param.parameterName === "TOWN" ) {
-        const town = param.parameterValue
-        obj.town = town
-      }
-    }
-    for (const param of item.weatherElement) {
-      if ( param.elementName === "TEMP") {
-        const temp = param.elementValue
-        const newTemp = Number(temp)
-        if ( newTemp !==  noData) {
-          obj.newTemp = newTemp
-        }
-      }
-    }
-    console.log(obj)
   }
+
+  // Deal Sort
+  array.sort(function (a, b) {
+    return a.temp - b.temp;
+  });
+
+  // Deal Array
+  const five = []; // 0 - 500
+  const one = []; // - 1000
+  const oneFive = []; // - 1500
+  const two = []; // - 2000
+  const twoFive = []; // - 2500
+  const three = []; // - 3000
+  const threeFive = []; // - 3500
+  const four = []; //8. - 4000
+
+  array.map(function (e) {
+    if (e.newEle === 0) {
+      five.push(e);
+    } else if (e.newEle === 500) {
+      one.push(e);
+    } else if (e.newEle === 1000) {
+      oneFive.push(e);
+    } else if (e.newEle === 1500) {
+      two.push(e);
+    } else if (e.newEle === 2000) {
+      twoFive.push(e);
+    } else if (e.newEle === 2500) {
+      three.push(e);
+    } else if (e.newEle === 3000) {
+      threeFive.push(e);
+    } else if (e.newEle === 3500) {
+      four.push(e);
+    }
+  });
+  console.log(five[0]);
+  // Render
+  document.getElementById("examTwo_answer").innerHTML = `
+  <li>500 公尺以下 <span>     ${five[0].locationName}    </span> 溫度 ${five[0].temp} 度 </li>
+  <li>500 - 1000公尺 <span>  ${one[0].locationName}      </span> 溫度 ${one[0].temp} 度 </li>
+  <li>1000 - 1500公尺 <span>  ${oneFive[0].locationName} </span> 溫度 ${oneFive[0].temp} 度 </li>
+  <li>1500 - 2000公尺 <span>  ${two[0].locationName}     </span> 溫度 ${two[0].temp} 度 </li>
+  <li>2000 - 2500公尺 <span>  ${twoFive[0].locationName} </span> 溫度 ${twoFive[0].temp} 度 </li>
+  <li>2500 - 3000公尺 <span>  ${three[0].locationName}   </span> 溫度 ${three[0].temp} 度 </li>
+  <li>3000 - 3500公尺 <span>  ${threeFive[0].locationName} </span> 溫度 ${threeFive[0].temp} 度 </li>
+  <li>3500 公尺以上 <span>     ${four[0].locationName}    </span> 溫度 ${four[0].temp} 度 </li>
+  `;
 }
-
-  // Deal data
-  // const newArray = [five, one, oneFive, two, twoFive, three, threeFive, four];
-  // const newArray = []
-  // newArray.push(obj)
-
-  // console.log()
-  // const five = []; // 0 - 500
-  // const one = []; // - 1000
-  // const oneFive = []; // - 1500
-  // const two = []; // - 2000
-  // const twoFive = []; // - 2500
-  // const three = []; // - 3000
-  // const threeFive = []; // - 3500
-  // const four = []; //8. - 4000
-
-  // newArray.push(obj)
-  // console.log(newArray)
-
-
-  // for (i = 0; i < newArray.length; i++) {
-  //   newArray[i].sort(function (a, b) {
-  //     return a.temp - b.temp;
-  //   });
-  // }
-
-  // document.getElementById("examTwo_answer").innerHTML = `
-  // <li>500 公尺以下<span>     ${five[0].city} ${five[0].town} 溫度 ${five[0].temp}度 </span></li>
-  // <li>500 - 1000公尺<span>  ${one[0].city} ${one[0].town} 溫度${one[0].temp}度 </span></li>
-  // <li>1000 - 1500公尺<span> ${oneFive[0].city} ${oneFive[0].town} 溫度${oneFive[0].temp}度 </span></li>
-  // <li>1500 - 2000公尺<span> ${two[0].city} ${two[0].town} 溫度${two[0].temp}度 </span></li>
-  // <li>2000 - 2500公尺<span> ${twoFive[0].city} ${twoFive[0].town} 溫度${twoFive[0].temp}度 </span></li>
-  // <li>2500 - 3000公尺<span> ${three[0].city} ${three[0].town} 溫度${three[0].temp}度 </span></li>
-  // <li>3000 - 3500公尺<span> ${threeFive[0].city} ${threeFive[0].town} 溫度${threeFive[0].temp}度 </span></li>
-  // <li>3500 公尺以上<span>${four[0].city} ${four[0].town} 溫度 ${four[0].temp}度 </span></li>
-  // `;
-// }
 
 // Exam Three
 function findRainTop(data) {
@@ -173,32 +180,32 @@ function findRainTop(data) {
   let pullAlldataArray = pullAlldata(data);
   let list = [];
 
-  // Clean data
-    for (const item of pullAlldataArray){
-      const obj = {}
-      const parameter = item.parameter
-      for (const city of parameter ){
-        if (city.parameterName === "CITY") {
-          obj.city = city
-        } 
+  // Clean
+  for (const item of pullAlldataArray) {
+    const obj = {};
+    const parameter = item.parameter;
+    for (const city of parameter) {
+      if (city.parameterName === "CITY") {
+        obj.city = city;
       }
-      const weatherElement = item.weatherElement
-      for (const rain of weatherElement) {
-        let topRain = Number(rain.elementValue)
-        if (rain.elementName === 'H_24R' && topRain !== noData) {
-          obj.topRain = topRain
-        }
-      }
-      list.push(obj)
     }
+    const weatherElement = item.weatherElement;
+    for (const rain of weatherElement) {
+      let topRain = Number(rain.elementValue);
+      if (rain.elementName === "H_24R" && topRain !== noData) {
+        obj.topRain = topRain;
+      }
+    }
+    list.push(obj);
+  }
 
-    // Deal data
-    list.sort(function (a, b) {
-      return b.topRain - a.topRain;
-    });
+  // Deal
+  list.sort(function (a, b) {
+    return b.topRain - a.topRain;
+  });
 
-    // Render
-    for (var i = 0; i < 20; i++) {
+  // Render
+  for (var i = 0; i < 20; i++) {
     list[i].rank = i + 1;
     document.getElementById("examThree_answer").innerHTML += `
     <li>
@@ -214,7 +221,6 @@ function findRainTop(data) {
     `;
   }
 }
-
 
 // Exam Four
 function expectFutureMaxT(data) {
