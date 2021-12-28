@@ -74,8 +74,6 @@ const getCurrentData = async () => {
     },
   };
 
-  let minTemp500,minTemp1000,minTemp1500,minTemp2000,minTemp2500,minTemp3000,minTemp3500,minTemp4000,minTemp4500;
-  let location500,location1000,location1500,location2000,location2500,location3000,location3500,location4000,location4500;
   // Q3 變數
   const rainObj = {};
 
