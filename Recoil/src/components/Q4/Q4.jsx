@@ -1,20 +1,20 @@
 import Task from "../Task/Task";
 import { useWeatherByDistrict } from "../hooks";
-import { find, pipe } from "../../utils";
+import { find, pipe, jsonViewer } from "../../utils";
 import { TempCard } from "../Card";
 
-const classifyTemp = (data) =>
+const groupByEveryDay = (data) =>
   data.reduce((acc, val) => {
-    const key = val.dataTime.substring(0, 10);
-
-    if (acc.hasOwnProperty(key)) {
-      acc[key].push(val.value);
+    const date = val.dataTime.substring(0, 10);
+    console.log(date);
+    if (acc.hasOwnProperty(date)) {
+      acc[date].push(val.value);
       return acc;
     }
 
     return {
       ...acc,
-      [key]: [val.value],
+      [date]: [val.value],
     };
   }, {});
 
@@ -47,7 +47,7 @@ function QuestionFour() {
   );
 
   const maxDiffTemp = pipe(
-    classifyTemp,
+    groupByEveryDay,
     Object.entries,
     computeTempDiff,
     findMaxTempDiff
@@ -82,6 +82,15 @@ function QuestionFour() {
           temp={maxDiffTemp.diffTemp}
           time={maxDiffTemp.date}
         />
+      </Task.Answer>
+      <Task.Answer title="最低溫 JSON" className="bg-slate-900">
+        {jsonViewer(lowestTemp)}
+      </Task.Answer>
+      <Task.Answer title="最高溫 JSON" className="bg-slate-900">
+        {jsonViewer(heighestTemp)}
+      </Task.Answer>
+      <Task.Answer title="單日溫差最大 JSON" className="bg-slate-900">
+        {jsonViewer(maxDiffTemp)}
       </Task.Answer>
     </>
   );

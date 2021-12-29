@@ -1,6 +1,6 @@
 import Task from "../Task/Task";
 import { useWeatherAPI } from "../hooks";
-import { find, lowestTempCond } from "../../utils";
+import { find, lowestTempCond, jsonViewer } from "../../utils";
 import { StationCard } from "../Card";
 
 function QuestionOne() {
@@ -35,6 +35,9 @@ function QuestionOne() {
           temp={weather.TEMP}
           time={time}
         />
+      </Task.Answer>
+      <Task.Answer title="當下最低溫的點 JSON" className="bg-slate-900">
+        {jsonViewer({ name, district, weather, time })}
       </Task.Answer>
     </>
   );

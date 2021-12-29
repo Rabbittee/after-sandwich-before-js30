@@ -1,20 +1,21 @@
 import Task from "../Task/Task";
 import { useWeatherAPI } from "../hooks";
-import { pipe, find, lowestTempCond, groupBy } from "../../utils";
+import { pipe, find, lowestTempCond, jsonViewer } from "../../utils";
 import { StationCard } from "../Card";
 
-const elevation = (acc, val) => {
-  const elevation = Math.ceil(val.weather.ELEV / 500) * 500;
-  const range = `${elevation - 500}-${elevation}`;
-  if (acc.hasOwnProperty(range)) {
-    acc[range].push(val);
-    return acc;
-  }
-  return {
-    ...acc,
-    [range]: [val],
-  };
-};
+const groupByElevation = (data) =>
+  data.reduce((acc, val) => {
+    const elevation = Math.ceil(val.weather.ELEV / 500) * 500;
+    const range = `${elevation - 500}-${elevation}`;
+    if (acc.hasOwnProperty(range)) {
+      acc[range].push(val);
+      return acc;
+    }
+    return {
+      ...acc,
+      [range]: [val],
+    };
+  }, {});
 
 const sortByElevation = (data) =>
   data.sort((a, b) => a.weather.ELEV - b.weather.ELEV);
@@ -34,7 +35,7 @@ function QuestionTwo() {
 
   const stationByRange = pipe(
     sortByElevation,
-    groupBy(elevation),
+    groupByElevation,
     findLowestTemp
   )(data);
 
@@ -62,8 +63,16 @@ function QuestionTwo() {
         一組，並回傳object
         <small className="block">(API: v1/rest/datastore/O-A0001-001)</small>
       </Task.Question>
-      <Task.Answer className="bg-[url('/src/assets/images/bg_snow.jpg')]">
+      <Task.Answer
+        title="每500公尺最低溫"
+        className="bg-[url('/src/assets/images/bg_snow.jpg')]"
+      >
         <ul>{stationCards}</ul>
+      </Task.Answer>
+      <Task.Answer title="每500公尺最低溫 JSON" className="bg-slate-900">
+        <div className=" max-h-96 overflow-y-scroll">
+          {jsonViewer(stationByRange)}
+        </div>
       </Task.Answer>
     </>
   );
