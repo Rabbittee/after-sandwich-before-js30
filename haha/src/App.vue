@@ -14,7 +14,7 @@
                     :class="[
                         {
                             'hover:bg-red-500': state.btnClick === index,
-                            'bg-red-500 text-white': state.btnClick === index
+                            'bg-red-500 text-white': state.btnClick === index,
                         },
                         'bg-gray-100 text-gray-600',
                         'rounded-lg',
@@ -30,7 +30,12 @@
                     {{ btn }}
                 </div>
             </template>
-            <div class="bg-gray-300 rounded-lg h-auto">
+            <div class="bg-gray-300 rounded-lg p-5 mb-10">
+                題目 {{ questionCard[state.btnClick].id }} .{{
+                    questionCard[state.btnClick].question
+                }}
+            </div>
+            <div class="bg-gray-300 rounded-lg h-auto p-5">
                 <Component :is="questionCard[state.btnClick].Comp"></Component>
             </div>
         </div>
@@ -45,7 +50,7 @@ import Answer3 from './components/Answer3.vue'
 import Answer4 from './components/Answer4.vue'
 
 const state = reactive({
-    btnClick: 1,
+    btnClick: 0,
 })
 
 const btnCard = ['全台最低溫', '最低溫測站', '降雨量', '未來兩天天氣預報']
