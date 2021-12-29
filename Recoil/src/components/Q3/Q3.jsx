@@ -60,8 +60,8 @@ function QuestionThree() {
   if (!data) return <div>loading</div>;
 
   const top20 = pipe(filterTop20, groupByDistrict)(data);
-  const districts = Object.keys(top20).map((key) => (
-    <Country name={key} stations={top20[key]} key={key} />
+  const districts = Object.keys(top20).map((district) => (
+    <Country name={district} stations={top20[district]} key={district} />
   ));
 
   return (
