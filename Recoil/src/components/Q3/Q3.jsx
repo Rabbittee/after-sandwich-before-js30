@@ -1,23 +1,24 @@
 import Task from "../Task/Task";
 import { useWeatherAPI } from "../hooks";
-import { top, pipe, groupBy } from "../../utils";
+import { top, pipe, jsonViewer } from "../../utils";
 import { Card } from "../Card";
 
 const filterTop20 = top(
   20,
   (pre, val) => val.weather.HOUR_24 - pre.weather.HOUR_24
 );
-const district = (acc, val) => {
-  const cityName = val.district.CITY;
-  if (acc.hasOwnProperty(cityName)) {
-    acc[cityName].push(val);
-    return acc;
-  }
-  return {
-    [cityName]: [val],
-    ...acc,
-  };
-};
+const groupByDistrict = (data) =>
+  data.reduce((acc, val) => {
+    const cityName = val.district.CITY;
+    if (acc.hasOwnProperty(cityName)) {
+      acc[cityName].push(val);
+      return acc;
+    }
+    return {
+      [cityName]: [val],
+      ...acc,
+    };
+  }, {});
 
 function StationCard({ name, weather }) {
   return (
@@ -38,7 +39,7 @@ function Country({ name, stations }) {
     <li>
       <Card title={name}>
         <ul className="flex flex-row flex-wrap gap-x-2 gap-y-4">
-          {stations.map((station,index) => (
+          {stations.map((station, index) => (
             <StationCard
               key={`${station.name}-${index}`}
               name={station.name}
@@ -58,7 +59,7 @@ function QuestionThree() {
 
   if (!data) return <div>loading</div>;
 
-  const top20 = pipe(filterTop20, groupBy(district))(data);
+  const top20 = pipe(filterTop20, groupByDistrict)(data);
   const districts = Object.keys(top20).map((key) => (
     <Country name={key} stations={top20[key]} key={key} />
   ));
@@ -78,6 +79,9 @@ function QuestionThree() {
         className="bg-[url('/src/assets/images/q3_bg.jpeg')]"
       >
         <ul>{districts}</ul>
+      </Task.Answer>
+      <Task.Answer title="近24小時降雨量前20名 JSON" className="bg-slate-900">
+        <div className=" max-h-96 overflow-y-scroll">{jsonViewer(top20)}</div>
       </Task.Answer>
     </>
   );

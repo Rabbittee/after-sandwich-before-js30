@@ -10,13 +10,15 @@ export const toFormat = (to, series) => series.map(to);
 export const top = (quantity, cb) => (series) =>
   series.sort(cb).slice(0, quantity);
 
-export const lowestTempCond = (acc, val, index) => {
-  if (index === 0) return acc;
+export const jsonViewer = (o) => {
+  const showText = JSON.stringify(o, null, "    ");
+  return showText.split("\n").map((row) => <pre key={row}>{row}</pre>);
+};
+
+export const lowestTempCond = (acc, val) => {
   if (val.weather.TEMP < acc.weather.TEMP) return val;
   return acc;
 };
-
-export const groupBy = (handler) => (data) => data.reduce(handler, {});
 
 export class StationInfo {
   constructor({ locationName, lat, lon, weatherElement, time, parameter }) {
@@ -50,7 +52,7 @@ export class DistrictInfo {
           time: val.time.map(({ dataTime, elementValue }) => ({
             dataTime,
             value: Number(elementValue[0].value),
-            measures: elementValue[0].measures
+            measures: elementValue[0].measures,
           })),
         },
       }),
