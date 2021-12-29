@@ -1,4 +1,8 @@
-<template>{{ state.data }}</template>
+<template>
+    <template v-for="item in state.data" :key="item">
+        <div>{{ item }}</div></template
+    >
+</template>
 <script setup>
 import { reactive } from 'vue'
 import fetchData from '../utils/fetchApi.js'
