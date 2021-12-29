@@ -1,15 +1,20 @@
 import Task from "../Task/Task";
 import { useWeatherAPI } from "../hooks";
-import { find, lowestTempCond, jsonViewer } from "../../utils";
+import { compare, lowestTempCond, jsonViewer } from "../../utils";
 import { StationCard } from "../Card";
 
 function QuestionOne() {
+
   const data = useWeatherAPI("/v1/rest/datastore/O-A0001-001", {
     elementName: ["TEMP", "ELEV"],
   });
+
   if (!data) return <div>loading</div>;
-  const findLowestTemp = find(lowestTempCond);
-  const { name, district, weather, time } = findLowestTemp(data);
+
+  const getLowestTemp = compare(lowestTempCond);
+
+  const { name, district, weather, time } = getLowestTemp(data);
+
   return (
     <>
       <Task.Question title="題目一:">
@@ -41,6 +46,7 @@ function QuestionOne() {
       </Task.Answer>
     </>
   );
+  
 }
 
 export default QuestionOne;

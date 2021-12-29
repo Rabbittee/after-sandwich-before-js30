@@ -1,6 +1,6 @@
 import Task from "../Task/Task";
 import { useWeatherByDistrict } from "../hooks";
-import { find, pipe, jsonViewer } from "../../utils";
+import { compare, pipe, jsonViewer } from "../../utils";
 import { TempCard } from "../Card";
 
 const groupByEveryDay = (data) =>
@@ -24,7 +24,7 @@ const computeTempDiff = (data) =>
     diffTemp: Math.max(...temps) - Math.min(...temps),
   }));
 
-const findMaxTempDiff = find((acc, val) =>
+const findMaxTempDiff = compare((acc, val) =>
   acc.diffTemp > val.diffTemp ? acc : val
 );
 
@@ -38,11 +38,11 @@ function QuestionFour() {
 
   const tempSeries = data[0].weather.T.time;
 
-  const heighestTemp = find((pre, val) => (pre.value > val.value ? pre : val))(
+  const heighestTemp = compare((pre, val) => (pre.value > val.value ? pre : val))(
     tempSeries
   );
 
-  const lowestTemp = find((pre, val) => (pre.value < val.value ? pre : val))(
+  const lowestTemp = compare((pre, val) => (pre.value < val.value ? pre : val))(
     tempSeries
   );
 

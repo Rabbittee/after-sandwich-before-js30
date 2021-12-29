@@ -7,6 +7,7 @@ const filterTop20 = top(
   20,
   (pre, val) => val.weather.HOUR_24 - pre.weather.HOUR_24
 );
+
 const groupByDistrict = (data) =>
   data.reduce((acc, val) => {
     const cityName = val.district.CITY;

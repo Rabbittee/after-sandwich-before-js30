@@ -1,6 +1,6 @@
 import Task from "../Task/Task";
 import { useWeatherAPI } from "../hooks";
-import { pipe, find, lowestTempCond, jsonViewer } from "../../utils";
+import { pipe, compare, lowestTempCond, jsonViewer } from "../../utils";
 import { StationCard } from "../Card";
 
 const groupByElevation = (data) =>
@@ -20,9 +20,9 @@ const groupByElevation = (data) =>
 const sortByElevation = (data) =>
   data.sort((a, b) => a.weather.ELEV - b.weather.ELEV);
 
-const findLowestTemp = (data) =>
+const getLowestTemp = (data) =>
   Object.keys(data).reduce(
-    (acc, val) => ({ ...acc, [val]: find(lowestTempCond)(data[val]) }),
+    (acc, val) => ({ ...acc, [val]: compare(lowestTempCond)(data[val]) }),
     {}
   );
 
@@ -36,7 +36,7 @@ function QuestionTwo() {
   const stationByRange = pipe(
     sortByElevation,
     groupByElevation,
-    findLowestTemp
+    getLowestTemp
   )(data);
 
   const stationCards = Object.keys(stationByRange).map((elevation) => {
@@ -76,6 +76,7 @@ function QuestionTwo() {
       </Task.Answer>
     </>
   );
+  
 }
 
 export default QuestionTwo;
