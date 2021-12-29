@@ -1,24 +1,29 @@
-import { getCurrentData, token } from "../fetch.js";
+import { getCurrentData } from "../fetch.js";
 import { getElementValue, getParameterValue } from "../utils.js";
-import { temp, city, town } from "../global.js";
+import { temp, city, town, noData, Authorization } from "../global.js";
 
 const apiPath = "O-A0001-001";
-const { Authorization } = token;
 const paramsObj = {
-  Authorization: Authorization,
+  Authorization,
   parameterName: [city, town],
   elementName: temp,
 };
 
+/**
+ * 找出當下最低溫位置
+ * @returns {object}
+ */
 export const answer1 = async () => {
   const data = await getCurrentData(apiPath, paramsObj);
 
   const locationData = data.records.location;
 
   const currentObj = locationData
+    //filter no data
     .filter((item) => {
-      return getElementValue(item.weatherElement, temp) > 0;
+      return getElementValue(item.weatherElement, temp) !== noData;
     })
+    //find the lowest temperature
     .reduce((prev, item) => {
       return Number(getElementValue(item.weatherElement, temp)) <
         Number(getElementValue(prev.weatherElement, temp))

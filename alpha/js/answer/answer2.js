@@ -1,14 +1,18 @@
-import { getCurrentData, token } from "../fetch.js";
+import { getCurrentData } from "../fetch.js";
 import { getElementValue, getParameterValue } from "../utils.js";
-import { temp, city, town, elev } from "../global.js";
+import { temp, city, town, elev, Authorization } from "../global.js";
 
 const apiPath = "O-A0001-001";
-const { Authorization } = token;
 const paramsObj = {
-  Authorization: Authorization,
+  Authorization,
   parameterName: [city, town],
   elementName: [elev, temp],
 };
+
+/**
+ * 找出海拔每500m最低溫位置
+ * @returns {object}
+ */
 export const answer2 = async () => {
   const data = await getCurrentData(apiPath, paramsObj);
 
@@ -21,8 +25,8 @@ export const answer2 = async () => {
     const cityName = getParameterValue(parameter, city);
     const townName = getParameterValue(parameter, town);
 
-    //find pre 500m altitude;
-    const step = (Math.floor(altitude / 500) + 1) * 500;
+    //find pre 500m elevation;
+    const step = (Math.floor(elevation / 500) + 1) * 500;
     //get pre 500m array;
     const { [step]: tempObj } = acc;
 
