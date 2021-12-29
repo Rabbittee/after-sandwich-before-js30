@@ -23,7 +23,7 @@ export const lowestTempCond = (acc, val) => {
 export class StationInfo {
   constructor({ locationName, lat, lon, weatherElement, time, parameter }) {
     this.name = locationName;
-    this.geoLocation = { lat, lon };
+    this.geoLocation = { lat: Number(lat), lon: Number(lon) };
     this.district = parameter.reduce(
       (acc, val) => ({
         ...acc,
@@ -43,7 +43,7 @@ export class StationInfo {
 export class DistrictInfo {
   constructor({ locationName, lat, lon, weatherElement }) {
     this.name = locationName;
-    this.geoLocation = { lat, lon };
+    this.geoLocation = { lat: Number(lat), lon: Number(lon) };
     this.weather = weatherElement.reduce(
       (acc, val) => ({
         ...acc,
