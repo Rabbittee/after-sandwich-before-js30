@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { render } from './methods.js'
 
 const convertString = function (fn, data) {
@@ -70,15 +69,4 @@ export default function q4(datum) {
         }
     }
     render(answer, 4)
-=======
-import { render, getLocation, getWeather } from './methods.js'
-const invalid = '-99'
-const rain = 'HOUR_24'
-const city = 'CITY'
-const town = 'TOWN'
-
-/** Q4 */
-export default function q4(datum) {
-    console.log(datum)
->>>>>>> d8fbb11edcb02ece41884d8222adf12649b3009d
 }
