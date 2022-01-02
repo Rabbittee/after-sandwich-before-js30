@@ -5,7 +5,7 @@ export async function fetchApi(id, params) {
 
     const query = new URLSearchParams({
         Authorization: token,
-        params,
+        ...params,
     })
 
     const response = await fetch(`${cwbHost}/${apiPath}/${id}?${query}`)
@@ -15,5 +15,13 @@ export async function fetchApi(id, params) {
 
 export async function getCurrentData(id, params) {
     const response = await fetchApi(id, params)
-    return response.records.location
+
+    for (let key in params) {
+        if (key === 'locationName') {
+            return response.records.locations[0].location[0]
+        } else {
+            return response.records.location
+        }
+    }
+
 }
