@@ -15,6 +15,7 @@ export default function q3(datum) {
         .sort((a, b) => Number(getWeather(b, rain)) - Number(getWeather(a, rain)))
         .slice(0, 20)
 
+<<<<<<< HEAD
     // 4. 統計分佈縣市
     const answer = filters.reduce((acc, curr) => {
 
@@ -30,6 +31,17 @@ export default function q3(datum) {
         return acc
         
     }, {})
+=======
+    // 4. 整理格式、渲染
+    const answer = filters.map((data, index) => {
+        return {
+            [index + 1]: {
+                [getLocation(data, city)]: getLocation(data, town),
+                [data.locationName]: getWeather(data, rain)
+            }
+        }
+    })
+>>>>>>> d8fbb11edcb02ece41884d8222adf12649b3009d
 
     render(answer, 3)
 }
