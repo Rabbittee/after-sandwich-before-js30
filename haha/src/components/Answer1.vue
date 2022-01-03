@@ -11,10 +11,7 @@ const state = reactive({
 fetchData('O-A0001-001').then((res) => {
     const data = min(validWeather(res.records.location), 'TEMP')
     const { city, town, temp } = formatData(data)
-    const { locationName, lat, lon } = min(
-        validWeather(res.records.location),
-        'TEMP'
-    )
+    const { locationName, lat, lon } = data
     state.data = { city, locationName, town, lat, lon, temp }
 })
 </script>
