@@ -9,8 +9,12 @@
   // 2. 練習用別的方法打 API
   // 3. 使用更明確的陣列方法操作（？
   // 4. component 可以分得更明確一點
-  // 5. 第二題要回傳 object，研究如何傳 object
+  // 5. 第二題要回傳 object，研究如何傳 object (好像可以直接把物件外框寫死輸出
+  // data:{
+  //   測站名稱: {ans}
+  // })
   // 6. 研究 rollup base url 的東東
+  // 7. 把會用到的東東 ex. -99 抽出來給予有意義的變數做使用
   // regionend
 </script>
 
@@ -31,11 +35,11 @@
     <Third />
   </section>
 
-  <!-- <section
+  <section
     class="forth w-1/5 bg-white m-3 p-5 rounded-lg shadow-md font-light"
   >
     <Fourth />
-  </section> -->
+  </section>
 </main>
 
 <style global>
