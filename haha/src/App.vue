@@ -31,7 +31,7 @@
                 </div>
             </template>
             <div class="bg-gray-300 rounded-lg p-5 mb-10">
-                題目 {{ questionCard[state.btnClick].id }} .{{
+                題目 {{ state.btnClick + 1 }} .{{
                     questionCard[state.btnClick].question
                 }}
             </div>
@@ -57,24 +57,20 @@ const btnCard = ['全台最低溫', '最低溫測站', '降雨量', '未來兩�
 
 const questionCard = [
     {
-        id: 1,
         question:
             '找到全台當下最低溫的點，並列出 縣市 行政區 測站名稱 溫度 座標',
         Comp: Answer1,
     },
     {
-        id: 2,
         question:
             '同上，針對不同海拔高度找出最低溫測站，每500m一組，並回傳 object',
         Comp: Answer2,
     },
     {
-        id: 3,
         question: '近24小時降雨量前20名是哪些？ 分別統計整理列在哪些縣市？',
         Comp: Answer3,
     },
     {
-        id: 4,
         question:
             '自己所在的縣市，未來兩天的最低溫與最高溫分別為多少？且最大單日溫差為多少？',
         Comp: Answer4,
