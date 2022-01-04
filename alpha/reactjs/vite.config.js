@@ -4,6 +4,11 @@ import path from "path";
 
 export default defineConfig({
   plugins: [reactRefresh()],
+  resolve: {
+    alias: {
+      "@/": `${path.resolve(__dirname, "src")}/`,
+    },
+  },
   esbuild: {
     jsxInject: `import React from 'react'`,
   },

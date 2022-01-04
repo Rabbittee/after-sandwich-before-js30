@@ -1,84 +1,57 @@
-import question1 from "./components";
+import {
+  Question1,
+  Question2,
+  Question3,
+  Question4,
+  Answer1,
+} from "./components";
+import { Card } from "./components/Card";
 
 function App() {
   return (
     <main className="w-screen max-w-3xl flex flex-col mx-auto my-16 space-y-6 px-4">
-      <h4 class="text-2xl font-black">JS讀書會後測啦</h4>
+      <h4 className="text-2xl font-black">JS讀書會後測啦</h4>
 
       {/* 第一題 */}
-      <question1 />
-      {/* <section className="bg-white text-black text-opacity-70 rounded-2xl shadow-xl p-8">
-        <h6 class="text-md font-black">題目一:</h6>
-        找到全台當下最低溫的點，並列出
-        <span class="bg-blue-900 text-white">縣市</span>
-        <span class="bg-blue-900 text-white">行政區</span>
-        <span class="bg-blue-900 text-white">測站名稱</span>
-        <span class="bg-blue-900 text-white">溫度</span>
-        <span class="bg-blue-900 text-white">座標</span>
-        <small class="block">(透過中央氣象局API取得全台測站即時資料)</small>
-        <small class="block">
-          (API: v1/rest/datastore/O-A0001-001 or v1/rest/datastore/O-A0003-001)
-        </small>
-      </section> */}
-      <section class="bg-white text-black text-opacity-70 rounded-2xl shadow-xl p-8">
-        <h6 class="text-md font-black">Answer:</h6>
-        <textarea
-          class="w-full p-4 text-black text-opacity-70 text-sm"
-          id="answer_1"
-          disabled
-        ></textarea>
-      </section>
+      <Card>
+        <Question1 />
+        <Answer1 />
+      </Card>
 
       {/* 第二題 */}
-      <section class="bg-white text-black text-opacity-70 rounded-2xl shadow-xl p-8">
-        <h6 class="text-md font-black">題目二:</h6>
-        同上，針對不同海拔高度找出最低溫測站，每
-        <span class="bg-blue-900 text-white">500m</span>一組，並回傳object
-        <small class="block">
-          (API: v1/rest/datastore/O-A0001-001 or v1/rest/datastore/O-A0003-001)
-        </small>
-      </section>
-      <section class="bg-white text-black text-opacity-70 rounded-2xl shadow-xl p-8">
-        <h6 class="text-md font-black">Answer:格式自己定辣，我懶</h6>
+      <Card>
+        <Question2 />
+      </Card>
+      <section className="bg-white text-black text-opacity-70 rounded-2xl shadow-xl p-8">
+        <h6 className="text-md font-black">Answer:格式自己定辣，我懶</h6>
         <textarea
-          class="w-full p-4 text-black text-opacity-70 text-sm"
+          className="w-full p-4 text-black text-opacity-70 text-sm"
           id="answer_2"
           disabled
         ></textarea>
       </section>
 
       {/* 第三題 */}
-      <section class="bg-white text-black text-opacity-70 rounded-2xl shadow-xl p-8">
-        <h6 class="text-md font-black">題目三:</h6>近
-        <span class="bg-blue-900 text-white">24小時</span>降雨量
-        <span class="bg-blue-900 text-white">前20名</span>是哪些？
-        <br />
-        分別統計整理列在哪些<span class="bg-blue-900 text-white">縣市</span>？
-        <small class="block">HOUR_24欄位為近24小時的累積降雨量</small>
-        <small class="block">(API: /v1/rest/datastore/O-A0002-001)</small>
-      </section>
-      <section class="bg-white text-black text-opacity-70 rounded-2xl shadow-xl p-8">
-        <h6 class="text-md font-black">Answer:</h6>
+      <Card>
+        <Question3 />
+      </Card>
+      <section className="bg-white text-black text-opacity-70 rounded-2xl shadow-xl p-8">
+        <h6 className="text-md font-black">Answer:</h6>
         <textarea
-          class="w-full p-4 text-black text-opacity-70 text-sm"
+          className="w-full p-4 text-black text-opacity-70 text-sm"
           id="answer_3"
           disabled
         ></textarea>
       </section>
 
       {/* 第四題 */}
-      <section class="bg-white text-black text-opacity-70 rounded-2xl shadow-xl p-8">
-        <h6 class="text-md font-black">題目四:</h6>
-        自己所在的縣市，未來兩天的
-        <span class="bg-blue-900 text-white">最低溫</span>與
-        <span class="bg-blue-900 text-white">最高溫</span>分別為多少？
-        <br />且<span class="bg-blue-900 text-white">最大單日溫差</span>為多少？
-        <small class="block">(API:/v1/rest/datastore/F-D0047-089)</small>
-      </section>
-      <section class="bg-white text-black text-opacity-70 rounded-2xl shadow-xl p-8">
-        <h6 class="text-md font-black">Answer:</h6>
+      <Card>
+        <Question4 />
+      </Card>
+      <section className="bg-white text-black text-opacity-70 rounded-2xl shadow-xl p-8">
+        <h6 className="text-md font-black">Answer:</h6>
         <textarea
-          class="w-full p-4 text-black text-opacity-70 text-sm"
+          className="w-full p-4 text-black text-opacity-70 text-sm"
           id="answer_4"
           disabled
         ></textarea>
