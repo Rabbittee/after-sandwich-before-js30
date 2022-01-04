@@ -1,6 +1,13 @@
 <script>
   import { onMount } from 'svelte'
+  import fetchData from '../js/fetch'
+  import { cwbHost, TempApiPath, token } from '../js/constants'
 
+  const paramsObj = {
+    Authorization: token
+  }
+  const searchParams = new URLSearchParams(paramsObj)
+  
   let data
   let location
   let currentTN
@@ -10,22 +17,10 @@
   })
 
   async function getCurrentData() {
-    const cwbHost = 'https://opendata.cwb.gov.tw'
-    const apiPath = 'api/v1/rest/datastore/O-A0001-001'
-    let paramsObj = {
-      Authorization: 'CWB-34AC2BFB-2272-41E3-84FE-AAF40C0C42AA'
-    }
-    let searchParams = new URLSearchParams(paramsObj)
-    const response = await fetch(
-      `${cwbHost}/${apiPath}?${searchParams.toString()}`
-    )
+    data = await fetchData(cwbHost, TempApiPath, searchParams)
+    location = await data.records.location
 
-    if (response.statusText === 'OK') {
-      data = await response.json()
-      location = await data.records.location
-
-      getCurrentTN()
-    }
+    getCurrentTN()
   }
 
   function getCurrentTN() {
@@ -40,6 +35,7 @@
     }
 
     currentTN = data.records.location[smallestIndex]
+    currentTN = currentTN
   }
 </script>
 
@@ -66,3 +62,4 @@
     </div>
   {/if}
 </div>
+<!-- {currentTN.locationName} -->
