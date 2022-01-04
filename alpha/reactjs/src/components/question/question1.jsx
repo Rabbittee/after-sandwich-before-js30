@@ -1,13 +1,13 @@
 export function Question1() {
   return (
     <>
-      <h6 className="text-md font-black text-green-600">題目一:</h6>
+      <h6 className="text-md font-black text-green-500">題目一:</h6>
       <p className="text-green my-2">
         找到全台當下最低溫的點，並列出
         <span className="bg-red-400 text-white p-1 mx-0.5 rounded-md">
           縣市
         </span>
-        <span className="bg-blue-900 text-white">行政區</span>
+        <span className="bg-red-900 text-white">行政區</span>
         <span className="bg-blue-900 text-white">測站名稱</span>
         <span className="bg-blue-900 text-white">溫度</span>
         <span className="bg-blue-900 text-white">座標</span>
