@@ -24,8 +24,8 @@ fetchData('O-A0001-001').then((res) => {
         if (!elevMap.get(index)) elevMap.set(index, [])
         elevMap.get(index).push(el)
     })
-    for (const group of elevMap.keys()) {
-        formatFunc(min(elevMap.get(group), 'TEMP'), group)
+    for(const group of elevMap){
+        formatFunc(min(group[1], 'TEMP'), group[0])
     }
 })
 
