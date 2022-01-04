@@ -42,25 +42,20 @@ fetchData('F-D0047-089', {
     state.data = { featureMin, featureMax, maxDiff }
 })
 
-function diffTemp(arr) {
-    let minOneTemp = Infinity,
-        minTwoTemp = Infinity
-    let maxOneTemp = -Infinity,
-        maxTwoTemp = -Infinity
+function diffTemp(arr, minVal = Infinity, maxVal = -Infinity, result = -Infinity) {
     const oneDay = dayjs(featureOneDay).get('date')
     const index = findArrIdx(arr[0].weatherElement, 'T', 'weather')
-
     arr[0].weatherElement[index].time.forEach((el) => {
         if (dayjs(el.dataTime).get('date') === oneDay) {
-            minOneTemp = Math.min(minOneTemp, Number(el.elementValue[0].value))
-            maxOneTemp = Math.max(maxOneTemp, Number(el.elementValue[0].value))
+            minVal = Math.min(minVal, Number(el.elementValue[0].value))
+            maxVal = Math.max(maxVal, Number(el.elementValue[0].value))
+            result = Math.max(maxVal-minVal, result)
         } else {
-            minTwoTemp = Math.min(minTwoTemp, Number(el.elementValue[0].value))
-            maxTwoTemp = Math.max(maxTwoTemp, Number(el.elementValue[0].value))
+            minVal = Math.min(minVal, Number(el.elementValue[0].value))
+            maxVal = Math.max(maxVal, Number(el.elementValue[0].value))
+            result = Math.max(maxVal-minVal, result)
         }
     })
-    const diffOneTemp = maxOneTemp - minOneTemp
-    const diffTwoTemp = maxTwoTemp - minTwoTemp
-    return diffOneTemp > diffTwoTemp ? diffOneTemp : diffTwoTemp
+    return result
 }
 </script>
