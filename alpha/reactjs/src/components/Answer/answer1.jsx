@@ -2,6 +2,10 @@ import { useState, useEffect } from "react";
 import { fetchData } from "@/api/api";
 import { city, town, temp, noData } from "@/constant";
 
+/**
+ * 找出當下最低溫位置
+ * @returns {object}
+ */
 export function Answer1() {
   const apiPath = `O-A0001-001`;
   const [data, setData] = useState({});
@@ -9,6 +13,7 @@ export function Answer1() {
     parameterName: [city, town],
     elementName: temp,
   };
+
   useEffect(() => {
     const fetch = async () => {
       const res = await fetchData(apiPath, params);
@@ -17,13 +22,14 @@ export function Answer1() {
         array.weatherElement.find((item) => item.elementName === temp)
           .elementValue;
       const currentObj = locationData
+        //filter no data
         .filter((array) => {
           return getTemp(array) !== noData;
         })
+        //find the lowest temperature
         .reduce((acc, cur) => {
           return Number(getTemp(cur)) < Number(getTemp(acc)) ? cur : acc;
         });
-      console.log(currentObj);
       const { locationName, lat, lon, parameter, weatherElement } = currentObj;
       const currentTemp = weatherElement.find(
         (item) => item.elementName === temp
@@ -47,14 +53,11 @@ export function Answer1() {
     };
     fetch();
   }, []);
-  console.log(data);
 
   return (
     <div className=" flex flex-col rounded-xl px-4 py-2 my-3 shadow bg-white text-green-600">
-      {/* <h6 className="text-md my-2">Answer:</h6> */}
-
       <p>{data.locationName}</p>
-      <p>{data.currentTemp}度</p>
+      <p>{data.currentTemp}°C</p>
       <p>{data.currentCity}</p>
       <p>{data.currentTown}</p>
     </div>
