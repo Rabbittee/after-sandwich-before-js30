@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 import { fetchData } from "@/api/api";
-import { city, town, temp, elev, noData } from "@/constant";
+import { city, town, temp, elev } from "@/constant";
 
 /**
  * 找出海拔每500m最低溫位置
- * @returns {object}
+ * @returns {array}
  */
 export function Answer2() {
   const apiPath = `O-A0001-001`;
-  const [data, setData] = useState({});
+  const [data, setData] = useState([]);
   const params = {
     parameterName: [city, town],
     elementName: [elev, temp],
@@ -17,57 +17,58 @@ export function Answer2() {
   useEffect(() => {
     const fetch = async () => {
       const res = await fetchData(apiPath, params);
-      const locationData = res.records.location;
 
-      const getTemp = (array) => {
-        array.find((item) => item.elementName === temp).elementValue;
-      };
-      const getElev = (array) => {
-        array.find((item) => item.elementName === elev).elementValue;
-      };
-      const getCity = (array) => {
-        array.find((item) => item.parameterName === city).parameterValue;
-      };
-      const getTown = (array) => {
-        array.find((item) => item.parameterName === town).parameterValue;
-      };
-
-      const currentObj = locationData.reduce((acc, cur) => {
-        const { locationName: name, parameter, weatherElement } = cur;
-        // console.log(weatherElement);
-        const tempValue = getTemp(weatherElement);
-        const elevation = getElev(weatherElement);
-        const cityName = getCity(parameter);
-        const townName = getTown(parameter);
-        //find pre 500m elevation;
-        const step = (Math.floor(elevation / 500) + 1) * 500;
-        //get pre 500m array;
-        const { [step]: tempObj } = acc;
-
-        //find next if temp is current value;
+      const currentObj = res.reduce((acc, cur) => {
+        const { temp, elev, locationName: name, city, town } = cur;
+        const step = (Math.floor(elev / 500) + 1) * 500;
+        const { [step]: elevation } = acc;
         const next =
-          tempObj?.tempValue < tempValue
-            ? tempObj
-            : {
-                城市: cityName,
-                townName,
-                name,
-                elevation,
-              };
+          elevation?.temp < temp ? elevation : { name, temp, city, town, elev };
         return {
           ...acc,
           [step]: next,
         };
       }, {});
-      console.log(currentObj);
-      setData({ ...currentObj });
+
+      setData([...Object.entries(currentObj)]);
     };
     fetch();
   }, []);
 
   return (
     <div className=" flex flex-col rounded-xl px-4 py-2 my-3 shadow bg-white text-green-600">
-      {/* <p>{data}</p> */}
+      {data.map(([step, item]) => {
+        return (
+          <ul key={step}>
+            <li className="p-4">
+              <h4 className="text-emerald-800 text-xl p-2">
+                {"海拔範圍:"}
+                {step - 500}
+                {"-"}
+                {step}
+              </h4>
+              <ul
+                key={item.name}
+                className="bg-green-600 text-white rounded-md p-2"
+              >
+                <li>
+                  {"海拔:"}
+                  {item.elev}
+                </li>
+                <li>
+                  {item.city}
+                  {"-"}
+                  {item.name}
+                </li>
+                <li>
+                  {"溫度:"}
+                  {item.temp}
+                </li>
+              </ul>
+            </li>
+          </ul>
+        );
+      })}
     </div>
   );
 }

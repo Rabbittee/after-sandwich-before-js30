@@ -6,4 +6,5 @@ export const rain = "HOUR_24";
 export const myCity = "新北市";
 export const locationName = "台灣";
 export const tempPrediction = "T";
-export const noData = "-99";
+export const noData = -99;
+export const noDataInLoations = -999.0;

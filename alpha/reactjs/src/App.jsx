@@ -6,6 +6,7 @@ import {
   Answer1,
   Answer2,
   Answer3,
+  Answer4,
 } from "./components";
 import { Card } from "./components/Card";
 
@@ -23,7 +24,7 @@ function App() {
       {/* 第二題 */}
       <Card>
         <Question2 />
-        {/* <Answer2 /> */}
+        <Answer2 />
       </Card>
 
       {/* 第三題 */}
@@ -35,15 +36,8 @@ function App() {
       {/* 第四題 */}
       <Card>
         <Question4 />
+        <Answer4 />
       </Card>
-      <section className="bg-white text-black text-opacity-70 rounded-2xl shadow-xl p-8">
-        <h6 className="text-md font-black">Answer:</h6>
-        <textarea
-          className="w-full p-4 text-black text-opacity-70 text-sm"
-          id="answer_4"
-          disabled
-        ></textarea>
-      </section>
     </main>
   );
 }

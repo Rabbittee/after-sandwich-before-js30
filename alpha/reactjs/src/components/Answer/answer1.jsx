@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { fetchData } from "@/api/api";
-import { city, town, temp, noData } from "@/constant";
+import { city, town, temp } from "@/constant";
 
 /**
  * 找出當下最低溫位置
@@ -15,51 +15,32 @@ export function Answer1() {
   };
 
   useEffect(() => {
-    const fetch = async () => {
+    const getData = async () => {
       const res = await fetchData(apiPath, params);
-      const locationData = res.records.location;
-      const getTemp = (array) =>
-        array.weatherElement.find((item) => item.elementName === temp)
-          .elementValue;
-      const currentObj = locationData
-        //filter no data
-        .filter((array) => {
-          return getTemp(array) !== noData;
-        })
-        //find the lowest temperature
-        .reduce((acc, cur) => {
-          return Number(getTemp(cur)) < Number(getTemp(acc)) ? cur : acc;
-        });
-      const { locationName, lat, lon, parameter, weatherElement } = currentObj;
-      const currentTemp = weatherElement.find(
-        (item) => item.elementName === temp
-      ).elementValue;
-      const currentCity = parameter.find(
-        (item) => item.parameterName === city
-      ).parameterValue;
-      const currentTown = parameter.find(
-        (item) => item.parameterName === town
-      ).parameterValue;
+      const current = res.reduce((acc, cur) => {
+        return acc.temp > cur.temp ? cur : acc;
+      });
+      const { locationName: name, lat, lon, temp, city, town } = current;
       setData({
         ...{
           lat,
           lon,
-          locationName,
-          currentTemp,
-          currentCity,
-          currentTown,
+          name,
+          temp,
+          city,
+          town,
         },
       });
     };
-    fetch();
+    getData();
   }, []);
 
   return (
     <div className=" flex flex-col rounded-xl px-4 py-2 my-3 shadow bg-white text-green-600">
-      <p>{data.locationName}</p>
-      <p>{data.currentTemp}°C</p>
-      <p>{data.currentCity}</p>
-      <p>{data.currentTown}</p>
+      <p>{data.name}</p>
+      <p>{data.temp}°C</p>
+      <p>{data.city}</p>
+      <p>{data.town}</p>
     </div>
   );
 }

@@ -1,7 +1,7 @@
 export function Question3() {
   return (
     <>
-      <h6 className="text-md font-black">題目三:</h6>
+      <h6 className="text-md font-black text-green-500">題目三:</h6>
 
       <p className="my-2 space-y-2">
         近<span className="hint">24小時</span>降雨量

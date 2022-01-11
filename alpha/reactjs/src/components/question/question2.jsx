@@ -1,7 +1,7 @@
 export function Question2() {
   return (
     <>
-      <h6 className="text-md font-black">題目二:</h6>
+      <h6 className="text-md font-black text-green-500">題目二:</h6>
       <p className="my-2">
         同上，針對不同海拔高度找出最低溫測站，每
         <span className="hint">500m</span>一組，並回傳object

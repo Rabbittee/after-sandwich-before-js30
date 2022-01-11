@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { fetchData } from "@/api/api";
-import { city, town, rain, noData } from "@/constant";
+import { city, town, rain } from "@/constant";
 
 export function Answer3() {
   const apiPath = `O-A0002-001`;
@@ -17,43 +17,45 @@ export function Answer3() {
   useEffect(() => {
     const getData = async () => {
       const res = await fetchData(apiPath, params);
-      const locationData = res.records.location;
-      const filterData = locationData
+
+      const filterData = res
         .sort((a, b) => {
-          const valueA = a.weatherElement.find(
-            (item) => item.elementName === rain
-          ).elementValue;
-          const valueB = b.weatherElement.find(
-            (item) => item.elementName === rain
-          ).elementValue;
-          return valueB - valueA;
+          return b.rain - a.rain;
         })
         .slice(0, 20);
-      console.log(filterData);
+
       const groupData = filterData.reduce((acc, cur) => {
-        const cityName = cur.parameter.find(
-          (item) => item.parameterName === city
-        ).parameterValue;
-        if (!acc[cityName]) acc[cityName] = [];
-        acc[cityName].push(cur);
+        const { city } = cur;
+        if (!acc[city]) acc[city] = [];
+        acc[city].push(cur);
         return acc;
       }, {});
-      console.log(Object.entries(groupData));
+
       setData([...Object.entries(groupData)]);
     };
     getData();
   }, []);
-  console.log(data);
+
   return (
     <div className=" flex flex-col rounded-xl px-4 py-2 my-3 shadow bg-white text-green-600">
       {data.map(([key, value]) => {
         return (
-          <ul key={key}>
-            <h4 className="text-emerald-800 text-3xl">{key}</h4>
+          <ul key={key} className="p-4">
+            <h4 className="text-emerald-800 text-2xl py-2">{key}</h4>
             {value.map((item, i) => {
               return (
-                <li key={i} className="text-black">
-                  {item.locationName}
+                <li
+                  key={i}
+                  className="p-4 bg-green-600 text-white rounded-md my-2"
+                >
+                  <p>
+                    {"觀測站:"}
+                    {item.locationName} {item.stationId}
+                  </p>
+                  <p>
+                    {"降雨量:"}
+                    {item.rain}
+                  </p>
                 </li>
               );
             })}

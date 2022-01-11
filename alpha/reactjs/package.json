@@ -6,8 +6,10 @@
     "serve": "vite preview"
   },
   "dependencies": {
+    "dayjs": "^1.10.7",
     "react": "^18.0.0-beta-24dd07bd2-20211208",
-    "react-dom": "^18.0.0-beta-24dd07bd2-20211208"
+    "react-dom": "^18.0.0-beta-24dd07bd2-20211208",
+    "react-router-dom": "^6.2.1"
   },
   "devDependencies": {
     "@types/react": "^18",
