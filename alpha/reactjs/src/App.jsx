@@ -68,7 +68,7 @@ function CustomLink({ children, to, ...props }) {
     <div>
       <Link
         className={clsx(
-          match ? "text-white bg-green-500 " : "text-gray-500",
+          match ? "text-white bg-green-500 " : "text-gray-400",
           "px-4 py-1 rounded-md"
         )}
         to={to}
