@@ -37,7 +37,7 @@ export function Answer3() {
   }, []);
 
   return (
-    <div className=" flex flex-col rounded-xl px-4 py-2 my-3 shadow bg-white text-green-600">
+    <div className=" flex flex-col rounded-xl px-4 py-2 my-3 shadow bg-white text-green-600 max-h-96 overflow-y-scroll ">
       {data.map(([key, value]) => {
         return (
           <ul key={key} className="p-4">
