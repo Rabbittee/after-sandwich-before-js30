@@ -2,6 +2,7 @@ import { StrictMode } from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
+import { BrowserRouter } from "react-router-dom";
 
 const element = document.getElementById("root");
 if (!element) {
@@ -10,6 +11,8 @@ if (!element) {
 
 ReactDOM.createRoot(element).render(
   <StrictMode>
-    <App />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </StrictMode>
 );
