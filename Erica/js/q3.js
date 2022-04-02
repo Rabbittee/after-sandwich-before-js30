@@ -15,15 +15,21 @@ export default function q3(datum) {
         .sort((a, b) => Number(getWeather(b, rain)) - Number(getWeather(a, rain)))
         .slice(0, 20)
 
-    // 4. 整理格式、渲染
-    const answer = filters.map((data, index) => {
-        return {
-            [index + 1]: {
-                [getLocation(data, city)]: getLocation(data, town),
-                [data.locationName]: getWeather(data, rain)
-            }
-        }
-    })
+    // 4. 統計分佈縣市
+    const answer = filters.reduce((acc, curr) => {
+
+        const currCity = getLocation(curr, city)
+        const currTown = getLocation(curr, town)
+        const currRain = getWeather(curr, rain)
+        
+        if( !acc ) acc = {}
+        if( !acc[currCity] ) acc[currCity] = {}
+        if( !acc[currCity][currTown] ) acc[currCity][currTown] = {}
+        acc[currCity][currTown][`${curr['locationName']}_${curr['stationId']}`] = currRain
+
+        return acc
+        
+    }, {})
 
     render(answer, 3)
 }
